@@ -1,38 +1,44 @@
 'use client';
 
+import Link from 'next/link';
 import Sidebar from '../../components/Sidebar';
-import { Settings, User, Database, Bell, Shield, Palette } from 'lucide-react';
+import { User, Database, Bell, Shield, Palette, ChevronRight } from 'lucide-react';
 
 export default function SettingsPage() {
   const settingsCategories = [
     {
       icon: User,
-      title: 'User Management',
-      description: 'Manage users, roles, and permissions',
-      status: 'Coming Soon',
+      title: 'Profile Settings',
+      description: 'Manage your personal information and avatar',
+      href: '/settings/profile',
+      status: 'Available',
+    },
+    {
+      icon: Palette,
+      title: 'Application',
+      description: 'Theme, notifications, and regional settings',
+      href: '/settings/app',
+      status: 'Available',
     },
     {
       icon: Database,
-      title: 'Data Management',
-      description: 'Backup, restore, and data export settings',
-      status: 'Coming Soon',
+      title: 'Database',
+      description: 'Supabase connection and data management',
+      href: '/settings/database',
+      status: 'Available',
     },
     {
       icon: Bell,
       title: 'Notifications',
-      description: 'Email alerts, follow-up reminders, and notifications',
+      description: 'Email alerts and follow-up reminders',
+      href: '#',
       status: 'Coming Soon',
     },
     {
       icon: Shield,
       title: 'Security',
       description: 'API keys, access control, and audit logs',
-      status: 'Coming Soon',
-    },
-    {
-      icon: Palette,
-      title: 'Customization',
-      description: 'Branding, themes, and UI preferences',
+      href: '#',
       status: 'Coming Soon',
     },
   ];
@@ -51,15 +57,21 @@ export default function SettingsPage() {
 
           {/* Current User Info */}
           <div className="glass border border-wit-border rounded-xl p-6 mb-6">
-            <div className="flex items-center space-x-4">
-              <div className="w-16 h-16 bg-wit-red rounded-full flex items-center justify-center overflow-hidden">
-                <img src="/wit-logo.png" alt="WIT" className="w-12 h-12 object-contain" />
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <div className="w-16 h-16 bg-wit-red rounded-full flex items-center justify-center overflow-hidden">
+                  <img src="/wit-logo.png" alt="WIT" className="w-12 h-12 object-contain" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-wit-text">Ilham Kurniawan</h2>
+                  <p className="text-wit-muted">Managing Director</p>
+                  <p className="text-wit-muted text-sm">ikurniawann@gmail.com</p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-xl font-bold text-wit-text">Ilham Kurniawan</h2>
-                <p className="text-wit-muted">Administrator</p>
-                <p className="text-wit-muted text-sm">ikurniawann@gmail.com</p>
-              </div>
+              <Link href="/settings/profile" className="btn-secondary flex items-center space-x-2">
+                <span>Edit Profile</span>
+                <ChevronRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
 
@@ -67,16 +79,25 @@ export default function SettingsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {settingsCategories.map((category, index) => {
               const Icon = category.icon;
+              const isAvailable = category.status === 'Available';
+              
               return (
-                <div
+                <Link
                   key={index}
-                  className="glass border border-wit-border rounded-xl p-6"
+                  href={category.href}
+                  className={`glass border border-wit-border rounded-xl p-6 transition-all ${
+                    isAvailable 
+                      ? 'hover:border-wit-red hover:bg-wit-red/5 cursor-pointer' 
+                      : 'opacity-50 cursor-not-allowed'
+                  }`}
                 >
                   <div className="flex items-center justify-between mb-4">
                     <div className="p-3 bg-wit-red/10 rounded-lg">
                       <Icon className="w-6 h-6 text-wit-red" />
                     </div>
-                    <span className="badge badge-cancelled">{category.status}</span>
+                    <span className={`badge ${isAvailable ? 'badge-done' : 'badge-cancelled'}`}>
+                      {category.status}
+                    </span>
                   </div>
                   <h3 className="text-lg font-bold text-wit-text mb-2">
                     {category.title}
@@ -84,10 +105,13 @@ export default function SettingsPage() {
                   <p className="text-wit-muted text-sm mb-4">
                     {category.description}
                   </p>
-                  <button className="btn-secondary w-full" disabled>
-                    Coming Soon
-                  </button>
-                </div>
+                  {isAvailable && (
+                    <div className="flex items-center text-wit-red text-sm font-medium">
+                      <span>Open</span>
+                      <ChevronRight className="w-4 h-4 ml-1" />
+                    </div>
+                  )}
+                </Link>
               );
             })}
           </div>
@@ -95,7 +119,7 @@ export default function SettingsPage() {
           {/* System Info */}
           <div className="glass border border-wit-border rounded-xl p-6 mt-6">
             <h2 className="text-xl font-bold text-wit-text mb-4">System Information</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div>
                 <p className="text-wit-muted text-sm mb-1">Version</p>
                 <p className="text-wit-text font-medium">v1.0.0</p>
@@ -111,6 +135,22 @@ export default function SettingsPage() {
               <div>
                 <p className="text-wit-muted text-sm mb-1">Framework</p>
                 <p className="text-wit-text font-medium">Next.js 14</p>
+              </div>
+              <div>
+                <p className="text-wit-muted text-sm mb-1">Database</p>
+                <p className="text-wit-text font-medium">PostgreSQL</p>
+              </div>
+              <div>
+                <p className="text-wit-muted text-sm mb-1">Region</p>
+                <p className="text-wit-text font-medium">Singapore</p>
+              </div>
+              <div>
+                <p className="text-wit-muted text-sm mb-1">Total Leads</p>
+                <p className="text-wit-text font-medium">14</p>
+              </div>
+              <div>
+                <p className="text-wit-muted text-sm mb-1">Total Clients</p>
+                <p className="text-wit-text font-medium">4</p>
               </div>
             </div>
           </div>
