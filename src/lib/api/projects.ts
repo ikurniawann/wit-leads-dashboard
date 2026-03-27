@@ -69,39 +69,15 @@ export interface ProjectStats {
 }
 
 export const projectsApi = {
-  // GET ALL PROJECTS
+  // GET ALL PROJECTS - Simple query without joins
   async getAll() {
     const { data: projects, error } = await supabase
       .from('projects')
-      .select(`
-        *,
-        project_categories!projects_category_id_fkey (
-          category_name
-        ),
-        clients!projects_client_id_fkey (
-          company_name
-        ),
-        employees!projects_project_manager_fkey (
-          employee_name
-        )
-      `)
+      .select('*')
       .order('created_at', { ascending: false });
 
     if (error) throw error;
-
-    // Flatten nested data - Supabase returns arrays for relationships
-    return projects.map(p => {
-      const categories = p.project_categories as any[];
-      const clients = p.clients as any[];
-      const employees = p.employees as any[];
-      
-      return {
-        ...p,
-        category_name: categories?.[0]?.category_name || null,
-        client_name: clients?.[0]?.company_name || null,
-        project_manager_name: employees?.[0]?.employee_name || null,
-      };
-    }) as Project[];
+    return projects as Project[];
   },
 
   // GET PROJECT BY ID

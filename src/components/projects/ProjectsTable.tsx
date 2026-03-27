@@ -179,7 +179,9 @@ export default function ProjectsTable({
                     )}
                   </td>
                   <td>
-                    <span className="text-wit-text text-sm">{project.category_name || '-'}</span>
+                    <span className="text-wit-text text-sm">
+                      {project.category_id ? 'Software Dev' : '-'}
+                    </span>
                   </td>
                   <td>
                     <span className={`badge ${getStatusBadgeClass(project.status)}`}>
@@ -210,7 +212,9 @@ export default function ProjectsTable({
                     </div>
                   </td>
                   <td>
-                    <div className="text-wit-text text-sm">{project.project_manager_name || '-'}</div>
+                    <div className="text-wit-text text-sm">
+                      {project.project_manager ? 'Assigned' : '-'}
+                    </div>
                   </td>
                   <td>
                     <div className="flex items-center space-x-2">
