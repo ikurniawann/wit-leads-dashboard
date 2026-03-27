@@ -227,9 +227,9 @@ body {
 }
 
 .badge-approved {
-  background: rgba(192, 0, 0, 0.15);
-  color: #c00000;
-  border: 1px solid rgba(192, 0, 0, 0.3);
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
 }
 
 .badge-in_progress {
