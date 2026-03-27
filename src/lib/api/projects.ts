@@ -76,8 +76,12 @@ export const projectsApi = {
       .select(`
         *,
         project_categories (category_name),
-        clients (company_name),
-        employees (employee_name)
+        clients (
+          company_name
+        ),
+        employees (
+          employee_name
+        )
       `)
       .order('created_at', { ascending: false });
 
@@ -87,8 +91,8 @@ export const projectsApi = {
     return projects.map(p => ({
       ...p,
       category_name: p.project_categories?.category_name,
-      client_name: p.clients?.company_name,
-      project_manager_name: p.employees?.employee_name,
+      client_name: p.clients?.company_name || null,
+      project_manager_name: p.employees?.employee_name || null,
     })) as Project[];
   },
 
