@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import Sidebar from '../../components/Sidebar';
-import { User, Database, Bell, Shield, Palette, ChevronRight } from 'lucide-react';
+import ThemeToggle from '../../components/ThemeToggle';
+import { User, Database, Bell, Shield, Palette, Sun, Moon, ChevronRight } from 'lucide-react';
 
 export default function SettingsPage() {
   const settingsCategories = [
@@ -53,6 +54,35 @@ export default function SettingsPage() {
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-wit-text mb-2">Settings</h1>
             <p className="text-wit-muted">Configure your dashboard settings</p>
+          </div>
+
+          {/* Theme Toggle Card */}
+          <div className="glass border border-wit-border rounded-xl p-6 mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center space-x-3">
+                <div className="p-3 bg-wit-red/10 rounded-lg">
+                  <Sun className="w-6 h-6 text-wit-red" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-wit-text">Appearance</h2>
+                  <p className="text-wit-muted text-sm">Toggle light/dark theme</p>
+                </div>
+              </div>
+              <ThemeToggle />
+            </div>
+            <div className="flex items-center space-x-4 text-sm text-wit-muted">
+              <div className="flex items-center space-x-2">
+                <Sun className="w-4 h-4" />
+                <span>Light Mode</span>
+              </div>
+              <div className="h-4 w-px bg-wit-border"></div>
+              <div className="flex items-center space-x-2">
+                <Moon className="w-4 h-4" />
+                <span>Dark Mode</span>
+              </div>
+              <div className="h-4 w-px bg-wit-border"></div>
+              <div className="text-wit-text font-medium">Auto-save enabled</div>
+            </div>
           </div>
 
           {/* Current User Info */}
