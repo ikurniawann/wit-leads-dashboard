@@ -36,6 +36,7 @@ export default function Sidebar() {
       submenu: [
         { href: '/projects', label: 'All Projects' },
         { href: '/projects/timeline', label: 'Timeline' },
+        { href: '/projects/budget', label: 'Budget vs Actual' },
         { href: '/reports/workload', label: 'Workload Report' },
       ]
     },
