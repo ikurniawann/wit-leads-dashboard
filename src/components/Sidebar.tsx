@@ -23,7 +23,9 @@ export default function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
+  const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({
+    'HRIS': true, // Always open HRIS submenu by default
+  });
 
   // Main navigation
   const mainNavItems = [
@@ -48,14 +50,14 @@ export default function Sidebar() {
       label: 'HRIS', 
       icon: UserCheck,
       submenu: [
-        { href: '/hris/attendance', label: 'Attendance', disabled: true },
-        { href: '/hris/leave', label: 'Leave Management', disabled: true },
-        { href: '/hris/performance', label: 'Performance Review', disabled: true },
-        { href: '/hris/payroll', label: 'Payroll', disabled: true },
-        { href: '/hris/employees', label: 'Employee Directory', disabled: true },
-        { href: '/hris/requests', label: 'My Requests', disabled: true },
-        { href: '/hris/reports', label: 'HR Reports', disabled: true },
-        { href: '/hris/settings', label: 'HR Settings', disabled: true },
+        { href: '/hris/attendance', label: 'Attendance 🔒' },
+        { href: '/hris/leave', label: 'Leave Management 🔒' },
+        { href: '/hris/performance', label: 'Performance Review 🔒' },
+        { href: '/hris/payroll', label: 'Payroll 🔒' },
+        { href: '/hris/employees', label: 'Employee Directory 🔒' },
+        { href: '/hris/requests', label: 'My Requests 🔒' },
+        { href: '/hris/reports', label: 'HR Reports 🔒' },
+        { href: '/hris/settings', label: 'HR Settings 🔒' },
       ]
     },
     { href: '/analytics', label: 'Analytics', icon: BarChart3 },
@@ -171,17 +173,16 @@ export default function Sidebar() {
                   <div className="ml-8 mt-1 space-y-1">
                     {item.submenu.map((subItem) => {
                       const isSubActive = pathname === subItem.href;
-                      const isDisabled = subItem.disabled;
+                      const hasLock = subItem.label.includes('🔒');
                       
-                      if (isDisabled) {
+                      if (hasLock) {
                         return (
                           <div
                             key={subItem.href}
-                            className="block px-3 py-2 rounded-lg text-sm text-wit-muted/50 cursor-not-allowed flex items-center space-x-2"
+                            className="block px-3 py-2 rounded-lg text-sm text-wit-muted/50 cursor-not-allowed"
                             title="Coming Soon"
                           >
-                            <span>{subItem.label}</span>
-                            <span className="text-xs">🔒</span>
+                            {subItem.label}
                           </div>
                         );
                       }
