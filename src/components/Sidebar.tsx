@@ -44,27 +44,31 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile Menu Button */}
+      {/* Mobile Menu Button - Highest z-index to stay on top */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="md:hidden fixed top-4 left-4 p-3 bg-wit-red text-white rounded-lg z-50 shadow-lg"
+        className="md:hidden fixed top-4 left-4 p-3 bg-wit-red text-white rounded-lg shadow-lg z-[60]"
+        aria-label="Toggle menu"
       >
         {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
 
-      {/* Overlay for mobile */}
+      {/* Overlay for mobile - Click to close */}
       {mobileOpen && (
         <div
-          className="md:hidden fixed inset-0 bg-black/50 z-40"
+          className="md:hidden fixed inset-0 bg-black/60 z-40 backdrop-blur-sm"
           onClick={() => setMobileOpen(false)}
+          aria-hidden="true"
         />
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar - Always show on desktop, slide in on mobile */}
       <aside
-        className={`fixed left-0 top-0 h-screen bg-wit-darker border-r border-wit-border z-50 transition-all duration-300 ${
+        className={`fixed left-0 top-0 h-screen bg-wit-darker border-r border-wit-border z-50 transition-all duration-300 transform ${
+          mobileOpen ? 'translate-x-0' : '-translate-x-full'
+        } md:translate-x-0 ${
           collapsed ? 'w-20' : 'w-72'
-        } hidden md:block ${mobileOpen ? 'block' : ''}`}
+        }`}
       >
         {/* Logo */}
         <div className="h-20 flex items-center justify-between px-6 border-b border-wit-border">
