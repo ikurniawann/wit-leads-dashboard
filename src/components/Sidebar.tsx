@@ -109,11 +109,31 @@ export default function Sidebar() {
             const hasSubmenu = item.submenu && item.submenu.length > 0;
             const isSubmenuOpen = hasSubmenu && openMenus[item.label];
 
+            // For items without submenu, use Link for navigation
+            if (!hasSubmenu) {
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all ${
+                    isActive
+                      ? 'bg-wit-red/10 text-wit-red'
+                      : 'text-wit-muted hover:text-wit-red hover:bg-wit-card'
+                  }`}
+                >
+                  <Icon className="w-5 h-5 flex-shrink-0" />
+                  <span className="font-medium">{item.label}</span>
+                </Link>
+              );
+            }
+
+            // For items with submenu, use div with toggle
             return (
               <div key={item.href}>
                 {/* Main Menu Item */}
                 <div
-                  onClick={() => hasSubmenu ? toggleMenu(item.label) : null}
+                  onClick={() => toggleMenu(item.label)}
                   className={`flex items-center justify-between px-3 py-2.5 rounded-lg transition-all cursor-pointer ${
                     isActive
                       ? 'bg-wit-red/10 text-wit-red'
@@ -124,13 +144,11 @@ export default function Sidebar() {
                     <Icon className="w-5 h-5 flex-shrink-0" />
                     <span className="font-medium">{item.label}</span>
                   </div>
-                  {hasSubmenu && (
-                    <ChevronDown
-                      className={`w-4 h-4 transition-transform ${
-                        isSubmenuOpen ? 'rotate-180' : ''
-                      }`}
-                    />
-                  )}
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform ${
+                      isSubmenuOpen ? 'rotate-180' : ''
+                    }`}
+                  />
                 </div>
 
                 {/* Submenu Items */}
