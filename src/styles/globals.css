@@ -99,6 +99,26 @@ body {
   border-color: var(--wit-red);
 }
 
+/* Table row hover - text jadi putih */
+.table-dark tbody tr:hover {
+  background-color: rgba(192, 0, 0, 0.1);
+}
+
+.table-dark tbody tr:hover td {
+  color: #ffffff !important;
+}
+
+/* Sidebar hover - text jadi putih */
+.sidebar-item:hover {
+  background-color: rgba(192, 0, 0, 0.2);
+  color: #ffffff !important;
+}
+
+.sidebar-item:hover .sidebar-icon,
+.sidebar-item:hover .sidebar-text {
+  color: #ffffff !important;
+}
+
 /* Gradient text */
 .gradient-text {
   background: linear-gradient(135deg, #c00000 0%, #ff3333 100%);

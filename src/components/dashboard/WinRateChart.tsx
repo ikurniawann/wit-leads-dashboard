@@ -76,10 +76,13 @@ export default function WinRateChart() {
                 </Pie>
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#111111',
+                    backgroundColor: '#ffffff',
                     border: '1px solid #222222',
                     borderRadius: '8px',
+                    color: '#000000',
                   }}
+                  labelStyle={{ color: '#000000', fontWeight: 'bold' }}
+                  itemStyle={{ color: '#000000' }}
                 />
                 <Legend />
               </PieChart>

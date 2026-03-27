@@ -62,6 +62,8 @@ export default function LeadsTable({ leads, onAdd, onEdit, onDelete, onView }: L
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [dateFilter, setDateFilter] = useState<string>('all');
+  const [sortColumn, setSortColumn] = useState<string>('created_at');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
 
   const statusOptions = [
     { value: 'all', label: 'All' },
@@ -70,6 +72,14 @@ export default function LeadsTable({ leads, onAdd, onEdit, onDelete, onView }: L
     { value: 'IN_PROGRESS', label: 'In Progress' },
     { value: 'DONE', label: 'Done' },
     { value: 'CANCELLED', label: 'Cancelled' },
+  ];
+
+  const dateOptions = [
+    { value: 'all', label: 'All Time' },
+    { value: 'today', label: 'Today' },
+    { value: 'week', label: 'This Week' },
+    { value: 'month', label: 'This Month' },
+    { value: 'year', label: 'This Year' },
   ];
 
   const filteredLeads = leads.filter((lead) => {
@@ -81,8 +91,69 @@ export default function LeadsTable({ leads, onAdd, onEdit, onDelete, onView }: L
 
     const matchesStatus = statusFilter === 'all' || lead.status_id === statusFilter;
 
-    return matchesSearch && matchesStatus;
+    // Date filter
+    let matchesDate = true;
+    if (dateFilter !== 'all') {
+      const leadDate = new Date(lead.created_at);
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      
+      if (dateFilter === 'today') {
+        matchesDate = leadDate >= today;
+      } else if (dateFilter === 'week') {
+        const weekAgo = new Date(today);
+        weekAgo.setDate(weekAgo.getDate() - 7);
+        matchesDate = leadDate >= weekAgo;
+      } else if (dateFilter === 'month') {
+        const monthAgo = new Date(today);
+        monthAgo.setMonth(monthAgo.getMonth() - 1);
+        matchesDate = leadDate >= monthAgo;
+      } else if (dateFilter === 'year') {
+        const yearAgo = new Date(today);
+        yearAgo.setFullYear(yearAgo.getFullYear() - 1);
+        matchesDate = leadDate >= yearAgo;
+      }
+    }
+
+    return matchesSearch && matchesStatus && matchesDate;
   });
+
+  // Sort leads
+  const sortedLeads = [...filteredLeads].sort((a, b) => {
+    let aVal: any = a[sortColumn as keyof Lead];
+    let bVal: any = b[sortColumn as keyof Lead];
+
+    if (sortColumn === 'grand_total' || sortColumn === 'total_value') {
+      aVal = aVal || 0;
+      bVal = bVal || 0;
+    } else if (sortColumn === 'created_at' || sortColumn === 'updated_at') {
+      aVal = new Date(aVal).getTime();
+      bVal = new Date(bVal).getTime();
+    } else {
+      aVal = (aVal || '').toString().toLowerCase();
+      bVal = (bVal || '').toString().toLowerCase();
+    }
+
+    if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
+    if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
+    return 0;
+  });
+
+  const handleSort = (column: string) => {
+    if (sortColumn === column) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortColumn(column);
+      setSortDirection('desc');
+    }
+  };
+
+  const SortIcon = ({ column }: { column: string }) => {
+    if (sortColumn !== column) return <span className="ml-1 text-wit-muted">⇅</span>;
+    return sortDirection === 'asc' ? 
+      <span className="ml-1 text-wit-red">↑</span> : 
+      <span className="ml-1 text-wit-red">↓</span>;
+  };
 
   return (
     <div className="glass border border-wit-border rounded-xl overflow-hidden animate-fade-in">
@@ -118,6 +189,19 @@ export default function LeadsTable({ leads, onAdd, onEdit, onDelete, onView }: L
             />
           </div>
 
+          {/* Date Filter */}
+          <select
+            value={dateFilter}
+            onChange={(e) => setDateFilter(e.target.value)}
+            className="input-dark w-full md:w-40"
+          >
+            {dateOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+
           {/* Status Filter */}
           <div className="flex items-center space-x-2 overflow-x-auto">
             {statusOptions.map((option) => (
@@ -142,18 +226,32 @@ export default function LeadsTable({ leads, onAdd, onEdit, onDelete, onView }: L
         <table className="table-dark">
           <thead>
             <tr>
-              <th>Company</th>
-              <th>Project</th>
-              <th>Client</th>
-              <th>PIC</th>
-              <th>Status</th>
-              <th>Value</th>
-              <th>Created</th>
+              <th className="cursor-pointer hover:text-wit-red" onClick={() => handleSort('company_name')}>
+                Company <SortIcon column="company_name" />
+              </th>
+              <th className="cursor-pointer hover:text-wit-red" onClick={() => handleSort('project_name')}>
+                Project <SortIcon column="project_name" />
+              </th>
+              <th className="cursor-pointer hover:text-wit-red" onClick={() => handleSort('client_name')}>
+                Client <SortIcon column="client_name" />
+              </th>
+              <th className="cursor-pointer hover:text-wit-red" onClick={() => handleSort('pic_excel_name')}>
+                PIC <SortIcon column="pic_excel_name" />
+              </th>
+              <th className="cursor-pointer hover:text-wit-red" onClick={() => handleSort('status_id')}>
+                Status <SortIcon column="status_id" />
+              </th>
+              <th className="cursor-pointer hover:text-wit-red text-right" onClick={() => handleSort('grand_total')}>
+                Value <SortIcon column="grand_total" />
+              </th>
+              <th className="cursor-pointer hover:text-wit-red" onClick={() => handleSort('created_at')}>
+                Created <SortIcon column="created_at" />
+              </th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {filteredLeads.length === 0 ? (
+            {sortedLeads.length === 0 ? (
               <tr>
                 <td colSpan={8}>
                   <div className="empty-state py-12">
@@ -166,7 +264,7 @@ export default function LeadsTable({ leads, onAdd, onEdit, onDelete, onView }: L
                 </td>
               </tr>
             ) : (
-              filteredLeads.map((lead) => (
+              sortedLeads.map((lead) => (
                 <tr key={lead.quotation_id} className="hover:bg-wit-red/5 transition-colors">
                   <td>
                     <div className="font-medium text-wit-text">{lead.company_name}</div>

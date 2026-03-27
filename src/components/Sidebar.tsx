@@ -20,6 +20,7 @@ import {
 export default function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
 
   // Main navigation
@@ -43,11 +44,27 @@ export default function Sidebar() {
 
   return (
     <>
+      {/* Mobile Menu Button */}
+      <button
+        onClick={() => setMobileOpen(!mobileOpen)}
+        className="md:hidden fixed top-4 left-4 p-3 bg-wit-red text-white rounded-lg z-50 shadow-lg"
+      >
+        {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+      </button>
+
+      {/* Overlay for mobile */}
+      {mobileOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/50 z-40"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
       <aside
         className={`fixed left-0 top-0 h-screen bg-wit-darker border-r border-wit-border z-50 transition-all duration-300 ${
           collapsed ? 'w-20' : 'w-72'
-        }`}
+        } hidden md:block ${mobileOpen ? 'block' : ''}`}
       >
         {/* Logo */}
         <div className="h-20 flex items-center justify-between px-6 border-b border-wit-border">
@@ -115,13 +132,13 @@ export default function Sidebar() {
 
       {/* Top Bar */}
       <header
-        className={`fixed top-0 right-0 h-16 border-b border-wit-border glass z-40 transition-all duration-300 ${
+        className={`fixed top-0 right-0 h-16 border-b border-wit-border glass z-40 transition-all duration-300 md:block ${
           collapsed ? 'left-20' : 'left-72'
-        }`}
+        } ${mobileOpen ? 'left-0 md:left-auto' : ''}`}
       >
         <div className="h-full px-6 flex items-center justify-between">
-          {/* Breadcrumb */}
-          <div className="flex items-center space-x-2 text-sm">
+          {/* Breadcrumb - Hidden on mobile */}
+          <div className="hidden md:flex items-center space-x-2 text-sm">
             <Link href="/" className="text-wit-muted hover:text-wit-text">
               Home
             </Link>
