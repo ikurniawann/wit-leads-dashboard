@@ -29,7 +29,15 @@ export default function Sidebar() {
   const mainNavItems = [
     { href: '/', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/leads', label: 'Leads', icon: Briefcase },
-    { href: '/projects', label: 'Projects', icon: FolderKanban },
+    { 
+      href: '/projects', 
+      label: 'Projects', 
+      icon: FolderKanban,
+      submenu: [
+        { href: '/projects', label: 'All Projects' },
+        { href: '/reports/workload', label: 'Workload Report' },
+      ]
+    },
     { href: '/vendors', label: 'Vendors', icon: Truck },
     { href: '/clients', label: 'Clients', icon: Users },
     { href: '/employees', label: 'Employees', icon: UserCheck },
@@ -95,22 +103,57 @@ export default function Sidebar() {
         <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
           {mainNavItems.map((item) => {
             const Icon = item.icon;
-            const isActive = pathname === item.href;
+            const isActive = pathname === item.href || item.submenu?.some(s => pathname === s.href);
+            const hasSubmenu = item.submenu && item.submenu.length > 0;
+            const isSubmenuOpen = hasSubmenu && openMenus[item.label];
 
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className={`flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all ${
-                  isActive
-                    ? 'bg-wit-red/10 text-wit-red'
-                    : 'text-wit-muted hover:text-wit-red hover:bg-wit-card'
-                }`}
-              >
-                <Icon className="w-5 h-5 flex-shrink-0" />
-                <span className="font-medium">{item.label}</span>
-              </Link>
+              <div key={item.href}>
+                {/* Main Menu Item */}
+                <div
+                  onClick={() => hasSubmenu ? toggleMenu(item.label) : null}
+                  className={`flex items-center justify-between px-3 py-2.5 rounded-lg transition-all cursor-pointer ${
+                    isActive
+                      ? 'bg-wit-red/10 text-wit-red'
+                      : 'text-wit-muted hover:text-wit-red hover:bg-wit-card'
+                  }`}
+                >
+                  <div className="flex items-center space-x-3">
+                    <Icon className="w-5 h-5 flex-shrink-0" />
+                    <span className="font-medium">{item.label}</span>
+                  </div>
+                  {hasSubmenu && (
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform ${
+                        isSubmenuOpen ? 'rotate-180' : ''
+                      }`}
+                    />
+                  )}
+                </div>
+
+                {/* Submenu Items */}
+                {hasSubmenu && isSubmenuOpen && (
+                  <div className="ml-8 mt-1 space-y-1">
+                    {item.submenu.map((subItem) => {
+                      const isSubActive = pathname === subItem.href;
+                      return (
+                        <Link
+                          key={subItem.href}
+                          href={subItem.href}
+                          onClick={() => setMobileOpen(false)}
+                          className={`block px-3 py-2 rounded-lg text-sm transition-all ${
+                            isSubActive
+                              ? 'bg-wit-red/10 text-wit-red'
+                              : 'text-wit-muted hover:text-wit-red hover:bg-wit-card'
+                          }`}
+                        >
+                          {subItem.label}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             );
           })}
         </nav>
