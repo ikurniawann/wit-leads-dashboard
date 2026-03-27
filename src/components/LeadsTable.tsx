@@ -75,6 +75,9 @@ export default function LeadsTable({
   currentPage = 1,
   totalLeads,
 }: LeadsTableProps) {
+  // Debug log
+  console.log('LeadsTable Props:', { pageSize, currentPage, totalLeads, leadsCount: leads.length });
+  
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [dateFilter, setDateFilter] = useState<string>('all');
@@ -364,9 +367,14 @@ export default function LeadsTable({
         </table>
       </div>
 
-      {/* Pagination */}
+      {/* Pagination - Always render */}
       <div className="p-4 border-t border-wit-border bg-wit-card/50">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          {/* Debug Info */}
+          <div className="text-xs text-wit-muted">
+            Debug: pageSize={pageSize}, currentPage={currentPage}, total={total}, totalPages={totalPages}
+          </div>
+          
           {/* Page Size Selector */}
           <div className="flex items-center space-x-2 text-sm text-wit-muted">
             <span>Show:</span>
