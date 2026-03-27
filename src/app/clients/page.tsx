@@ -66,7 +66,7 @@ export default function ClientsPage() {
   };
 
   const filteredClients = clients.filter(client =>
-    client.company_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    client.company_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     client.client_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     client.industry?.toLowerCase().includes(searchTerm.toLowerCase())
   );
