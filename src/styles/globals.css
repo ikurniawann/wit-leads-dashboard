@@ -3,13 +3,34 @@
 @tailwind utilities;
 
 :root {
+  /* Shared colors */
   --wit-red: #c00000;
+  --wit-red-light: #ff1a1a;
+  --wit-red-dark: #990000;
+  
+  /* Dark mode (default) */
   --wit-dark: #0a0a0a;
   --wit-darker: #050505;
   --wit-card: #111111;
   --wit-border: #222222;
   --wit-text: #ffffff;
   --wit-muted: #888888;
+  --wit-shadow: rgba(0, 0, 0, 0.4);
+  --wit-glass-bg: rgba(17, 17, 17, 0.85);
+  --wit-glass-border: rgba(255, 255, 255, 0.08);
+}
+
+/* Light mode */
+[data-theme='light'] {
+  --wit-dark: #f5f5f7;
+  --wit-darker: #ffffff;
+  --wit-card: #ffffff;
+  --wit-border: #e0e0e0;
+  --wit-text: #1d1d1f;
+  --wit-muted: #6e6e73;
+  --wit-shadow: rgba(0, 0, 0, 0.1);
+  --wit-glass-bg: rgba(255, 255, 255, 0.85);
+  --wit-glass-border: rgba(0, 0, 0, 0.08);
 }
 
 * {
