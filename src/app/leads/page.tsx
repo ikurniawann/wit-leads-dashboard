@@ -15,7 +15,7 @@ export default function LeadsPage() {
   return (
     <div className="min-h-screen bg-wit-darker">
       <Sidebar />
-      <main className="ml-72 pt-16 pb-12 flex items-center justify-center">
+      <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6 flex items-center justify-center">
         <div className="text-center">
           <div className="spinner mx-auto mb-4"></div>
           <p className="text-wit-muted">Redirecting to Dashboard...</p>

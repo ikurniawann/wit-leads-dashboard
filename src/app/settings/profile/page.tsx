@@ -43,17 +43,17 @@ export default function ProfileSettingsPage() {
     <div className="min-h-screen bg-wit-darker">
       <Sidebar />
       
-      <main className="ml-72 pt-16 pb-12">
-        <div className="px-6">
-          {/* Page Header */}
+      <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
+        <div>
+          {/* Page Header - Mobile Responsive */}
           <div className="mb-6">
             <div className="flex items-center space-x-2 text-wit-muted mb-2">
               <span>Settings</span>
               <span>/</span>
               <span className="text-wit-text">Profile</span>
             </div>
-            <h1 className="text-3xl font-bold text-wit-text">Profile Settings</h1>
-            <p className="text-wit-muted">Manage your personal information</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-wit-text mb-1 md:mb-2">Profile Settings</h1>
+            <p className="text-sm md:text-base text-wit-muted">Manage your personal information</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

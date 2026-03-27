@@ -127,16 +127,16 @@ export default function ReportsPage() {
     <div className="min-h-screen bg-wit-darker">
       <Sidebar />
       
-      <main className="ml-72 pt-16 pb-12">
-        <div className="px-6">
-          {/* Page Header */}
+      <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
+        <div>
+          {/* Page Header - Mobile Responsive */}
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-wit-text mb-2">Reports</h1>
-            <p className="text-wit-muted">Generate and export reports</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-wit-text mb-1 md:mb-2">Reports</h1>
+            <p className="text-sm md:text-base text-wit-muted">Generate and export reports</p>
           </div>
 
-          {/* Quick Export Actions */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          {/* Quick Export Actions - Mobile Responsive */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-6">
             <div className="glass border border-wit-border rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="p-3 bg-wit-red/10 rounded-lg">

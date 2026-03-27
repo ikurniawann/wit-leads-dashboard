@@ -48,12 +48,12 @@ export default function SettingsPage() {
     <div className="min-h-screen bg-wit-darker">
       <Sidebar />
       
-      <main className="ml-72 pt-16 pb-12">
-        <div className="px-6">
-          {/* Page Header */}
+      <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
+        <div>
+          {/* Page Header - Mobile Responsive */}
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-wit-text mb-2">Settings</h1>
-            <p className="text-wit-muted">Configure your dashboard settings</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-wit-text mb-1 md:mb-2">Settings</h1>
+            <p className="text-sm md:text-base text-wit-muted">Configure your dashboard settings</p>
           </div>
 
           {/* Theme Toggle Card */}
