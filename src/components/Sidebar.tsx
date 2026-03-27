@@ -64,7 +64,7 @@ export default function Sidebar() {
 
       {/* Sidebar - Always show on desktop, slide in on mobile */}
       <aside
-        className={`fixed left-0 top-0 h-screen bg-wit-darker border-r border-wit-border z-50 transition-all duration-300 transform ${
+        className={`fixed left-0 top-0 h-screen mac-sidebar z-50 transition-all duration-300 transform ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         } md:translate-x-0 ${
           collapsed ? 'w-20' : 'w-72'
