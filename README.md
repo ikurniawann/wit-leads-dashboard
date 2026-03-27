@@ -1,387 +1,381 @@
-# WIT Leads Dashboard 🚀
+# WIT Leads Dashboard
 
-Dashboard monitoring dan manajemen leads untuk **PT Wahana Informasi dan Teknologi (WIT)**
+**PT Wahana Informasi dan Teknologi - Leads & Pipeline Management System**
 
-![Dashboard Preview](./preview.png)
+![Version](https://img.shields.io/badge/version-1.0.0-red)
+![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)
+![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?logo=supabase)
+![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?logo=vercel)
 
 ---
 
-## ✨ Features
+## 🚀 Quick Start
 
-### 📊 Dashboard Overview
-- **Real-time Statistics**: Total leads, leads aktif, won, lost
-- **Pipeline Value**: Total nilai pipeline dalam Rupiah
-- **Quick Actions**: Akses cepat ke Leads, Clients, Employees
-- **Recent Leads**: 10 leads terbaru dengan status update
+### **Live Dashboard**
+🔗 **URL:** https://wit-leads-dashboard.vercel.app
 
-### 🎯 Leads Management
-- **List Views**: Tabel leads dengan search & filter
-- **Status Filters**: NEW, APPROVED, IN_PROGRESS, DONE, CANCELLED
-- **Search**: Cari berdasarkan company, project, client, atau PIC
-- **CRUD Operations**: Create, Read, Update, Delete leads
-- **Actions**: View details, Edit, Delete
+### **Access**
+- **No login required** (public dashboard)
+- **Direct access** to all features
 
-### 👥 Client Management
-- **Client Database**: Daftar semua clients
-- **Client Details**: Informasi kontak, industry, notes
-- **Project History**: Semua project per client
+---
 
-### 📋 Employee Management
-- **Employee Directory**: Data kepegawaian WIT
-- **PIC Assignment**: Assign PIC ke leads
-- **Department & Position**: Organizational structure
+## 📋 Features
 
-### 🎨 Design Features
-- **Dark Theme**: Modern dark mode dengan WIT branding (Merah-Hitam)
-- **Responsive**: Desktop, tablet, dan mobile friendly
-- **Glass Morphism**: Glass effect cards dan panels
-- **Smooth Animations**: Fade-in, hover effects, transitions
-- **Custom Scrollbar**: Styled scrollbar matching theme
+### **Dashboard (Phase 1)**
+- 📊 **Real-time Stats Cards** (Revenue, Win Rate, Leads, Clients)
+- 📈 **Pipeline Chart** (Revenue & Leads per month)
+- 🎯 **Win Rate Chart** (Pie chart + conversion stats)
+- 📑 **Leads Table** with CRUD operations
+- ➕ **Add/Edit/Delete** leads with modal forms
+- 🔍 **Search & Filter** by status, date, keyword
+
+### **Clients Management (Phase 2)**
+- 👥 **Client Database** with company info
+- 🏢 **Contact Person** details
+- 📧 **Email, Phone, Website** tracking
+- 🏷️ **Tags & Notes** support
+- ✅ **Active/Inactive** status
+
+### **Employees Management (Phase 2)**
+- 👔 **Employee Directory**
+- 📊 **Position & Department** tracking
+- 📅 **Join Date** management
+- ✅ **Active/Inactive/Probation** status
+- 🔍 **Search** by name, email, position
+
+### **Analytics (Phase 3)**
+- 💰 **Revenue by PIC** (Bar chart)
+- 📈 **Monthly Trend** (Area chart with Revenue, Leads, Won)
+- 🎯 **Performance Insights** (Top performer, Best conversion, Pipeline health)
+- 📊 **6 Key Metrics** cards
+
+### **Reports (Phase 3)**
+- 📤 **Export to Excel** (.xlsx format)
+- 📄 **Export to PDF** (with WIT branding)
+- 📋 **Pre-built Reports** (Leads, Clients, Employees)
+- 🔄 **Bulk Export** functionality
+
+### **Settings (Phase 4)**
+- 👤 **Profile Settings** (Avatar upload, personal info)
+- 🎨 **App Settings** (Theme, color, notifications)
+- 🌍 **Regional** (Language, timezone, date/currency format)
+- 💾 **Database** (Supabase connection, tables, API keys)
+- 🔧 **Data Management** (Backup, restore, export)
 
 ---
 
 ## 🛠️ Tech Stack
 
 | Layer | Technology |
-|-------|-----------|
-| **Framework** | Next.js 14 (App Router) |
+|-------|------------|
+| **Frontend** | Next.js 14 (App Router) |
 | **Language** | TypeScript |
 | **Styling** | Tailwind CSS |
 | **Backend** | Supabase (PostgreSQL) |
+| **Charts** | Recharts |
+| **Export** | xlsx, jspdf, jspdf-autotable |
 | **Icons** | Lucide React |
-| **Deployment** | Vercel |
+| **Hosting** | Vercel |
 
 ---
 
-## 📦 Installation
+## 📦 Installation (Local Development)
 
-### 1. Clone Repository
+### **Prerequisites**
+- Node.js 18+ 
+- npm or yarn
+- Supabase account
 
+### **Steps**
+
+1. **Clone Repository**
 ```bash
-cd /home/ubuntu/.openclaw/workspace/wit-dashboard
+git clone https://github.com/ikurniawann/wit-leads-dashboard.git
+cd wit-leads-dashboard
 ```
 
-### 2. Install Dependencies
-
+2. **Install Dependencies**
 ```bash
 npm install
 ```
 
-### 3. Setup Environment Variables
-
-Copy `.env.local.example` to `.env.local`:
-
+3. **Setup Environment Variables**
 ```bash
 cp .env.local.example .env.local
 ```
 
-Edit `.env.local` dengan Supabase credentials kamu:
-
+Edit `.env.local`:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://nmcegwmrzewwgqxgbspi.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
 ```
 
-**⚠️ PENTING:** Ganti `your-anon-key-here` dengan anon key dari Supabase project kamu!
-
-### 4. Run Development Server
-
+4. **Run Development Server**
 ```bash
 npm run dev
 ```
 
-Buka [http://localhost:3000](http://localhost:3000) di browser.
+5. **Open Browser**
+```
+http://localhost:3000
+```
 
 ---
 
-## 🚀 Deployment to Vercel
+## 🗄️ Database Schema
 
-### Option 1: Deploy via Vercel CLI
+### **Tables**
 
-```bash
-# Install Vercel CLI
-npm install -g vercel
+| Table | Description | Rows |
+|-------|-------------|------|
+| `quotations` | Leads & quotations | 14 |
+| `clients` | Client database | 4 |
+| `employees` | Employee directory | 0 (seed pending) |
+| `followup_logs` | Follow-up history | 0 |
+| `lead_status` | Status master data | 5 |
 
-# Login to Vercel
-vercel login
+### **Seed Data**
 
-# Deploy
-vercel
-```
+To populate employees table:
 
-### Option 2: Deploy via GitHub
-
-1. **Push ke GitHub:**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git remote add origin https://github.com/yourusername/wit-dashboard.git
-   git push -u origin main
+1. **Open Supabase SQL Editor**
+   ```
+   https://nmcegwmrzewwgqxgbspi.supabase.co/sql
    ```
 
-2. **Connect to Vercel:**
-   - Buka [vercel.com](https://vercel.com)
-   - Click "New Project"
-   - Import dari GitHub repository
-   - Set environment variables:
-     - `NEXT_PUBLIC_SUPABASE_URL`
-     - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - Click "Deploy"
-
-3. **Production Deploy:**
+2. **Run Seed Script**
    ```bash
-   vercel --prod
+   # Copy contents from wit/seed-employees.sql
+   # Paste and run in SQL Editor
+   ```
+
+3. **Verify**
+   ```sql
+   SELECT COUNT(*) FROM employees;
+   -- Should return ~35 rows
    ```
 
 ---
 
-## 📊 Database Schema
-
-Dashboard ini menggunakan Supabase database dengan tables berikut:
-
-### quotations (Leads)
-```sql
-CREATE TABLE quotations (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  client_id UUID REFERENCES clients(client_id),
-  company_name TEXT NOT NULL,
-  project_name TEXT NOT NULL,
-  project_description TEXT,
-  client_name TEXT,
-  pic_employee_id TEXT,
-  pic_excel_name TEXT,
-  status_id TEXT NOT NULL,
-  currency TEXT DEFAULT 'IDR',
-  unit_value DECIMAL,
-  grand_total DECIMAL,
-  tags TEXT[],
-  internal_notes TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
-
-### clients
-```sql
-CREATE TABLE clients (
-  client_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  company_name TEXT NOT NULL,
-  industry TEXT,
-  client_name TEXT,
-  email TEXT,
-  phone TEXT,
-  tags TEXT[],
-  notes TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
-
-### employees
-```sql
-CREATE TABLE employees (
-  employee_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  employee_name TEXT NOT NULL,
-  email TEXT,
-  phone TEXT,
-  position TEXT,
-  department TEXT,
-  join_date DATE,
-  status TEXT DEFAULT 'active',
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
-
----
-
-## 🎨 Customization
-
-### Change Branding Colors
-
-Edit `tailwind.config.js`:
-
-```javascript
-colors: {
-  wit: {
-    red: '#c00000',        // Ganti dengan warna brand kamu
-    dark: '#0a0a0a',
-    darker: '#050505',
-    card: '#111111',
-    border: '#222222',
-    text: '#ffffff',
-    muted: '#888888',
-  }
-}
-```
-
-### Add New Pages
-
-1. Buat file baru di `src/app/[page-name]/page.tsx`
-2. Import komponen yang dibutuhkan
-3. Add navigation di `src/components/Header.tsx`
-
-### Add New Features
-
-1. **Modal Forms**: Gunakan library seperti `@headlessui/react`
-2. **Charts**: Install `recharts` atau `chart.js`
-3. **Export**: Tambahkan library `xlsx` untuk Excel export
-4. **PDF**: Gunakan `@react-pdf/renderer` untuk PDF generation
-
----
-
-## 🔧 Development
-
-### Project Structure
+## 📁 Project Structure
 
 ```
 wit-dashboard/
 ├── src/
-│   ├── app/                # Next.js App Router pages
-│   │   ├── page.tsx        # Dashboard homepage
-│   │   ├── leads/          # Leads management page
-│   │   ├── clients/        # Clients management page
-│   │   ├── employees/      # Employees management page
-│   │   └── settings/       # Settings page
-│   ├── components/         # Reusable React components
-│   │   ├── Header.tsx      # Top navigation
-│   │   ├── StatsCards.tsx  # Statistics cards
-│   │   ├── LeadsTable.tsx  # Leads data table
-│   │   └── ...
-│   ├── lib/                # Utilities and API clients
-│   │   └── supabase.ts     # Supabase client & API
-│   └── styles/             # Global styles
-│       └── globals.css     # Tailwind + custom CSS
-├── public/                 # Static assets
-├── .env.local              # Environment variables
-├── next.config.js          # Next.js configuration
-├── tailwind.config.js      # Tailwind CSS configuration
-└── package.json            # Dependencies
+│   ├── app/                    # Next.js App Router
+│   │   ├── page.tsx           # Dashboard (Home)
+│   │   ├── leads/             # Leads page
+│   │   ├── clients/           # Clients page
+│   │   ├── employees/         # Employees page
+│   │   ├── analytics/         # Analytics page
+│   │   ├── reports/           # Reports page
+│   │   └── settings/          # Settings pages
+│   │       ├── page.tsx       # Main settings
+│   │       ├── profile/       # Profile settings
+│   │       ├── app/           # App settings
+│   │       └── database/      # Database settings
+│   ├── components/            # React components
+│   │   ├── Header.tsx
+│   │   ├── Sidebar.tsx
+│   │   ├── StatsCards.tsx
+│   │   ├── LeadsTable.tsx
+│   │   ├── dashboard/         # Dashboard charts
+│   │   ├── analytics/         # Analytics charts
+│   │   ├── leads/             # Lead modals
+│   │   ├── clients/           # Client modals
+│   │   ├── employees/         # Employee modals
+│   │   └── shared/            # Shared modals
+│   ├── lib/                   # Utilities & API
+│   │   ├── api/               # API functions
+│   │   │   ├── leads.ts
+│   │   │   ├── clients.ts
+│   │   │   └── employees.ts
+│   │   ├── utils/             # Export utilities
+│   │   │   ├── export-excel.ts
+│   │   │   └── export-pdf.ts
+│   │   └── supabase.ts        # Supabase client
+│   └── styles/                # Global styles
+│       └── globals.css
+├── wit/                       # WIT documentation
+│   ├── seed-employees.sql     # Employee seed data
+│   └── [other WIT files]
+├── .env.local.example         # Environment template
+├── package.json
+├── tailwind.config.js
+├── tsconfig.json
+└── README.md
 ```
 
-### Available Scripts
+---
 
+## 🎨 Design System
+
+### **Colors**
+```css
+--wit-red: #c00000      /* Primary brand color */
+--wit-dark: #0a0a0a     /* Dark background */
+--wit-darker: #050505   /* Darker background */
+--wit-card: #111111     /* Card background */
+--wit-border: #222222   /* Border color */
+--wit-text: #ffffff     /* Text color */
+--wit-muted: #888888    /* Muted text */
+```
+
+### **Components**
+- **Glass cards** with backdrop blur
+- **Red accent** (#c00000) for branding
+- **Dark theme** optimized
+- **Responsive** design (mobile-friendly)
+
+---
+
+## 🚀 Deployment
+
+### **Production (Vercel)**
+
+1. **Push to GitHub**
+```bash
+git add .
+git commit -m "Your message"
+git push origin main
+```
+
+2. **Auto-deploy**
+- Vercel automatically deploys on push to `main`
+- Check: https://vercel.com/ikurniawanns-projects/wit-leads-dashboard
+
+3. **Environment Variables**
+Ensure these are set in Vercel:
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
+### **Build Commands**
 ```bash
 # Development
-npm run dev          # Start dev server (http://localhost:3000)
+npm run dev
 
-# Production
-npm run build        # Build for production
-npm run start        # Start production server
+# Production build
+npm run build
 
-# Linting
-npm run lint         # Run ESLint
+# Start production server
+npm start
+
+# Lint
+npm run lint
 ```
 
 ---
 
-## 📱 Screenshots
+## 📊 Usage Guide
 
-### Dashboard Overview
-![Dashboard](./screenshots/dashboard.png)
+### **Adding a Lead**
+1. Go to **Dashboard**
+2. Click **"Add Lead"** button
+3. Fill in:
+   - Company name
+   - Project name
+   - Client name
+   - PIC (Person In Charge)
+   - Status (NEW, APPROVED, IN_PROGRESS, DONE, CANCELLED)
+   - Value (IDR)
+   - Probability (%)
+4. Click **"Create Lead"**
 
-### Leads Management
-![Leads](./screenshots/leads.png)
+### **Exporting Data**
+1. Go to **Reports** page
+2. Choose data type (Leads, Clients, Employees)
+3. Click **"Export Excel"** or **"Export PDF"**
+4. File downloads automatically
 
-### Dark Theme with WIT Branding
-![Theme](./screenshots/theme.png)
+### **Managing Employees**
+1. Go to **Employees** page
+2. Click **"Add Employee"**
+3. Fill in:
+   - Full name
+   - Email, phone
+   - Position, department
+   - Join date
+   - Status
+4. Click **"Create Employee"**
 
 ---
 
-## 🔐 Security
+## 🔧 Maintenance
 
-### Row Level Security (RLS)
+### **Common Tasks**
 
-Pastikan RLS enabled di Supabase tables:
-
+**1. Add New Employee**
 ```sql
--- Enable RLS
-ALTER TABLE quotations ENABLE ROW LEVEL SECURITY;
-ALTER TABLE clients ENABLE ROW LEVEL SECURITY;
-ALTER TABLE employees ENABLE ROW LEVEL SECURITY;
-
--- Policy: Authenticated users can read all
-CREATE POLICY "Allow authenticated read"
-  ON quotations FOR SELECT
-  TO authenticated
-  USING (true);
-
--- Policy: Authenticated users can insert
-CREATE POLICY "Allow authenticated insert"
-  ON quotations FOR INSERT
-  TO authenticated
-  WITH CHECK (true);
-
--- Policy: Authenticated users can update
-CREATE POLICY "Allow authenticated update"
-  ON quotations FOR UPDATE
-  TO authenticated
-  USING (true);
-
--- Policy: Authenticated users can delete
-CREATE POLICY "Allow authenticated delete"
-  ON quotations FOR DELETE
-  TO authenticated
-  USING (true);
+INSERT INTO employees (employee_name, email, position, department, status)
+VALUES ('Name', 'email@wit.com', 'Position', 'Department', 'active');
 ```
 
-### Environment Variables
-
-**JANGAN commit `.env.local` ke Git!**
-
-File `.env.local` sudah ada di `.gitignore`. Gunakan `.env.local.example` sebagai template.
-
----
-
-## 🐛 Troubleshooting
-
-### Error: Missing Supabase environment variables
-
-**Solusi:** Pastikan `.env.local` sudah dibuat dan berisi:
-```env
-NEXT_PUBLIC_SUPABASE_URL=your-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-key
+**2. Update Lead Status**
+```sql
+UPDATE quotations
+SET status_id = 'DONE', value = 500000000
+WHERE quotation_id = 'LEAD-202603-001';
 ```
 
-### Error: Table "quotations" does not exist
+**3. Backup Data**
+- Use **Settings → Database → Download Backup**
+- Or export via **Reports** page
 
-**Solusi:** Pastikan tables sudah dibuat di Supabase. Jalankan migration SQL di Supabase SQL Editor.
+### **Troubleshooting**
 
-### Build fails on Vercel
+**Build Error: Module not found**
+```bash
+# Clear cache
+rm -rf .next
+npm run build
+```
 
-**Solusi:** 
-1. Check environment variables di Vercel dashboard
-2. Pastikan semua variables ada di "Settings > Environment Variables"
-3. Redeploy setelah add variables
+**Runtime Error: toLowerCase undefined**
+- Check for null/undefined values in search filters
+- Add optional chaining: `?.toLowerCase()`
 
----
-
-## 📝 License
-
-This project is proprietary software for PT Wahana Informasi dan Teknologi.
-
----
-
-## 👨‍ Developer
-
-**Built for WIT by AI Assistant**
-
-- **Design Reference**: Pinx VueJS Admin Template
-- **Adaptation**: Dark theme with WIT branding (Merah-Hitam)
-- **Integration**: Supabase backend
-- **Deployment**: Vercel
+**Supabase Connection Failed**
+- Verify environment variables
+- Check Supabase project status
+- Ensure API key is valid
 
 ---
 
-## 🆘 Support
+## 📝 Changelog
 
-Untuk pertanyaan atau issue:
-1. Check dokumentasi ini
-2. Lihat console browser untuk error messages
-3. Check Supabase dashboard untuk database issues
-4. Contact: Ilham Kurniawan (Admin)
+### **v1.0.0** (March 27, 2026)
+- ✅ **Phase 1:** Dashboard, Leads CRUD, Stats, Charts
+- ✅ **Phase 2:** Clients CRUD, Employees CRUD
+- ✅ **Phase 3:** Analytics, Reports, Export (Excel/PDF)
+- ✅ **Phase 4:** Settings (Profile, App, Database)
+- ✅ **Total:** 11 pages, 4,000+ lines of code
 
 ---
 
-**Last Updated:** March 27, 2026
+## 👥 Team
+
+**Developed for:** PT Wahana Informasi dan Teknologi (WIT)  
+**Developer:** OpenClaw AI Assistant  
+**Project Lead:** Ilham Kurniawan (Managing Director)
+
+---
+
+## 📞 Support
+
+**Issues:** Create GitHub issue  
+**Docs:** https://docs.openclaw.ai  
+**Community:** https://discord.com/invite/clawd
+
+---
+
+## 📄 License
+
+**Proprietary** - PT Wahana Informasi dan Teknologi
+
+**Confidential** - Internal use only
+
+---
+
+**Last Updated:** March 27, 2026  
+**Version:** 1.0.0
