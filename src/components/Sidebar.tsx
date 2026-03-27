@@ -14,8 +14,11 @@ import {
   Menu,
   X,
   ChevronDown,
-  ChevronRight
+  ChevronRight,
+  Sun,
+  Moon
 } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -161,6 +164,9 @@ export default function Sidebar() {
 
           {/* Right side */}
           <div className="flex items-center space-x-4">
+            {/* Theme Toggle */}
+            <ThemeToggle />
+
             {/* User profile */}
             <div className="flex items-center space-x-3 pl-4 border-l border-wit-border">
               <div className="w-8 h-8 bg-wit-red rounded-full flex items-center justify-center overflow-hidden">

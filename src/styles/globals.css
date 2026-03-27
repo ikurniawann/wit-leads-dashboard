@@ -3,13 +3,34 @@
 @tailwind utilities;
 
 :root {
+  /* Shared colors */
   --wit-red: #c00000;
+  --wit-red-light: #ff1a1a;
+  --wit-red-dark: #990000;
+  
+  /* Dark mode (default) */
   --wit-dark: #0a0a0a;
   --wit-darker: #050505;
   --wit-card: #111111;
   --wit-border: #222222;
   --wit-text: #ffffff;
   --wit-muted: #888888;
+  --wit-shadow: rgba(0, 0, 0, 0.4);
+  --wit-glass-bg: rgba(17, 17, 17, 0.85);
+  --wit-glass-border: rgba(255, 255, 255, 0.08);
+}
+
+/* Light mode */
+[data-theme='light'] {
+  --wit-dark: #f5f5f7;
+  --wit-darker: #ffffff;
+  --wit-card: #ffffff;
+  --wit-border: #e0e0e0;
+  --wit-text: #1d1d1f;
+  --wit-muted: #6e6e73;
+  --wit-shadow: rgba(0, 0, 0, 0.1);
+  --wit-glass-bg: rgba(255, 255, 255, 0.85);
+  --wit-glass-border: rgba(0, 0, 0, 0.08);
 }
 
 * {
@@ -56,34 +77,34 @@ body {
 
 /* macOS Liquid Glass - Enhanced frosted glass effect */
 .liquid-glass {
-  background: rgba(17, 17, 17, 0.65);
+  background: var(--wit-glass-bg);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--wit-glass-border);
   box-shadow: 
-    0 8px 32px 0 rgba(0, 0, 0, 0.37),
+    0 8px 32px 0 var(--wit-shadow),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .liquid-glass:hover {
-  background: rgba(17, 17, 17, 0.75);
-  border-color: rgba(192, 0, 0, 0.3);
+  background: var(--wit-glass-bg);
+  border-color: var(--wit-red);
   box-shadow: 
-    0 12px 40px 0 rgba(192, 0, 0, 0.15),
+    0 12px 40px 0 var(--wit-shadow),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
 }
 
 /* macOS Card - Smooth elevated cards */
 .mac-card {
-  background: rgba(22, 22, 22, 0.8);
+  background: var(--wit-card);
   backdrop-filter: blur(24px) saturate(200%);
   -webkit-backdrop-filter: blur(24px) saturate(200%);
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--wit-glass-border);
   box-shadow: 
-    0 4px 24px 0 rgba(0, 0, 0, 0.4),
-    0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    0 4px 24px 0 var(--wit-shadow),
+    0 1px 2px 0 var(--wit-shadow);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -91,9 +112,9 @@ body {
 .mac-card:hover {
   transform: translateY(-4px);
   box-shadow: 
-    0 12px 40px 0 rgba(0, 0, 0, 0.5),
-    0 2px 4px 0 rgba(0, 0, 0, 0.3);
-  border-color: rgba(192, 0, 0, 0.4);
+    0 12px 40px 0 var(--wit-shadow),
+    0 2px 4px 0 var(--wit-shadow);
+  border-color: var(--wit-red);
 }
 
 /* macOS Button - Smooth glossy buttons */
@@ -129,12 +150,12 @@ body {
 
 /* macOS Input - Frosted glass inputs */
 .mac-input {
-  background: rgba(30, 30, 30, 0.6);
+  background: var(--wit-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--wit-border);
   border-radius: 12px;
-  color: white;
+  color: var(--wit-text);
   padding: 0.75rem 1rem;
   font-size: 0.875rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -142,33 +163,33 @@ body {
 
 .mac-input:focus {
   outline: none;
-  background: rgba(30, 30, 30, 0.8);
-  border-color: rgba(192, 0, 0, 0.5);
+  background: var(--wit-card);
+  border-color: var(--wit-red);
   box-shadow: 
-    0 0 0 3px rgba(192, 0, 0, 0.1),
+    0 0 0 3px rgba(192, 0, 0, 0.15),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
 }
 
 .mac-input::placeholder {
-  color: rgba(136, 136, 136, 0.8);
+  color: var(--wit-muted);
 }
 
 /* macOS Sidebar - Enhanced frosted sidebar */
 .mac-sidebar {
-  background: rgba(17, 17, 17, 0.85);
+  background: var(--wit-glass-bg);
   backdrop-filter: blur(24px) saturate(200%);
   -webkit-backdrop-filter: blur(24px) saturate(200%);
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 4px 0 24px 0 rgba(0, 0, 0, 0.3);
+  border-right: 1px solid var(--wit-glass-border);
+  box-shadow: 4px 0 24px 0 var(--wit-shadow);
 }
 
 /* macOS Header - Floating header */
 .mac-header {
-  background: rgba(17, 17, 17, 0.75);
+  background: var(--wit-glass-bg);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--wit-glass-border);
+  box-shadow: 0 4px 24px 0 var(--wit-shadow);
 }
 
 /* Smooth scroll for macOS feel */
