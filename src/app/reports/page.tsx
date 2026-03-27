@@ -1,6 +1,6 @@
 'use client';
 
-import Sidebar from '@/components/Sidebar';
+import Sidebar from '../../components/Sidebar';
 import { FileText, Download, Calendar, TrendingUp } from 'lucide-react';
 
 export default function ReportsPage() {

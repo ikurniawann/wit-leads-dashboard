@@ -1,6 +1,6 @@
 'use client';
 
-import Sidebar from '@/components/Sidebar';
+import Sidebar from '../../components/Sidebar';
 import { Settings, User, Database, Bell, Shield, Palette } from 'lucide-react';
 
 export default function SettingsPage() {

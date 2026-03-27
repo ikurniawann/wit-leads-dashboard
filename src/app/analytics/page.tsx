@@ -1,6 +1,6 @@
 'use client';
 
-import Sidebar from '@/components/Sidebar';
+import Sidebar from '../../components/Sidebar';
 import { BarChart3, TrendingUp, DollarSign, Users } from 'lucide-react';
 
 export default function AnalyticsPage() {
