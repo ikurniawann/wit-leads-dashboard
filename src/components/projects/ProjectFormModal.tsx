@@ -242,17 +242,17 @@ export default function ProjectFormModal({
               </select>
             </div>
 
-            {/* Project Manager */}
+            {/* PIC Internal */}
             <div>
               <label className="block text-sm font-medium text-wit-text mb-2">
-                PM (Project Manager)
+                PIC Internal
               </label>
               <select
                 value={formData.project_manager}
                 onChange={(e) => setFormData({ ...formData, project_manager: e.target.value })}
                 className="input-dark w-full"
               >
-                <option value="">Select PM</option>
+                <option value="">Select PIC Internal</option>
                 {employees.map(emp => (
                   <option key={emp.employee_id} value={emp.employee_id}>
                     {emp.employee_name}
