@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { leadsApi } from '@/lib/api/leads';
+import { leadsApi } from '../../lib/api/leads';
 
 interface ChartData {
   month: string;

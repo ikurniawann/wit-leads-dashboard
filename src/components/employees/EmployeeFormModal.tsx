@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Modal from '../ui/Modal';
-import { Employee } from '@/lib/api/employees';
+import { Employee } from '../../lib/api/employees';
 
 interface EmployeeFormModalProps {
   isOpen: boolean;

@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import Modal from '../ui/Modal';
-import { Lead } from '@/lib/api/leads';
-import { clientsApi, Client } from '@/lib/api/clients';
-import { employeesApi, Employee } from '@/lib/api/employees';
+import { Lead } from '../../lib/api/leads';
+import { clientsApi, Client } from '../../lib/api/clients';
+import { employeesApi, Employee } from '../../lib/api/employees';
 
 interface LeadFormModalProps {
   isOpen: boolean;

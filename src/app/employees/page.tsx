@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Sidebar from '@/components/Sidebar';
-import EmployeeFormModal from '@/components/employees/EmployeeFormModal';
-import DeleteConfirmModal from '@/components/shared/DeleteConfirmModal';
-import { employeesApi, Employee } from '@/lib/api/employees';
+import Sidebar from '../../components/Sidebar';
+import EmployeeFormModal from '../../components/employees/EmployeeFormModal';
+import DeleteConfirmModal from '../../components/shared/DeleteConfirmModal';
+import { employeesApi, Employee } from '../../lib/api/employees';
 import { Plus, Search, UserCheck, Mail, Phone, Briefcase } from 'lucide-react';
 
 export default function EmployeesPage() {

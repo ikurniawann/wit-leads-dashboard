@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Sidebar from '@/components/Sidebar';
-import ClientFormModal from '@/components/clients/ClientFormModal';
-import DeleteConfirmModal from '@/components/shared/DeleteConfirmModal';
-import { clientsApi, Client } from '@/lib/api/clients';
+import Sidebar from '../../components/Sidebar';
+import ClientFormModal from '../../components/clients/ClientFormModal';
+import DeleteConfirmModal from '../../components/shared/DeleteConfirmModal';
+import { clientsApi, Client } from '../../lib/api/clients';
 import { Plus, Search, Users, Building2, Mail, Phone } from 'lucide-react';
 
 export default function ClientsPage() {

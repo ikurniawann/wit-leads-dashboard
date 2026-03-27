@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
-import { leadsApi } from '@/lib/api/leads';
+import { leadsApi } from '../../lib/api/leads';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 
 interface WinRateData {

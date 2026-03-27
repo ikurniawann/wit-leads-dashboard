@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Modal from '../ui/Modal';
-import { Client } from '@/lib/api/clients';
+import { Client } from '../../lib/api/clients';
 
 interface ClientFormModalProps {
   isOpen: boolean;

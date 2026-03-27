@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Sidebar from '@/components/Sidebar';
+import Sidebar from '../../components/Sidebar';
 
 export default function LeadsPage() {
   const router = useRouter();
