@@ -43,7 +43,21 @@ export default function Sidebar() {
     },
     { href: '/vendors', label: 'Vendors', icon: Truck },
     { href: '/clients', label: 'Clients', icon: Users },
-    { href: '/employees', label: 'Employees', icon: UserCheck },
+    { 
+      href: '/hris', 
+      label: 'HRIS', 
+      icon: UserCheck,
+      submenu: [
+        { href: '/hris/attendance', label: 'Attendance', disabled: true },
+        { href: '/hris/leave', label: 'Leave Management', disabled: true },
+        { href: '/hris/performance', label: 'Performance Review', disabled: true },
+        { href: '/hris/payroll', label: 'Payroll', disabled: true },
+        { href: '/hris/employees', label: 'Employee Directory', disabled: true },
+        { href: '/hris/requests', label: 'My Requests', disabled: true },
+        { href: '/hris/reports', label: 'HR Reports', disabled: true },
+        { href: '/hris/settings', label: 'HR Settings', disabled: true },
+      ]
+    },
     { href: '/analytics', label: 'Analytics', icon: BarChart3 },
     { href: '/reports', label: 'Reports', icon: FileText },
   ];
@@ -157,6 +171,21 @@ export default function Sidebar() {
                   <div className="ml-8 mt-1 space-y-1">
                     {item.submenu.map((subItem) => {
                       const isSubActive = pathname === subItem.href;
+                      const isDisabled = subItem.disabled;
+                      
+                      if (isDisabled) {
+                        return (
+                          <div
+                            key={subItem.href}
+                            className="block px-3 py-2 rounded-lg text-sm text-wit-muted/50 cursor-not-allowed flex items-center space-x-2"
+                            title="Coming Soon"
+                          >
+                            <span>{subItem.label}</span>
+                            <span className="text-xs">🔒</span>
+                          </div>
+                        );
+                      }
+                      
                       return (
                         <Link
                           key={subItem.href}
