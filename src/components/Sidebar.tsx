@@ -64,9 +64,9 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full border-r border-wit-border z-[95] transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 h-full border-r z-[95] transition-all duration-300 ease-in-out ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
-        } md:translate-x-0 md:block w-[280px] md:w-72 bg-wit-darker [data-theme='light']&:bg-white`}
+        } md:translate-x-0 md:block w-[280px] md:w-72 theme-sidebar`}
       >
         {/* Logo */}
         <div className="h-20 flex items-center justify-between px-6 border-b border-wit-border">
@@ -75,7 +75,7 @@ export default function Sidebar() {
               <img src="/wit-logo.png" alt="WIT" className="w-8 h-8 object-contain" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-white [data-theme='light']&:text-wit-text">WIT.ID</h1>
+              <h1 className="text-lg font-bold theme-sidebar-text">WIT.ID</h1>
               <p className="text-xs text-wit-muted">Leads Dashboard</p>
             </div>
           </div>
