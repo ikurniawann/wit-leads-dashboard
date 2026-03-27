@@ -167,7 +167,7 @@ export default function LeadsTable({ leads, onAdd, onEdit, onDelete, onView }: L
               </tr>
             ) : (
               filteredLeads.map((lead) => (
-                <tr key={lead.id} className="hover:bg-wit-red/5 transition-colors">
+                <tr key={lead.quotation_id} className="hover:bg-wit-red/5 transition-colors">
                   <td>
                     <div className="font-medium text-wit-text">{lead.company_name}</div>
                   </td>
