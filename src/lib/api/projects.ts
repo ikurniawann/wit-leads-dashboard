@@ -74,32 +74,14 @@ export const projectsApi = {
     const { data: projects, error } = await supabase
       .from('projects')
       .select(`
-        project_id,
-        quotation_id,
-        project_name,
-        description,
-        category_id,
-        status,
-        start_date,
-        end_date,
-        estimated_hours,
-        actual_hours,
-        budget,
-        actual_cost,
-        client_id,
-        project_manager,
-        is_internal,
-        priority,
-        completion_percent,
-        created_at,
-        updated_at,
-        project_categories!inner (
+        *,
+        project_categories (
           category_name
         ),
-        clients!left (
+        clients (
           company_name
         ),
-        employees!left (
+        employees (
           employee_name
         )
       `)
@@ -109,28 +91,10 @@ export const projectsApi = {
 
     // Flatten nested data
     return projects.map(p => ({
-      project_id: p.project_id,
-      quotation_id: p.quotation_id,
-      project_name: p.project_name,
-      description: p.description,
-      category_id: p.category_id,
-      category_name: p.project_categories?.category_name,
-      status: p.status,
-      start_date: p.start_date,
-      end_date: p.end_date,
-      estimated_hours: p.estimated_hours,
-      actual_hours: p.actual_hours,
-      budget: p.budget,
-      actual_cost: p.actual_cost,
-      client_id: p.client_id,
-      client_name: p.clients?.company_name,
-      project_manager: p.project_manager,
-      project_manager_name: p.employees?.employee_name,
-      is_internal: p.is_internal,
-      priority: p.priority,
-      completion_percent: p.completion_percent,
-      created_at: p.created_at,
-      updated_at: p.updated_at,
+      ...p,
+      category_name: (p.project_categories as any)?.[0]?.category_name,
+      client_name: (p.clients as any)?.[0]?.company_name,
+      project_manager_name: (p.employees as any)?.[0]?.employee_name,
     })) as Project[];
   },
 
