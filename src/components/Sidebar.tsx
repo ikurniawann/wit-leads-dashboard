@@ -56,19 +56,19 @@ export default function Sidebar() {
       {/* Overlay for mobile - Click to close */}
       {mobileOpen && (
         <div
-          className="md:hidden fixed inset-0 bg-black/60 z-40 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/70 z-40 backdrop-blur-sm md:hidden"
           onClick={() => setMobileOpen(false)}
           aria-hidden="true"
         />
       )}
 
-      {/* Sidebar - Always show on desktop, slide in on mobile */}
+      {/* Sidebar - Full width on mobile, normal width on desktop */}
       <aside
         className={`fixed left-0 top-0 h-screen mac-sidebar z-50 transition-all duration-300 transform ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         } md:translate-x-0 ${
           collapsed ? 'w-20' : 'w-72'
-        }`}
+        } md:w-72 w-[85vw] max-w-[320px]`}
       >
         {/* Logo */}
         <div className="h-20 flex items-center justify-between px-6 border-b border-wit-border">
