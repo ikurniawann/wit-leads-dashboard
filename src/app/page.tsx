@@ -100,17 +100,17 @@ export default function Dashboard() {
     <div className="min-h-screen bg-wit-darker">
       <Sidebar />
       
-      <main className="ml-72 pt-16 pb-12">
-        <div className="px-6">
-          {/* Page Header */}
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h1 className="text-3xl font-bold text-wit-text mb-2">Dashboard</h1>
-              <p className="text-wit-muted">Monitor dan kelola pipeline leads WIT</p>
+      <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
+        <div>
+          {/* Page Header - Mobile Responsive */}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <div className="flex-1">
+              <h1 className="text-2xl md:text-3xl font-bold text-wit-text mb-1 md:mb-2">Dashboard</h1>
+              <p className="text-sm md:text-base text-wit-muted">Monitor dan kelola pipeline leads WIT</p>
             </div>
             <button
               onClick={handleAddLead}
-              className="btn-primary flex items-center space-x-2"
+              className="btn-primary flex items-center justify-center space-x-2 w-full md:w-auto"
             >
               <Plus className="w-4 h-4" />
               <span>Tambah Lead</span>
