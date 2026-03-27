@@ -3,14 +3,17 @@
 import { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
 import KanbanBoard from '../../components/leads/KanbanBoard';
+import LeadsTable from '../../components/LeadsTable';
 import LeadFormModal from '../../components/leads/LeadFormModal';
 import LeadDetailModal from '../../components/leads/LeadDetailModal';
 import DeleteConfirmModal from '../../components/shared/DeleteConfirmModal';
 import { leadsApi, Lead } from '../../lib/api/leads';
+import { Table, Kanban } from 'lucide-react';
 
 export default function LeadsPage() {
   const [loading, setLoading] = useState(true);
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [viewMode, setViewMode] = useState<'table' | 'kanban'>('table');
   
   // Modal states
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -99,20 +102,58 @@ export default function LeadsPage() {
       <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
         <div>
           {/* Page Header - Mobile Responsive */}
-          <div className="mb-6">
-            <h1 className="text-2xl md:text-3xl font-bold text-wit-text mb-1 md:mb-2">Leads Pipeline</h1>
-            <p className="text-sm md:text-base text-wit-muted">Visualize and manage your sales pipeline</p>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <div className="flex-1">
+              <h1 className="text-2xl md:text-3xl font-bold text-wit-text mb-1 md:mb-2">Leads Pipeline</h1>
+              <p className="text-sm md:text-base text-wit-muted">Visualize and manage your sales pipeline</p>
+            </div>
+            
+            {/* View Toggle */}
+            <div className="flex items-center space-x-2 bg-wit-card border border-wit-border rounded-lg p-1">
+              <button
+                onClick={() => setViewMode('table')}
+                className={`flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                  viewMode === 'table'
+                    ? 'bg-wit-red text-white'
+                    : 'text-wit-muted hover:text-wit-text'
+                }`}
+              >
+                <Table className="w-4 h-4" />
+                <span className="hidden md:inline">Table</span>
+              </button>
+              <button
+                onClick={() => setViewMode('kanban')}
+                className={`flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                  viewMode === 'kanban'
+                    ? 'bg-wit-red text-white'
+                    : 'text-wit-muted hover:text-wit-text'
+                }`}
+              >
+                <Kanban className="w-4 h-4" />
+                <span className="hidden md:inline">Kanban</span>
+              </button>
+            </div>
           </div>
 
-          {/* Kanban Board */}
-          <KanbanBoard
-            leads={leads}
-            onAddLead={handleAddLead}
-            onEditLead={handleEditLead}
-            onDeleteLead={handleDeleteLead}
-            onViewLead={handleViewLead}
-            onStageChange={handleStageChange}
-          />
+          {/* View Content */}
+          {viewMode === 'table' ? (
+            <LeadsTable
+              leads={leads}
+              onAdd={handleAddLead}
+              onEdit={handleEditLead}
+              onDelete={handleDeleteLead}
+              onView={handleViewLead}
+            />
+          ) : (
+            <KanbanBoard
+              leads={leads}
+              onAddLead={handleAddLead}
+              onEditLead={handleEditLead}
+              onDeleteLead={handleDeleteLead}
+              onViewLead={handleViewLead}
+              onStageChange={handleStageChange}
+            />
+          )}
         </div>
       </main>
 
