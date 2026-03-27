@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Search, Filter, Plus, Edit2, Trash2, Eye } from 'lucide-react';
+import { Search, Filter, Plus, Edit2, Trash2, Eye, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { Lead } from '../lib/api/leads';
 
 // Utility functions
@@ -56,9 +56,25 @@ interface LeadsTableProps {
   onEdit: (lead: Lead) => void;
   onDelete: (lead: Lead) => void;
   onView: (lead: Lead) => void;
+  pageSize?: number;
+  onPageChange?: (page: number) => void;
+  onPageSizeChange?: (size: number) => void;
+  currentPage?: number;
+  totalLeads?: number;
 }
 
-export default function LeadsTable({ leads, onAdd, onEdit, onDelete, onView }: LeadsTableProps) {
+export default function LeadsTable({
+  leads,
+  onAdd,
+  onEdit,
+  onDelete,
+  onView,
+  pageSize = 20,
+  onPageChange,
+  onPageSizeChange,
+  currentPage = 1,
+  totalLeads,
+}: LeadsTableProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [dateFilter, setDateFilter] = useState<string>('all');
@@ -82,61 +98,66 @@ export default function LeadsTable({ leads, onAdd, onEdit, onDelete, onView }: L
     { value: 'year', label: 'This Year' },
   ];
 
+  // Filter leads
   const filteredLeads = leads.filter((lead) => {
-    const matchesSearch = 
+    // Search filter
+    const searchMatch =
       lead.company_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       lead.project_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       lead.client_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       lead.pic_excel_name?.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesStatus = statusFilter === 'all' || lead.status_id === statusFilter;
+    // Status filter
+    const statusMatch = statusFilter === 'all' || lead.status_id === statusFilter;
 
     // Date filter
-    let matchesDate = true;
+    let dateMatch = true;
     if (dateFilter !== 'all') {
       const leadDate = new Date(lead.created_at);
       const now = new Date();
       const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      
-      if (dateFilter === 'today') {
-        matchesDate = leadDate >= today;
-      } else if (dateFilter === 'week') {
-        const weekAgo = new Date(today);
-        weekAgo.setDate(weekAgo.getDate() - 7);
-        matchesDate = leadDate >= weekAgo;
-      } else if (dateFilter === 'month') {
-        const monthAgo = new Date(today);
-        monthAgo.setMonth(monthAgo.getMonth() - 1);
-        matchesDate = leadDate >= monthAgo;
-      } else if (dateFilter === 'year') {
-        const yearAgo = new Date(today);
-        yearAgo.setFullYear(yearAgo.getFullYear() - 1);
-        matchesDate = leadDate >= yearAgo;
+
+      switch (dateFilter) {
+        case 'today':
+          dateMatch = leadDate >= today;
+          break;
+        case 'week':
+          const weekAgo = new Date(today);
+          weekAgo.setDate(weekAgo.getDate() - 7);
+          dateMatch = leadDate >= weekAgo;
+          break;
+        case 'month':
+          dateMatch =
+            leadDate.getMonth() === now.getMonth() &&
+            leadDate.getFullYear() === now.getFullYear();
+          break;
+        case 'year':
+          dateMatch = leadDate.getFullYear() === now.getFullYear();
+          break;
       }
     }
 
-    return matchesSearch && matchesStatus && matchesDate;
+    return searchMatch && statusMatch && dateMatch;
   });
 
   // Sort leads
   const sortedLeads = [...filteredLeads].sort((a, b) => {
-    let aVal: any = a[sortColumn as keyof Lead];
-    let bVal: any = b[sortColumn as keyof Lead];
+    let aValue: any = a[sortColumn as keyof Lead];
+    let bValue: any = b[sortColumn as keyof Lead];
 
-    if (sortColumn === 'grand_total' || sortColumn === 'total_value') {
-      aVal = aVal || 0;
-      bVal = bVal || 0;
-    } else if (sortColumn === 'created_at' || sortColumn === 'updated_at') {
-      aVal = new Date(aVal).getTime();
-      bVal = new Date(bVal).getTime();
-    } else {
-      aVal = (aVal || '').toString().toLowerCase();
-      bVal = (bVal || '').toString().toLowerCase();
+    if (aValue === undefined) aValue = '';
+    if (bValue === undefined) bValue = '';
+
+    if (typeof aValue === 'string') {
+      aValue = aValue.toLowerCase();
+      bValue = bValue.toLowerCase();
     }
 
-    if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
-    if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
-    return 0;
+    if (sortDirection === 'asc') {
+      return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+    } else {
+      return aValue > bValue ? -1 : aValue < bValue ? 1 : 0;
+    }
   });
 
   const handleSort = (column: string) => {
@@ -155,6 +176,17 @@ export default function LeadsTable({ leads, onAdd, onEdit, onDelete, onView }: L
       <span className="ml-1 text-wit-red">↓</span>;
   };
 
+  // Pagination
+  const total = totalLeads || filteredLeads.length;
+  const totalPages = Math.ceil(total / pageSize);
+  const startItem = (currentPage - 1) * pageSize + 1;
+  const endItem = Math.min(currentPage * pageSize, total);
+
+  const handleFirstPage = () => onPageChange && onPageChange(1);
+  const handlePrevPage = () => onPageChange && onPageChange(currentPage - 1);
+  const handleNextPage = () => onPageChange && onPageChange(currentPage + 1);
+  const handleLastPage = () => onPageChange && onPageChange(totalPages);
+
   return (
     <div className="glass border border-wit-border rounded-xl overflow-hidden animate-fade-in">
       {/* Header */}
@@ -162,7 +194,9 @@ export default function LeadsTable({ leads, onAdd, onEdit, onDelete, onView }: L
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <h2 className="text-2xl font-bold text-wit-text mb-1">Daftar Leads</h2>
-            <p className="text-wit-muted text-sm">{filteredLeads.length} leads ditemukan</p>
+            <p className="text-wit-muted text-sm">
+              Showing {startItem}-{endItem} of {total} leads
+            </p>
           </div>
           <button
             onClick={onAdd}
@@ -328,6 +362,69 @@ export default function LeadsTable({ leads, onAdd, onEdit, onDelete, onView }: L
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagination */}
+      <div className="p-4 border-t border-wit-border bg-wit-card/50">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          {/* Page Size Selector */}
+          <div className="flex items-center space-x-2 text-sm text-wit-muted">
+            <span>Show:</span>
+            <select
+              value={pageSize}
+              onChange={(e) => onPageSizeChange && onPageSizeChange(Number(e.target.value))}
+              className="px-3 py-1.5 bg-wit-card border border-wit-border rounded-lg text-wit-text focus:outline-none focus:border-wit-red"
+            >
+              <option value={20}>20</option>
+              <option value={50}>50</option>
+              <option value={100}>100</option>
+              <option value={9999}>All</option>
+            </select>
+            <span>per page</span>
+          </div>
+
+          {/* Pagination Controls */}
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={handleFirstPage}
+              disabled={currentPage === 1}
+              className="p-2 text-wit-muted hover:text-wit-text disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              title="First Page"
+            >
+              <ChevronsLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+              className="p-2 text-wit-muted hover:text-wit-text disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              title="Previous Page"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+
+            <span className="px-4 py-2 text-sm text-wit-text">
+              Page <span className="font-semibold text-wit-red">{currentPage}</span> of{' '}
+              <span className="font-semibold text-wit-red">{totalPages || 1}</span>
+            </span>
+
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage >= totalPages}
+              className="p-2 text-wit-muted hover:text-wit-text disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              title="Next Page"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+            <button
+              onClick={handleLastPage}
+              disabled={currentPage >= totalPages}
+              className="p-2 text-wit-muted hover:text-wit-text disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              title="Last Page"
+            >
+              <ChevronsRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

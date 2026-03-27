@@ -14,6 +14,8 @@ export default function LeadsPage() {
   const [loading, setLoading] = useState(true);
   const [leads, setLeads] = useState<Lead[]>([]);
   const [viewMode, setViewMode] = useState<'table' | 'kanban'>('table');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
   
   // Modal states
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -76,11 +78,14 @@ export default function LeadsPage() {
 
   const handleStageChange = async (lead: Lead, newStage: string) => {
     try {
-      await leadsApi.update(lead.quotation_id, { status_id: newStage });
+      console.log('Updating stage:', lead.quotation_id, 'from', lead.status_id, 'to', newStage);
+      const updated = await leadsApi.update(lead.quotation_id, { status_id: newStage });
+      console.log('Stage updated successfully:', updated);
       loadLeads();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error updating stage:', error);
-      alert('Failed to update stage. Please try again.');
+      const errorMessage = error?.message || 'Unknown error';
+      alert(`Failed to update stage: ${errorMessage}\n\nPlease check:\n1. You're logged in\n2. You have permission to edit leads\n3. Supabase connection is working`);
     }
   };
 
@@ -143,6 +148,14 @@ export default function LeadsPage() {
               onEdit={handleEditLead}
               onDelete={handleDeleteLead}
               onView={handleViewLead}
+              currentPage={currentPage}
+              pageSize={pageSize}
+              totalLeads={leads.length}
+              onPageChange={setCurrentPage}
+              onPageSizeChange={(size) => {
+                setPageSize(size);
+                setCurrentPage(1); // Reset to first page when changing page size
+              }}
             />
           ) : (
             <KanbanBoard
