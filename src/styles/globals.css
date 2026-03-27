@@ -123,6 +123,31 @@ body {
   background: #e8e8ed;
 }
 
+/* Force all text to be dark in light mode */
+[data-theme='light'] {
+  --wit-text: #1a1a1a;
+  --wit-muted: #666666;
+}
+
+[data-theme='light'] .text-wit-text {
+  color: #1a1a1a !important;
+}
+
+[data-theme='light'] .text-wit-muted {
+  color: #666666 !important;
+}
+
+[data-theme='light'] .font-bold,
+[data-theme='light'] .font-semibold,
+[data-theme='light'] h1,
+[data-theme='light'] h2,
+[data-theme='light'] h3,
+[data-theme='light'] h4,
+[data-theme='light'] h5,
+[data-theme='light'] h6 {
+  color: #1a1a1a !important;
+}
+
 /* Theme-aware Cards - Lighter on hover */
 [data-theme='light'] .card-hover:hover {
   background: #ffffff;
