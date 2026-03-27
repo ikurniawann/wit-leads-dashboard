@@ -6,6 +6,9 @@ import { Lead } from '../../lib/api/leads';
 import { clientsApi, Client } from '../../lib/api/clients';
 import { employeesApi, Employee } from '../../lib/api/employees';
 
+// Helper to convert empty string to null for dates
+const sanitizeDate = (date: string) => date === '' ? null : date;
+
 interface LeadFormModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -136,14 +139,21 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
 
     try {
       // Import leadsApi dynamically to avoid circular dependency
-      const { leadsApi } = await import('@/lib/api/leads');
+      const { leadsApi } = await import('../../lib/api/leads');
+
+      // Fix empty dates - convert "" to null
+      const dataToSave = {
+        ...formData,
+        valid_until: sanitizeDate(formData.valid_until || ''),
+        follow_up_date: sanitizeDate(formData.follow_up_date || ''),
+      };
 
       if (lead && lead.quotation_id) {
         // Update existing lead
-        await leadsApi.update(lead.quotation_id, formData);
+        await leadsApi.update(lead.quotation_id, dataToSave);
       } else {
         // Create new lead
-        await leadsApi.create(formData);
+        await leadsApi.create(dataToSave);
       }
 
       onSuccess();

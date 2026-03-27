@@ -56,14 +56,20 @@ export default function EmployeeFormModal({ isOpen, onClose, employee, onSuccess
     setLoading(true);
 
     try {
-      const { employeesApi } = await import('@/lib/api/employees');
+      const { employeesApi } = await import('../../lib/api/employees');
+
+      // Fix empty date - convert "" to null
+      const dataToSave = {
+        ...formData,
+        join_date: formData.join_date === '' ? null : formData.join_date,
+      };
 
       if (employee && employee.employee_id) {
         // Update existing employee
-        await employeesApi.update(employee.employee_id, formData);
+        await employeesApi.update(employee.employee_id, dataToSave);
       } else {
         // Create new employee
-        await employeesApi.create(formData);
+        await employeesApi.create(dataToSave);
       }
 
       onSuccess();

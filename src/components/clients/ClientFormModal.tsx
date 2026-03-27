@@ -55,7 +55,7 @@ export default function ClientFormModal({ isOpen, onClose, client, onSuccess }: 
     setLoading(true);
 
     try {
-      const { clientsApi } = await import('@/lib/api/clients');
+      const { clientsApi } = await import('../../lib/api/clients');
 
       if (client && client.client_id) {
         // Update existing client
