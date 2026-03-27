@@ -74,6 +74,9 @@ export default function LeadDetailModal({
     CANCELLED: 'Cancelled',
   };
 
+  // Map status_id to status for display
+  const status = lead.status_id;
+
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6">
       {/* Overlay */}
@@ -96,8 +99,8 @@ export default function LeadDetailModal({
             </div>
           </div>
           <div className="flex items-center space-x-3">
-            <span className={`px-3 py-1 rounded-full text-sm font-medium border ${stageColors[lead.status] || stageColors.NEW}`}>
-              {stageLabels[lead.status] || lead.status}
+            <span className={`px-3 py-1 rounded-full text-sm font-medium border ${stageColors[status] || stageColors.NEW}`}>
+              {stageLabels[status] || status}
             </span>
             <button
               onClick={onClose}
@@ -170,38 +173,29 @@ export default function LeadDetailModal({
                         <User className="w-5 h-5 text-wit-muted mt-0.5" />
                         <div>
                           <p className="text-xs text-wit-muted mb-1">Contact Person</p>
-                          <p className="text-sm text-wit-text font-medium">{lead.contact_name || '-'}</p>
+                          <p className="text-sm text-wit-text font-medium">{lead.client_name || '-'}</p>
                         </div>
                       </div>
                       <div className="flex items-start space-x-3">
                         <Mail className="w-5 h-5 text-wit-muted mt-0.5" />
                         <div>
                           <p className="text-xs text-wit-muted mb-1">Email</p>
-                          <p className="text-sm text-wit-text font-medium">{lead.email || '-'}</p>
+                          <p className="text-sm text-wit-text font-medium">{lead.client_email || '-'}</p>
                         </div>
                       </div>
                       <div className="flex items-start space-x-3">
                         <Phone className="w-5 h-5 text-wit-muted mt-0.5" />
                         <div>
                           <p className="text-xs text-wit-muted mb-1">Phone</p>
-                          <p className="text-sm text-wit-text font-medium">{lead.phone || '-'}</p>
+                          <p className="text-sm text-wit-text font-medium">{lead.client_phone || '-'}</p>
                         </div>
                       </div>
-                      {lead.industry && (
+                      {lead.client_position && (
                         <div className="flex items-start space-x-3">
                           <Tag className="w-5 h-5 text-wit-muted mt-0.5" />
                           <div>
-                            <p className="text-xs text-wit-muted mb-1">Industry</p>
-                            <p className="text-sm text-wit-text font-medium">{lead.industry}</p>
-                          </div>
-                        </div>
-                      )}
-                      {lead.location && (
-                        <div className="flex items-start space-x-3">
-                          <MapPin className="w-5 h-5 text-wit-muted mt-0.5" />
-                          <div>
-                            <p className="text-xs text-wit-muted mb-1">Location</p>
-                            <p className="text-sm text-wit-text font-medium">{lead.location}</p>
+                            <p className="text-xs text-wit-muted mb-1">Position</p>
+                            <p className="text-sm text-wit-text font-medium">{lead.client_position}</p>
                           </div>
                         </div>
                       )}
@@ -218,7 +212,7 @@ export default function LeadDetailModal({
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <p className="text-xs text-wit-muted mb-1">Quotation Value</p>
-                      <p className="text-xl font-bold text-wit-text">{formatCurrency(Number(lead.quotation_value) || 0)}</p>
+                      <p className="text-xl font-bold text-wit-text">{formatCurrency(Number(lead.grand_total) || 0)}</p>
                     </div>
                     <div>
                       <p className="text-xs text-wit-muted mb-1">Created Date</p>
@@ -230,13 +224,13 @@ export default function LeadDetailModal({
                     </div>
                     <div>
                       <p className="text-xs text-wit-muted mb-1">PIC</p>
-                      <p className="text-sm text-wit-text font-medium">{lead.pic_name || 'Unassigned'}</p>
+                      <p className="text-sm text-wit-text font-medium">{lead.pic_employee_id ? `Employee ${lead.pic_employee_id}` : 'Unassigned'}</p>
                     </div>
                   </div>
-                  {lead.description && (
+                  {lead.project_description && (
                     <div className="mt-4 pt-4 border-t border-wit-border">
                       <p className="text-xs text-wit-muted mb-2">Description</p>
-                      <p className="text-sm text-wit-text">{lead.description}</p>
+                      <p className="text-sm text-wit-text">{lead.project_description}</p>
                     </div>
                   )}
                   {lead.tags && lead.tags.length > 0 && (
@@ -254,41 +248,13 @@ export default function LeadDetailModal({
                       </div>
                     </div>
                   )}
-                </div>
-
-                {/* Attachments */}
-                {lead.attachments && lead.attachments.length > 0 && (
-                  <div className="glass border border-wit-border rounded-xl p-6">
-                    <h3 className="text-lg font-bold text-wit-text mb-4 flex items-center">
-                      <Paperclip className="w-5 h-5 mr-2 text-wit-red" />
-                      Attachments
-                    </h3>
-                    <div className="space-y-2">
-                      {lead.attachments.map((attachment, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center justify-between p-3 bg-wit-card rounded-lg border border-wit-border"
-                        >
-                          <div className="flex items-center space-x-3">
-                            <FileText className="w-5 h-5 text-wit-muted" />
-                            <div>
-                              <p className="text-sm text-wit-text font-medium">{attachment.name}</p>
-                              <p className="text-xs text-wit-muted">{attachment.size}</p>
-                            </div>
-                          </div>
-                          <a
-                            href={attachment.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="px-3 py-1.5 bg-wit-red/10 text-wit-red text-sm rounded-lg hover:bg-wit-red/20 transition-all"
-                          >
-                            Download
-                          </a>
-                        </div>
-                      ))}
+                  {lead.internal_notes && (
+                    <div className="mt-4 pt-4 border-t border-wit-border">
+                      <p className="text-xs text-wit-muted mb-2">Internal Notes</p>
+                      <p className="text-sm text-wit-text">{lead.internal_notes}</p>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
 
               {/* Right Column - Actions & Quick Info */}
@@ -311,7 +277,7 @@ export default function LeadDetailModal({
                     {/* Stage Change Dropdown */}
                     <div className="relative">
                       <select
-                        value={lead.status}
+                        value={lead.status_id}
                         onChange={(e) => {
                           onStageChange(lead, e.target.value);
                           onClose();
