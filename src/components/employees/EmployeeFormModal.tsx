@@ -58,10 +58,10 @@ export default function EmployeeFormModal({ isOpen, onClose, employee, onSuccess
     try {
       const { employeesApi } = await import('../../lib/api/employees');
 
-      // Fix empty date - convert "" to null
+      // Fix empty date - convert "" or undefined to null
       const dataToSave = {
         ...formData,
-        join_date: formData.join_date === '' ? null : formData.join_date,
+        join_date: !formData.join_date || formData.join_date === '' ? null : formData.join_date,
       };
 
       if (employee && employee.employee_id) {

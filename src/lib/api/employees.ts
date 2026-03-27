@@ -7,7 +7,7 @@ export interface Employee {
   phone?: string;
   position?: string;
   department?: string;
-  join_date?: string;
+  join_date?: string | null;
   status: string;
   created_at: string;
   updated_at: string;
