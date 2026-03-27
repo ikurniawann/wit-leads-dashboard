@@ -1,5 +1,4 @@
 import '../styles/globals.css'
-import '../styles/globals.css'  ← TAMBAH INI!
 
 export const metadata = {
   title: 'WIT Dashboard',
