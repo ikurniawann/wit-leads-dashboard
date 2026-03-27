@@ -43,7 +43,7 @@ export default function ProfileSettingsPage() {
     <div className="min-h-screen bg-wit-darker">
       <Sidebar />
       
-      <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
+      <main className="ml-72 pt-16 pb-12">
         <div className="px-6">
           {/* Page Header */}
           <div className="mb-6">
@@ -59,7 +59,7 @@ export default function ProfileSettingsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Profile Card */}
             <div className="lg:col-span-1">
-              <div className="mac-card p-6">
+              <div className="glass border border-wit-border rounded-xl p-6">
                 <div className="text-center">
                   {/* Avatar */}
                   <div className="relative w-32 h-32 mx-auto mb-4">
@@ -96,7 +96,7 @@ export default function ProfileSettingsPage() {
 
             {/* Profile Form */}
             <div className="lg:col-span-2">
-              <div className="mac-card p-6">
+              <div className="glass border border-wit-border rounded-xl p-6">
                 <h3 className="text-xl font-bold text-wit-text mb-6">Personal Information</h3>
 
                 <div className="space-y-6">
@@ -111,7 +111,7 @@ export default function ProfileSettingsPage() {
                           type="text"
                           value={profile.fullName}
                           onChange={(e) => setProfile({ ...profile, fullName: e.target.value })}
-                          className="mac-input w-full pl-10"
+                          className="input-dark w-full pl-10"
                         />
                       </div>
                     </div>
@@ -126,7 +126,7 @@ export default function ProfileSettingsPage() {
                           type="email"
                           value={profile.email}
                           onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-                          className="mac-input w-full pl-10"
+                          className="input-dark w-full pl-10"
                         />
                       </div>
                     </div>
@@ -141,7 +141,7 @@ export default function ProfileSettingsPage() {
                           type="tel"
                           value={profile.phone}
                           onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
-                          className="mac-input w-full pl-10"
+                          className="input-dark w-full pl-10"
                         />
                       </div>
                     </div>
@@ -156,7 +156,7 @@ export default function ProfileSettingsPage() {
                           type="text"
                           value={profile.position}
                           onChange={(e) => setProfile({ ...profile, position: e.target.value })}
-                          className="mac-input w-full pl-10"
+                          className="input-dark w-full pl-10"
                         />
                       </div>
                     </div>
@@ -168,7 +168,7 @@ export default function ProfileSettingsPage() {
                       <select
                         value={profile.department}
                         onChange={(e) => setProfile({ ...profile, department: e.target.value })}
-                        className="mac-input w-full"
+                        className="input-dark w-full"
                       >
                         <option value="Executive">Executive</option>
                         <option value="Technology">Technology</option>
@@ -186,7 +186,7 @@ export default function ProfileSettingsPage() {
                       <textarea
                         value={profile.bio}
                         onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
-                        className="mac-input w-full"
+                        className="input-dark w-full"
                         rows={4}
                         placeholder="Tell us about yourself..."
                       />
@@ -198,13 +198,13 @@ export default function ProfileSettingsPage() {
                     <button
                       type="button"
                       onClick={() => router.push('/settings')}
-                      className="mac-button" style={{ background: "linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(60, 60, 60, 0.7) 100%)" }}"
+                      className="btn-secondary"
                     >
                       Cancel
                     </button>
                     <button
                       onClick={handleSave}
-                      className="mac-button flex items-center space-x-2"
+                      className="btn-primary flex items-center space-x-2"
                       disabled={saving}
                     >
                       <Save className="w-4 h-4" />

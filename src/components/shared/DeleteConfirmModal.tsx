@@ -71,7 +71,7 @@ export default function DeleteConfirmModal({
             type="text"
             value={confirmText}
             onChange={(e) => setConfirmText(e.target.value)}
-            className="mac-input w-full"
+            className="input-dark w-full"
             placeholder="DELETE"
             disabled={loading}
           />
@@ -82,7 +82,7 @@ export default function DeleteConfirmModal({
           <button
             type="button"
             onClick={onClose}
-            className="mac-button" style={{ background: "linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(60, 60, 60, 0.7) 100%)" }}"
+            className="btn-secondary"
             disabled={loading}
           >
             Cancel

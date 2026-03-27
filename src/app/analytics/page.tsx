@@ -27,7 +27,7 @@ export default function AnalyticsPage() {
     <div className="min-h-screen bg-wit-darker">
       <Sidebar />
       
-      <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
+      <main className="ml-72 pt-16 pb-12">
         <div className="px-6">
           {/* Page Header */}
           <div className="mb-6">
@@ -37,7 +37,7 @@ export default function AnalyticsPage() {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
-            <div className="mac-card p-4">
+            <div className="glass border border-wit-border rounded-xl p-4">
               <div className="flex items-center justify-between mb-2">
                 <div className="p-2 bg-wit-red/10 rounded-lg">
                   <DollarSign className="w-5 h-5 text-wit-red" />
@@ -47,7 +47,7 @@ export default function AnalyticsPage() {
               <p className="text-xl font-bold text-wit-text">{formatCurrency(stats.totalRevenue)}</p>
             </div>
 
-            <div className="mac-card p-4">
+            <div className="glass border border-wit-border rounded-xl p-4">
               <div className="flex items-center justify-between mb-2">
                 <div className="p-2 bg-green-500/10 rounded-lg">
                   <TrendingUp className="w-5 h-5 text-green-500" />
@@ -57,7 +57,7 @@ export default function AnalyticsPage() {
               <p className="text-xl font-bold text-wit-text">{stats.winRate}%</p>
             </div>
 
-            <div className="mac-card p-4">
+            <div className="glass border border-wit-border rounded-xl p-4">
               <div className="flex items-center justify-between mb-2">
                 <div className="p-2 bg-blue-500/10 rounded-lg">
                   <Users className="w-5 h-5 text-blue-500" />
@@ -67,7 +67,7 @@ export default function AnalyticsPage() {
               <p className="text-xl font-bold text-wit-text">{stats.activeClients}</p>
             </div>
 
-            <div className="mac-card p-4">
+            <div className="glass border border-wit-border rounded-xl p-4">
               <div className="flex items-center justify-between mb-2">
                 <div className="p-2 bg-purple-500/10 rounded-lg">
                   <Award className="w-5 h-5 text-purple-500" />
@@ -77,7 +77,7 @@ export default function AnalyticsPage() {
               <p className="text-xl font-bold text-wit-text">{formatCurrency(stats.avgDealSize)}</p>
             </div>
 
-            <div className="mac-card p-4">
+            <div className="glass border border-wit-border rounded-xl p-4">
               <div className="flex items-center justify-between mb-2">
                 <div className="p-2 bg-yellow-500/10 rounded-lg">
                   <Target className="w-5 h-5 text-yellow-500" />
@@ -87,7 +87,7 @@ export default function AnalyticsPage() {
               <p className="text-xl font-bold text-wit-text">{stats.totalLeads}</p>
             </div>
 
-            <div className="mac-card p-4">
+            <div className="glass border border-wit-border rounded-xl p-4">
               <div className="flex items-center justify-between mb-2">
                 <div className="p-2 bg-pink-500/10 rounded-lg">
                   <BarChart3 className="w-5 h-5 text-pink-500" />
@@ -101,20 +101,20 @@ export default function AnalyticsPage() {
           {/* Charts */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             {/* Revenue by PIC */}
-            <div className="mac-card p-6">
+            <div className="glass border border-wit-border rounded-xl p-6">
               <h2 className="text-xl font-bold text-wit-text mb-4">Revenue by PIC</h2>
               <RevenueByPICChart />
             </div>
 
             {/* Monthly Trend */}
-            <div className="mac-card p-6">
+            <div className="glass border border-wit-border rounded-xl p-6">
               <h2 className="text-xl font-bold text-wit-text mb-4">Monthly Trend</h2>
               <MonthlyTrendChart />
             </div>
           </div>
 
           {/* Performance Insights */}
-          <div className="mac-card p-6">
+          <div className="glass border border-wit-border rounded-xl p-6">
             <h2 className="text-xl font-bold text-wit-text mb-4">Performance Insights</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 bg-wit-card rounded-lg">

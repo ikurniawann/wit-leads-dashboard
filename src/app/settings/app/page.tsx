@@ -42,7 +42,7 @@ export default function AppSettingsPage() {
     <div className="min-h-screen bg-wit-darker">
       <Sidebar />
       
-      <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
+      <main className="ml-72 pt-16 pb-12">
         <div className="px-6">
           {/* Page Header */}
           <div className="mb-6">
@@ -57,7 +57,7 @@ export default function AppSettingsPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Appearance */}
-            <div className="mac-card p-6">
+            <div className="glass border border-wit-border rounded-xl p-6">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-3 bg-wit-red/10 rounded-lg">
                   <Palette className="w-6 h-6 text-wit-red" />
@@ -73,7 +73,7 @@ export default function AppSettingsPage() {
                   <select
                     value={settings.theme}
                     onChange={(e) => setSettings({ ...settings, theme: e.target.value })}
-                    className="mac-input w-full"
+                    className="input-dark w-full"
                   >
                     <option value="dark">Dark</option>
                     <option value="light">Light</option>
@@ -96,7 +96,7 @@ export default function AppSettingsPage() {
                       type="text"
                       value={settings.primaryColor}
                       onChange={(e) => setSettings({ ...settings, primaryColor: e.target.value })}
-                      className="mac-input flex-1"
+                      className="input-dark flex-1"
                     />
                   </div>
                 </div>
@@ -114,7 +114,7 @@ export default function AppSettingsPage() {
             </div>
 
             {/* Notifications */}
-            <div className="mac-card p-6">
+            <div className="glass border border-wit-border rounded-xl p-6">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-3 bg-wit-red/10 rounded-lg">
                   <Bell className="w-6 h-6 text-wit-red" />
@@ -165,7 +165,7 @@ export default function AppSettingsPage() {
             </div>
 
             {/* Regional */}
-            <div className="mac-card p-6">
+            <div className="glass border border-wit-border rounded-xl p-6">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-3 bg-wit-red/10 rounded-lg">
                   <Globe className="w-6 h-6 text-wit-red" />
@@ -181,7 +181,7 @@ export default function AppSettingsPage() {
                   <select
                     value={settings.language}
                     onChange={(e) => setSettings({ ...settings, language: e.target.value })}
-                    className="mac-input w-full"
+                    className="input-dark w-full"
                   >
                     <option value="id">Bahasa Indonesia</option>
                     <option value="en">English</option>
@@ -195,7 +195,7 @@ export default function AppSettingsPage() {
                   <select
                     value={settings.timezone}
                     onChange={(e) => setSettings({ ...settings, timezone: e.target.value })}
-                    className="mac-input w-full"
+                    className="input-dark w-full"
                   >
                     <option value="Asia/Jakarta">Asia/Jakarta (WIB)</option>
                     <option value="Asia/Makassar">Asia/Makassar (WITA)</option>
@@ -210,7 +210,7 @@ export default function AppSettingsPage() {
                   <select
                     value={settings.dateFormat}
                     onChange={(e) => setSettings({ ...settings, dateFormat: e.target.value })}
-                    className="mac-input w-full"
+                    className="input-dark w-full"
                   >
                     <option value="DD/MM/YYYY">DD/MM/YYYY</option>
                     <option value="MM/DD/YYYY">MM/DD/YYYY</option>
@@ -225,7 +225,7 @@ export default function AppSettingsPage() {
                   <select
                     value={settings.currencyFormat}
                     onChange={(e) => setSettings({ ...settings, currencyFormat: e.target.value })}
-                    className="mac-input w-full"
+                    className="input-dark w-full"
                   >
                     <option value="IDR">IDR (Rp)</option>
                     <option value="USD">USD ($)</option>
@@ -235,7 +235,7 @@ export default function AppSettingsPage() {
             </div>
 
             {/* Data Management */}
-            <div className="mac-card p-6">
+            <div className="glass border border-wit-border rounded-xl p-6">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-3 bg-wit-red/10 rounded-lg">
                   <Database className="w-6 h-6 text-wit-red" />
@@ -264,7 +264,7 @@ export default function AppSettingsPage() {
                   <select
                     value={settings.backupFrequency}
                     onChange={(e) => setSettings({ ...settings, backupFrequency: e.target.value })}
-                    className="mac-input w-full"
+                    className="input-dark w-full"
                     disabled={!settings.autoBackup}
                   >
                     <option value="daily">Daily</option>
@@ -274,11 +274,11 @@ export default function AppSettingsPage() {
                 </div>
 
                 <div className="pt-4 space-y-2">
-                  <button className="mac-button" style={{ background: "linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(60, 60, 60, 0.7) 100%)" }} w-full flex items-center justify-center space-x-2">
+                  <button className="btn-secondary w-full flex items-center justify-center space-x-2">
                     <Download className="w-4 h-4" />
                     <span>Download Backup</span>
                   </button>
-                  <button className="mac-button" style={{ background: "linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(60, 60, 60, 0.7) 100%)" }} w-full flex items-center justify-center space-x-2">
+                  <button className="btn-secondary w-full flex items-center justify-center space-x-2">
                     <Upload className="w-4 h-4" />
                     <span>Restore Backup</span>
                   </button>
@@ -295,7 +295,7 @@ export default function AppSettingsPage() {
           <div className="flex items-center justify-end mt-6">
             <button
               onClick={handleSave}
-              className="mac-button flex items-center space-x-2"
+              className="btn-primary flex items-center space-x-2"
               disabled={saving}
             >
               <Save className="w-4 h-4" />

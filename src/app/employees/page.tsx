@@ -93,7 +93,7 @@ export default function EmployeesPage() {
     <div className="min-h-screen bg-wit-darker">
       <Sidebar />
       
-      <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
+      <main className="ml-72 pt-16 pb-12">
         <div className="px-6">
           {/* Page Header */}
           <div className="flex items-center justify-between mb-6">
@@ -103,7 +103,7 @@ export default function EmployeesPage() {
             </div>
             <button
               onClick={handleAddEmployee}
-              className="mac-button flex items-center space-x-2"
+              className="btn-primary flex items-center space-x-2"
             >
               <Plus className="w-4 h-4" />
               <span>Add Employee</span>
@@ -112,7 +112,7 @@ export default function EmployeesPage() {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div className="mac-card p-6">
+            <div className="glass border border-wit-border rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="p-3 bg-wit-red/10 rounded-lg">
                   <UserCheck className="w-6 h-6 text-wit-red" />
@@ -122,7 +122,7 @@ export default function EmployeesPage() {
               <p className="text-3xl font-bold text-wit-text">{stats.total}</p>
             </div>
 
-            <div className="mac-card p-6">
+            <div className="glass border border-wit-border rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="p-3 bg-green-500/10 rounded-lg">
                   <UserCheck className="w-6 h-6 text-green-500" />
@@ -132,7 +132,7 @@ export default function EmployeesPage() {
               <p className="text-3xl font-bold text-wit-text">{stats.active}</p>
             </div>
 
-            <div className="mac-card p-6">
+            <div className="glass border border-wit-border rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="p-3 bg-gray-500/10 rounded-lg">
                   <UserCheck className="w-6 h-6 text-gray-500" />
@@ -144,7 +144,7 @@ export default function EmployeesPage() {
           </div>
 
           {/* Search Bar */}
-          <div className="mac-card p-4 mb-6">
+          <div className="glass border border-wit-border rounded-xl p-4 mb-6">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-wit-muted" />
               <input
@@ -152,13 +152,13 @@ export default function EmployeesPage() {
                 placeholder="Search employees by name, email, position, or department..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="mac-input w-full pl-10"
+                className="input-dark w-full pl-10"
               />
             </div>
           </div>
 
           {/* Employees Table */}
-          <div className="mac-card overflow-hidden">
+          <div className="glass border border-wit-border rounded-xl overflow-hidden">
             <div className="overflow-x-auto">
               <table className="table-dark w-full">
                 <thead>

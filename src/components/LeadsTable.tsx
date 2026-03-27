@@ -156,7 +156,7 @@ export default function LeadsTable({ leads, onAdd, onEdit, onDelete, onView }: L
   };
 
   return (
-    <div className="mac-card overflow-hidden animate-fade-in">
+    <div className="glass border border-wit-border rounded-xl overflow-hidden animate-fade-in">
       {/* Header */}
       <div className="p-6 border-b border-wit-border">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -166,7 +166,7 @@ export default function LeadsTable({ leads, onAdd, onEdit, onDelete, onView }: L
           </div>
           <button
             onClick={onAdd}
-            className="mac-button flex items-center space-x-2 w-fit"
+            className="btn-primary flex items-center space-x-2 w-fit"
           >
             <Plus className="w-4 h-4" />
             <span>Tambah Lead</span>
@@ -185,7 +185,7 @@ export default function LeadsTable({ leads, onAdd, onEdit, onDelete, onView }: L
               placeholder="Cari leads, client, atau PIC..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="mac-input w-full pl-10"
+              className="input-dark w-full pl-10"
             />
           </div>
 
@@ -193,7 +193,7 @@ export default function LeadsTable({ leads, onAdd, onEdit, onDelete, onView }: L
           <select
             value={dateFilter}
             onChange={(e) => setDateFilter(e.target.value)}
-            className="mac-input w-full md:w-40"
+            className="input-dark w-full md:w-40"
           >
             {dateOptions.map((option) => (
               <option key={option.value} value={option.value}>

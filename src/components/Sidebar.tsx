@@ -14,11 +14,8 @@ import {
   Menu,
   X,
   ChevronDown,
-  ChevronRight,
-  Sun,
-  Moon
+  ChevronRight
 } from 'lucide-react';
-import ThemeToggle from './ThemeToggle';
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -47,31 +44,27 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile Menu Button - Only show on mobile */}
+      {/* Mobile Menu Button */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
         className="md:hidden fixed top-4 left-4 p-3 bg-wit-red text-white rounded-lg z-50 shadow-lg"
-        aria-label="Toggle menu"
       >
         {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
 
-      {/* Overlay for mobile - Click to close */}
+      {/* Overlay for mobile */}
       {mobileOpen && (
         <div
-          className="md:hidden fixed inset-0 bg-black/50 z-40 backdrop-blur-sm"
+          className="md:hidden fixed inset-0 bg-black/50 z-40"
           onClick={() => setMobileOpen(false)}
-          aria-hidden="true"
         />
       )}
 
-      {/* Sidebar - macOS Liquid Glass Style */}
+      {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-0 h-screen mac-sidebar z-50 transition-all duration-300 transform ${
-          mobileOpen ? 'translate-x-0' : '-translate-x-full'
-        } md:translate-x-0 md:${collapsed ? 'w-20' : 'w-72'} ${
+        className={`fixed left-0 top-0 h-screen bg-wit-darker border-r border-wit-border z-50 transition-all duration-300 ${
           collapsed ? 'w-20' : 'w-72'
-        }`}
+        } hidden md:block ${mobileOpen ? 'block' : ''}`}
       >
         {/* Logo */}
         <div className="h-20 flex items-center justify-between px-6 border-b border-wit-border">
@@ -137,13 +130,13 @@ export default function Sidebar() {
         </div>
       </aside>
 
-      {/* Top Bar - macOS Liquid Glass Header */}
+      {/* Top Bar */}
       <header
-        className={`fixed top-0 right-0 h-16 mac-header z-30 transition-all duration-300 ${
-          mobileOpen ? 'left-0' : collapsed ? 'left-20' : 'left-72'
-        } md:${collapsed ? 'left-20' : 'left-72'}`}
+        className={`fixed top-0 right-0 h-16 border-b border-wit-border glass z-40 transition-all duration-300 md:block ${
+          collapsed ? 'left-20' : 'left-72'
+        } ${mobileOpen ? 'left-0 md:left-auto' : ''}`}
       >
-        <div className="h-full px-4 md:px-6 flex items-center justify-between">
+        <div className="h-full px-6 flex items-center justify-between">
           {/* Breadcrumb - Hidden on mobile */}
           <div className="hidden md:flex items-center space-x-2 text-sm">
             <Link href="/" className="text-wit-muted hover:text-wit-text">
@@ -151,22 +144,12 @@ export default function Sidebar() {
             </Link>
             <span className="text-wit-muted">/</span>
             <span className="text-wit-text capitalize">
-              {pathname === '/' ? 'Dashboard' : pathname.split('/')[1]}
+              {pathname === '/' || !pathname ? 'Dashboard' : pathname.split('/')[1]}
             </span>
-          </div>
-
-          {/* Mobile title - Only show on mobile */}
-          <div className="md:hidden">
-            <h1 className="text-lg font-bold text-wit-text">
-              {pathname === '/' ? 'Dashboard' : pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1)}
-            </h1>
           </div>
 
           {/* Right side */}
           <div className="flex items-center space-x-4">
-            {/* Theme Toggle */}
-            <ThemeToggle />
-
             {/* User profile */}
             <div className="flex items-center space-x-3 pl-4 border-l border-wit-border">
               <div className="w-8 h-8 bg-wit-red rounded-full flex items-center justify-center overflow-hidden">

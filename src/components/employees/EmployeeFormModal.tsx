@@ -108,7 +108,7 @@ export default function EmployeeFormModal({ isOpen, onClose, employee, onSuccess
                 required
                 value={formData.employee_name}
                 onChange={(e) => handleChange('employee_name', e.target.value)}
-                className="mac-input w-full"
+                className="input-dark w-full"
                 placeholder="Full Name"
               />
             </div>
@@ -121,7 +121,7 @@ export default function EmployeeFormModal({ isOpen, onClose, employee, onSuccess
                 type="email"
                 value={formData.email}
                 onChange={(e) => handleChange('email', e.target.value)}
-                className="mac-input w-full"
+                className="input-dark w-full"
                 placeholder="employee@company.com"
               />
             </div>
@@ -134,7 +134,7 @@ export default function EmployeeFormModal({ isOpen, onClose, employee, onSuccess
                 type="text"
                 value={formData.phone}
                 onChange={(e) => handleChange('phone', e.target.value)}
-                className="mac-input w-full"
+                className="input-dark w-full"
                 placeholder="+62 xxx"
               />
             </div>
@@ -147,7 +147,7 @@ export default function EmployeeFormModal({ isOpen, onClose, employee, onSuccess
                 type="text"
                 value={formData.position}
                 onChange={(e) => handleChange('position', e.target.value)}
-                className="mac-input w-full"
+                className="input-dark w-full"
                 placeholder="e.g., Sales Manager, Developer"
               />
             </div>
@@ -160,7 +160,7 @@ export default function EmployeeFormModal({ isOpen, onClose, employee, onSuccess
                 type="text"
                 value={formData.department}
                 onChange={(e) => handleChange('department', e.target.value)}
-                className="mac-input w-full"
+                className="input-dark w-full"
                 placeholder="e.g., Sales, IT, Marketing"
               />
             </div>
@@ -173,7 +173,7 @@ export default function EmployeeFormModal({ isOpen, onClose, employee, onSuccess
                 type="date"
                 value={formData.join_date || ''}
                 onChange={(e) => handleChange('join_date', e.target.value)}
-                className="mac-input w-full"
+                className="input-dark w-full"
               />
             </div>
 
@@ -185,7 +185,7 @@ export default function EmployeeFormModal({ isOpen, onClose, employee, onSuccess
                 required
                 value={formData.status}
                 onChange={(e) => handleChange('status', e.target.value)}
-                className="mac-input w-full"
+                className="input-dark w-full"
               >
                 {STATUS_OPTIONS.map(opt => (
                   <option key={opt.value} value={opt.value}>
@@ -202,14 +202,14 @@ export default function EmployeeFormModal({ isOpen, onClose, employee, onSuccess
           <button
             type="button"
             onClick={onClose}
-            className="mac-button" style={{ background: "linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(60, 60, 60, 0.7) 100%)" }}"
+            className="btn-secondary"
             disabled={loading}
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="mac-button"
+            className="btn-primary"
             disabled={loading}
           >
             {loading ? 'Saving...' : (employee ? 'Update' : 'Create')} Employee

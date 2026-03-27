@@ -51,7 +51,7 @@ export default function PipelineChart() {
   const years = Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - 2 + i);
 
   return (
-    <div className="mac-card p-6">
+    <div className="glass border border-wit-border rounded-xl p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
@@ -61,7 +61,7 @@ export default function PipelineChart() {
         <select
           value={year}
           onChange={(e) => setYear(parseInt(e.target.value))}
-          className="mac-input"
+          className="input-dark"
         >
           {years.map(y => (
             <option key={y} value={y}>{y}</option>

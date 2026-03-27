@@ -189,7 +189,7 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
               required
               value={formData.company_name}
               onChange={(e) => handleChange('company_name', e.target.value)}
-              className="mac-input w-full"
+              className="input-dark w-full"
               placeholder="PT Company Name"
             />
           </div>
@@ -203,7 +203,7 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
               required
               value={formData.project_name}
               onChange={(e) => handleChange('project_name', e.target.value)}
-              className="mac-input w-full"
+              className="input-dark w-full"
               placeholder="Project Name"
             />
           </div>
@@ -219,7 +219,7 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
               type="text"
               value={formData.client_name}
               onChange={(e) => handleChange('client_name', e.target.value)}
-              className="mac-input w-full"
+              className="input-dark w-full"
               placeholder="Contact Person"
             />
           </div>
@@ -232,7 +232,7 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
               type="email"
               value={formData.client_email}
               onChange={(e) => handleChange('client_email', e.target.value)}
-              className="mac-input w-full"
+              className="input-dark w-full"
               placeholder="client@email.com"
             />
           </div>
@@ -245,7 +245,7 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
               type="text"
               value={formData.client_phone}
               onChange={(e) => handleChange('client_phone', e.target.value)}
-              className="mac-input w-full"
+              className="input-dark w-full"
               placeholder="+62 xxx"
             />
           </div>
@@ -264,7 +264,7 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
                 handleChange('pic_employee_id', e.target.value);
                 handleChange('pic_excel_name', emp?.employee_name || '');
               }}
-              className="mac-input w-full"
+              className="input-dark w-full"
             >
               <option value="">Select PIC</option>
               {employees.map(emp => (
@@ -283,7 +283,7 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
               required
               value={formData.status_id}
               onChange={(e) => handleChange('status_id', e.target.value)}
-              className="mac-input w-full"
+              className="input-dark w-full"
             >
               {STATUS_OPTIONS.map(opt => (
                 <option key={opt.value} value={opt.value}>
@@ -302,7 +302,7 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
           <textarea
             value={formData.project_description}
             onChange={(e) => handleChange('project_description', e.target.value)}
-            className="mac-input w-full"
+            className="input-dark w-full"
             rows={3}
             placeholder="Project description..."
           />
@@ -322,7 +322,7 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
                 required
                 value={formData.unit_value}
                 onChange={(e) => handleChange('unit_value', parseFloat(e.target.value) || 0)}
-                className="mac-input w-full"
+                className="input-dark w-full"
                 placeholder="0"
               />
             </div>
@@ -335,7 +335,7 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
                 type="number"
                 value={formData.tax_percent}
                 onChange={(e) => handleChange('tax_percent', parseFloat(e.target.value) || 0)}
-                className="mac-input w-full"
+                className="input-dark w-full"
                 placeholder="11"
               />
             </div>
@@ -348,7 +348,7 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
                 type="number"
                 value={formData.discount_percent}
                 onChange={(e) => handleChange('discount_percent', parseFloat(e.target.value) || 0)}
-                className="mac-input w-full"
+                className="input-dark w-full"
                 placeholder="0"
               />
             </div>
@@ -387,7 +387,7 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
               type="date"
               value={formData.quotation_date}
               onChange={(e) => handleChange('quotation_date', e.target.value)}
-              className="mac-input w-full"
+              className="input-dark w-full"
             />
           </div>
 
@@ -399,7 +399,7 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
               type="date"
               value={formData.valid_until || ''}
               onChange={(e) => handleChange('valid_until', e.target.value)}
-              className="mac-input w-full"
+              className="input-dark w-full"
             />
           </div>
 
@@ -411,7 +411,7 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
               type="date"
               value={formData.follow_up_date || ''}
               onChange={(e) => handleChange('follow_up_date', e.target.value)}
-              className="mac-input w-full"
+              className="input-dark w-full"
             />
           </div>
         </div>
@@ -424,7 +424,7 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
           <textarea
             value={formData.internal_notes}
             onChange={(e) => handleChange('internal_notes', e.target.value)}
-            className="mac-input w-full"
+            className="input-dark w-full"
             rows={2}
             placeholder="Internal notes..."
           />
@@ -435,14 +435,14 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
           <button
             type="button"
             onClick={onClose}
-            className="mac-button" style={{ background: "linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(60, 60, 60, 0.7) 100%)" }}"
+            className="btn-secondary"
             disabled={loading}
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="mac-button"
+            className="btn-primary"
             disabled={loading}
           >
             {loading ? 'Saving...' : (lead ? 'Update' : 'Create')} Lead

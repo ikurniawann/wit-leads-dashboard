@@ -29,7 +29,7 @@ export default function DatabaseSettingsPage() {
     <div className="min-h-screen bg-wit-darker">
       <Sidebar />
       
-      <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
+      <main className="ml-72 pt-16 pb-12">
         <div className="px-6">
           {/* Page Header */}
           <div className="mb-6">
@@ -44,7 +44,7 @@ export default function DatabaseSettingsPage() {
 
           <div className="grid grid-cols-1 gap-6">
             {/* Connection Status */}
-            <div className="mac-card p-6">
+            <div className="glass border border-wit-border rounded-xl p-6">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center space-x-3">
                   <div className={`p-3 rounded-lg ${connected ? 'bg-green-500/10' : 'bg-red-500/10'}`}>
@@ -79,7 +79,7 @@ export default function DatabaseSettingsPage() {
 
               <button
                 onClick={handleTestConnection}
-                className="mac-button flex items-center space-x-2"
+                className="btn-primary flex items-center space-x-2"
                 disabled={testing}
               >
                 <RefreshCw className={`w-4 h-4 ${testing ? 'animate-spin' : ''}`} />
@@ -88,7 +88,7 @@ export default function DatabaseSettingsPage() {
             </div>
 
             {/* Database Tables */}
-            <div className="mac-card p-6">
+            <div className="glass border border-wit-border rounded-xl p-6">
               <h3 className="text-xl font-bold text-wit-text mb-6">Database Tables</h3>
 
               <div className="overflow-x-auto">
@@ -179,7 +179,7 @@ export default function DatabaseSettingsPage() {
             </div>
 
             {/* API Keys */}
-            <div className="mac-card p-6">
+            <div className="glass border border-wit-border rounded-xl p-6">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-3 bg-wit-red/10 rounded-lg">
                   <Key className="w-6 h-6 text-wit-red" />
@@ -197,7 +197,7 @@ export default function DatabaseSettingsPage() {
                       type="text"
                       value={supabaseConfig.url}
                       readOnly
-                      className="mac-input w-full font-mono text-sm"
+                      className="input-dark w-full font-mono text-sm"
                     />
                   </div>
                 </div>
@@ -211,7 +211,7 @@ export default function DatabaseSettingsPage() {
                       type="password"
                       value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
                       readOnly
-                      className="mac-input w-full font-mono text-sm"
+                      className="input-dark w-full font-mono text-sm"
                     />
                   </div>
                   <p className="text-wit-muted text-xs mt-2">
@@ -222,7 +222,7 @@ export default function DatabaseSettingsPage() {
             </div>
 
             {/* Data Operations */}
-            <div className="mac-card p-6">
+            <div className="glass border border-wit-border rounded-xl p-6">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="p-3 bg-wit-red/10 rounded-lg">
                   <AlertTriangle className="w-6 h-6 text-wit-red" />
@@ -231,15 +231,15 @@ export default function DatabaseSettingsPage() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button className="mac-button" style={{ background: "linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(60, 60, 60, 0.7) 100%)" }} flex items-center justify-center space-x-2">
+                <button className="btn-secondary flex items-center justify-center space-x-2">
                   <Download className="w-4 h-4" />
                   <span>Export All Data</span>
                 </button>
-                <button className="mac-button" style={{ background: "linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(60, 60, 60, 0.7) 100%)" }} flex items-center justify-center space-x-2">
+                <button className="btn-secondary flex items-center justify-center space-x-2">
                   <Upload className="w-4 h-4" />
                   <span>Import Data</span>
                 </button>
-                <button className="mac-button" style={{ background: "linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(60, 60, 60, 0.7) 100%)" }} flex items-center justify-center space-x-2">
+                <button className="btn-secondary flex items-center justify-center space-x-2">
                   <RefreshCw className="w-4 h-4" />
                   <span>Reset Tables</span>
                 </button>

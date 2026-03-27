@@ -47,7 +47,7 @@ export default function SettingsPage() {
     <div className="min-h-screen bg-wit-darker">
       <Sidebar />
       
-      <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
+      <main className="ml-72 pt-16 pb-12">
         <div className="px-6">
           {/* Page Header */}
           <div className="mb-6">
@@ -56,7 +56,7 @@ export default function SettingsPage() {
           </div>
 
           {/* Current User Info */}
-          <div className="mac-card p-6 mb-6">
+          <div className="glass border border-wit-border rounded-xl p-6 mb-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <div className="w-16 h-16 bg-wit-red rounded-full flex items-center justify-center overflow-hidden">
@@ -68,7 +68,7 @@ export default function SettingsPage() {
                   <p className="text-wit-muted text-sm">ikurniawann@gmail.com</p>
                 </div>
               </div>
-              <Link href="/settings/profile" className="mac-button" style={{ background: "linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(60, 60, 60, 0.7) 100%)" }} flex items-center space-x-2">
+              <Link href="/settings/profile" className="btn-secondary flex items-center space-x-2">
                 <span>Edit Profile</span>
                 <ChevronRight className="w-4 h-4" />
               </Link>
@@ -85,7 +85,7 @@ export default function SettingsPage() {
                 <Link
                   key={index}
                   href={category.href}
-                  className={`mac-card p-6 transition-all ${
+                  className={`glass border border-wit-border rounded-xl p-6 transition-all ${
                     isAvailable 
                       ? 'hover:border-wit-red hover:bg-wit-red/5 cursor-pointer' 
                       : 'opacity-50 cursor-not-allowed'
@@ -117,7 +117,7 @@ export default function SettingsPage() {
           </div>
 
           {/* System Info */}
-          <div className="mac-card p-6 mt-6">
+          <div className="glass border border-wit-border rounded-xl p-6 mt-6">
             <h2 className="text-xl font-bold text-wit-text mb-4">System Information</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div>

@@ -42,7 +42,7 @@ export default function WinRateChart() {
   const COLORS = ['#22c55e', '#ef4444'];
 
   return (
-    <div className="mac-card p-6">
+    <div className="glass border border-wit-border rounded-xl p-6">
       {/* Header */}
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-wit-text mb-1">Win Rate</h2>

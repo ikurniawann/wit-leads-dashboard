@@ -127,7 +127,7 @@ export default function ReportsPage() {
     <div className="min-h-screen bg-wit-darker">
       <Sidebar />
       
-      <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
+      <main className="ml-72 pt-16 pb-12">
         <div className="px-6">
           {/* Page Header */}
           <div className="mb-6">
@@ -137,7 +137,7 @@ export default function ReportsPage() {
 
           {/* Quick Export Actions */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div className="mac-card p-6">
+            <div className="glass border border-wit-border rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="p-3 bg-wit-red/10 rounded-lg">
                   <FileText className="w-6 h-6 text-wit-red" />
@@ -150,7 +150,7 @@ export default function ReportsPage() {
               <div className="space-y-2">
                 <button 
                   onClick={() => handleExportExcel('leads')}
-                  className="mac-button w-full flex items-center justify-center space-x-2"
+                  className="btn-primary w-full flex items-center justify-center space-x-2"
                   disabled={exporting === 'leads-excel'}
                 >
                   <Download className="w-4 h-4" />
@@ -158,7 +158,7 @@ export default function ReportsPage() {
                 </button>
                 <button 
                   onClick={() => handleExportPDF('leads')}
-                  className="mac-button" style={{ background: "linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(60, 60, 60, 0.7) 100%)" }} w-full flex items-center justify-center space-x-2"
+                  className="btn-secondary w-full flex items-center justify-center space-x-2"
                   disabled={exporting === 'leads-pdf'}
                 >
                   <Download className="w-4 h-4" />
@@ -167,7 +167,7 @@ export default function ReportsPage() {
               </div>
             </div>
 
-            <div className="mac-card p-6">
+            <div className="glass border border-wit-border rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="p-3 bg-wit-red/10 rounded-lg">
                   <Users className="w-6 h-6 text-wit-red" />
@@ -180,7 +180,7 @@ export default function ReportsPage() {
               <div className="space-y-2">
                 <button 
                   onClick={() => handleExportExcel('clients')}
-                  className="mac-button w-full flex items-center justify-center space-x-2"
+                  className="btn-primary w-full flex items-center justify-center space-x-2"
                   disabled={exporting === 'clients-excel'}
                 >
                   <Download className="w-4 h-4" />
@@ -188,7 +188,7 @@ export default function ReportsPage() {
                 </button>
                 <button 
                   onClick={() => handleExportPDF('clients')}
-                  className="mac-button" style={{ background: "linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(60, 60, 60, 0.7) 100%)" }} w-full flex items-center justify-center space-x-2"
+                  className="btn-secondary w-full flex items-center justify-center space-x-2"
                   disabled={exporting === 'clients-pdf'}
                 >
                   <Download className="w-4 h-4" />
@@ -197,7 +197,7 @@ export default function ReportsPage() {
               </div>
             </div>
 
-            <div className="mac-card p-6">
+            <div className="glass border border-wit-border rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="p-3 bg-wit-red/10 rounded-lg">
                   <Users className="w-6 h-6 text-wit-red" />
@@ -210,7 +210,7 @@ export default function ReportsPage() {
               <div className="space-y-2">
                 <button 
                   onClick={() => handleExportExcel('employees')}
-                  className="mac-button w-full flex items-center justify-center space-x-2"
+                  className="btn-primary w-full flex items-center justify-center space-x-2"
                   disabled={exporting === 'employees-excel'}
                 >
                   <Download className="w-4 h-4" />
@@ -218,7 +218,7 @@ export default function ReportsPage() {
                 </button>
                 <button 
                   onClick={() => handleExportPDF('employees')}
-                  className="mac-button" style={{ background: "linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(60, 60, 60, 0.7) 100%)" }} w-full flex items-center justify-center space-x-2"
+                  className="btn-secondary w-full flex items-center justify-center space-x-2"
                   disabled={exporting === 'employees-pdf'}
                 >
                   <Download className="w-4 h-4" />
@@ -229,7 +229,7 @@ export default function ReportsPage() {
           </div>
 
           {/* Reports List */}
-          <div className="mac-card overflow-hidden">
+          <div className="glass border border-wit-border rounded-xl overflow-hidden">
             <div className="p-6 border-b border-wit-border">
               <h2 className="text-xl font-bold text-wit-text">Available Reports</h2>
             </div>
