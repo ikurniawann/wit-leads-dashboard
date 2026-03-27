@@ -110,7 +110,7 @@ export default function Dashboard() {
             </div>
             <button
               onClick={handleAddLead}
-              className="btn-primary flex items-center space-x-2"
+              className="mac-button flex items-center space-x-2"
             >
               <Plus className="w-4 h-4" />
               <span>Tambah Lead</span>

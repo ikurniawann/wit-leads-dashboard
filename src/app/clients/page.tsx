@@ -106,7 +106,7 @@ export default function ClientsPage() {
             </div>
             <button
               onClick={handleAddClient}
-              className="btn-primary flex items-center space-x-2"
+              className="mac-button flex items-center space-x-2"
             >
               <Plus className="w-4 h-4" />
               <span>Add Client</span>
@@ -115,7 +115,7 @@ export default function ClientsPage() {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div className="glass border border-wit-border rounded-xl p-6">
+            <div className="mac-card p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="p-3 bg-wit-red/10 rounded-lg">
                   <Building2 className="w-6 h-6 text-wit-red" />
@@ -125,7 +125,7 @@ export default function ClientsPage() {
               <p className="text-3xl font-bold text-wit-text">{stats.total}</p>
             </div>
 
-            <div className="glass border border-wit-border rounded-xl p-6">
+            <div className="mac-card p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="p-3 bg-green-500/10 rounded-lg">
                   <Users className="w-6 h-6 text-green-500" />
@@ -135,7 +135,7 @@ export default function ClientsPage() {
               <p className="text-3xl font-bold text-wit-text">{stats.withProjects}</p>
             </div>
 
-            <div className="glass border border-wit-border rounded-xl p-6">
+            <div className="mac-card p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="p-3 bg-blue-500/10 rounded-lg">
                   <Plus className="w-6 h-6 text-blue-500" />
@@ -147,7 +147,7 @@ export default function ClientsPage() {
           </div>
 
           {/* Search Bar */}
-          <div className="glass border border-wit-border rounded-xl p-4 mb-6">
+          <div className="mac-card p-4 mb-6">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-wit-muted" />
               <input
@@ -155,13 +155,13 @@ export default function ClientsPage() {
                 placeholder="Search clients by company name, contact person, or industry..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="input-dark w-full pl-10"
+                className="mac-input w-full pl-10"
               />
             </div>
           </div>
 
           {/* Clients Table */}
-          <div className="glass border border-wit-border rounded-xl overflow-hidden">
+          <div className="mac-card overflow-hidden">
             <div className="overflow-x-auto">
               <table className="table-dark w-full">
                 <thead>

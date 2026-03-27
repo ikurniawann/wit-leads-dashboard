@@ -101,7 +101,7 @@ export default function ClientFormModal({ isOpen, onClose, client, onSuccess }: 
                 required
                 value={formData.company_name}
                 onChange={(e) => handleChange('company_name', e.target.value)}
-                className="input-dark w-full"
+                className="mac-input w-full"
                 placeholder="PT Company Name"
               />
             </div>
@@ -114,7 +114,7 @@ export default function ClientFormModal({ isOpen, onClose, client, onSuccess }: 
                 type="text"
                 value={formData.industry}
                 onChange={(e) => handleChange('industry', e.target.value)}
-                className="input-dark w-full"
+                className="mac-input w-full"
                 placeholder="e.g., Technology, Finance, Healthcare"
               />
             </div>
@@ -129,7 +129,7 @@ export default function ClientFormModal({ isOpen, onClose, client, onSuccess }: 
                 type="url"
                 value={formData.company_website}
                 onChange={(e) => handleChange('company_website', e.target.value)}
-                className="input-dark w-full"
+                className="mac-input w-full"
                 placeholder="https://company.com"
               />
             </div>
@@ -142,7 +142,7 @@ export default function ClientFormModal({ isOpen, onClose, client, onSuccess }: 
                 type="text"
                 value={formData.company_address}
                 onChange={(e) => handleChange('company_address', e.target.value)}
-                className="input-dark w-full"
+                className="mac-input w-full"
                 placeholder="Full address"
               />
             </div>
@@ -162,7 +162,7 @@ export default function ClientFormModal({ isOpen, onClose, client, onSuccess }: 
                 type="text"
                 value={formData.client_name}
                 onChange={(e) => handleChange('client_name', e.target.value)}
-                className="input-dark w-full"
+                className="mac-input w-full"
                 placeholder="Contact person name"
               />
             </div>
@@ -175,7 +175,7 @@ export default function ClientFormModal({ isOpen, onClose, client, onSuccess }: 
                 type="text"
                 value={formData.client_position}
                 onChange={(e) => handleChange('client_position', e.target.value)}
-                className="input-dark w-full"
+                className="mac-input w-full"
                 placeholder="e.g., CEO, Manager, Director"
               />
             </div>
@@ -188,7 +188,7 @@ export default function ClientFormModal({ isOpen, onClose, client, onSuccess }: 
                 type="email"
                 value={formData.email}
                 onChange={(e) => handleChange('email', e.target.value)}
-                className="input-dark w-full"
+                className="mac-input w-full"
                 placeholder="email@company.com"
               />
             </div>
@@ -201,7 +201,7 @@ export default function ClientFormModal({ isOpen, onClose, client, onSuccess }: 
                 type="text"
                 value={formData.phone}
                 onChange={(e) => handleChange('phone', e.target.value)}
-                className="input-dark w-full"
+                className="mac-input w-full"
                 placeholder="+62 xxx"
               />
             </div>
@@ -219,7 +219,7 @@ export default function ClientFormModal({ isOpen, onClose, client, onSuccess }: 
             <textarea
               value={formData.notes}
               onChange={(e) => handleChange('notes', e.target.value)}
-              className="input-dark w-full"
+              className="mac-input w-full"
               rows={3}
               placeholder="Additional notes about the client..."
             />
@@ -233,7 +233,7 @@ export default function ClientFormModal({ isOpen, onClose, client, onSuccess }: 
               type="text"
               value={formData.tags?.join(', ')}
               onChange={(e) => handleChange('tags', e.target.value.split(',').map(t => t.trim()))}
-              className="input-dark w-full"
+              className="mac-input w-full"
               placeholder="e.g., Priority, Enterprise, Strategic"
             />
           </div>
@@ -244,14 +244,14 @@ export default function ClientFormModal({ isOpen, onClose, client, onSuccess }: 
           <button
             type="button"
             onClick={onClose}
-            className="btn-secondary"
+            className="mac-button" style={{ background: "linear-gradient(135deg, rgba(60, 60, 60, 0.9) 0%, rgba(60, 60, 60, 0.7) 100%)" }}"
             disabled={loading}
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="btn-primary"
+            className="mac-button"
             disabled={loading}
           >
             {loading ? 'Saving...' : (client ? 'Update' : 'Create')} Client

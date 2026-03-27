@@ -62,9 +62,9 @@ export default function Sidebar() {
         />
       )}
 
-      {/* Sidebar - Hidden on mobile by default, slide in when open */}
+      {/* Sidebar - macOS Liquid Glass Style */}
       <aside
-        className={`fixed left-0 top-0 h-screen bg-wit-darker border-r border-wit-border z-50 transition-all duration-300 transform ${
+        className={`fixed left-0 top-0 h-screen mac-sidebar z-50 transition-all duration-300 transform ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         } md:translate-x-0 md:${collapsed ? 'w-20' : 'w-72'} ${
           collapsed ? 'w-20' : 'w-72'
@@ -134,9 +134,9 @@ export default function Sidebar() {
         </div>
       </aside>
 
-      {/* Top Bar - Adjust left position based on sidebar state */}
+      {/* Top Bar - macOS Liquid Glass Header */}
       <header
-        className={`fixed top-0 right-0 h-16 border-b border-wit-border glass z-30 transition-all duration-300 ${
+        className={`fixed top-0 right-0 h-16 mac-header z-30 transition-all duration-300 ${
           mobileOpen ? 'left-0' : collapsed ? 'left-20' : 'left-72'
         } md:${collapsed ? 'left-20' : 'left-72'}`}
       >

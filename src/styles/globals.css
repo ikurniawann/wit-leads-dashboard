@@ -46,10 +46,157 @@ body {
   background: var(--wit-muted);
 }
 
-/* Glass effect */
+/* Glass effect - Base */
 .glass {
-  background: var(--wit-card);
+  background: rgba(17, 17, 17, 0.7);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(34, 34, 34, 0.5);
+}
+
+/* macOS Liquid Glass - Enhanced frosted glass effect */
+.liquid-glass {
+  background: rgba(17, 17, 17, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px 0 rgba(0, 0, 0, 0.37),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.liquid-glass:hover {
+  background: rgba(17, 17, 17, 0.75);
+  border-color: rgba(192, 0, 0, 0.3);
+  box-shadow: 
+    0 12px 40px 0 rgba(192, 0, 0, 0.15),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+}
+
+/* macOS Card - Smooth elevated cards */
+.mac-card {
+  background: rgba(22, 22, 22, 0.8);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 4px 24px 0 rgba(0, 0, 0, 0.4),
+    0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mac-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 12px 40px 0 rgba(0, 0, 0, 0.5),
+    0 2px 4px 0 rgba(0, 0, 0, 0.3);
+  border-color: rgba(192, 0, 0, 0.4);
+}
+
+/* macOS Button - Smooth glossy buttons */
+.mac-button {
+  background: linear-gradient(135deg, rgba(192, 0, 0, 0.9) 0%, rgba(192, 0, 0, 0.7) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  color: white;
+  padding: 0.625rem 1.5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 12px 0 rgba(192, 0, 0, 0.3),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+}
+
+.mac-button:hover {
+  background: linear-gradient(135deg, rgba(192, 0, 0, 1) 0%, rgba(192, 0, 0, 0.85) 100%);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 20px 0 rgba(192, 0, 0, 0.4),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+}
+
+.mac-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px 0 rgba(192, 0, 0, 0.3);
+}
+
+/* macOS Input - Frosted glass inputs */
+.mac-input {
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: white;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mac-input:focus {
+  outline: none;
+  background: rgba(30, 30, 30, 0.8);
+  border-color: rgba(192, 0, 0, 0.5);
+  box-shadow: 
+    0 0 0 3px rgba(192, 0, 0, 0.1),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
+.mac-input::placeholder {
+  color: rgba(136, 136, 136, 0.8);
+}
+
+/* macOS Sidebar - Enhanced frosted sidebar */
+.mac-sidebar {
+  background: rgba(17, 17, 17, 0.85);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 4px 0 24px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* macOS Header - Floating header */
+.mac-header {
+  background: rgba(17, 17, 17, 0.75);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Smooth scroll for macOS feel */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(136, 136, 136, 0.5) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(136, 136, 136, 0.5);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(192, 0, 0, 0.6);
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
 
 /* Toggle Switch */
