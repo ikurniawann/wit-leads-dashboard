@@ -223,7 +223,8 @@ body {
   background: var(--wit-card);
   border: 1px solid var(--wit-border);
   color: var(--wit-text);
-  padding: 0.5rem 1rem;
+  padding: 0.625rem 1rem;
+  padding-left: 2.75rem;
   border-radius: 0.5rem;
   transition: all 0.3s ease;
 }
