@@ -11,6 +11,7 @@ import {
   BarChart3,
   FileText,
   Settings,
+  FolderKanban,
   Menu,
   X,
   ChevronDown,
@@ -27,6 +28,7 @@ export default function Sidebar() {
   const mainNavItems = [
     { href: '/', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/leads', label: 'Leads', icon: Briefcase },
+    { href: '/projects', label: 'Projects', icon: FolderKanban },
     { href: '/clients', label: 'Clients', icon: Users },
     { href: '/employees', label: 'Employees', icon: UserCheck },
     { href: '/analytics', label: 'Analytics', icon: BarChart3 },
