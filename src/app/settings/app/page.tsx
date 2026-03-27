@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Sidebar } from '../../../components/Sidebar';
+import Sidebar from '../../../components/Sidebar';
 import { Palette, Bell, Globe, Shield, Database, Download, Upload, Trash2, Save } from 'lucide-react';
 
 export default function AppSettingsPage() {
