@@ -113,6 +113,22 @@ body {
   color: #1a1a1a;
 }
 
+/* Theme-aware Content */
+.theme-content {
+  background: var(--wit-darker);
+  transition: background-color 0.3s ease;
+}
+
+[data-theme='light'] .theme-content {
+  background: #e8e8ed;
+}
+
+/* Theme-aware Cards - Lighter on hover */
+[data-theme='light'] .card-hover:hover {
+  background: #ffffff;
+  border-color: var(--wit-red);
+}
+
 /* macOS Sidebar - Frosted glass sidebar */
 .mac-sidebar {
   background: var(--wit-glass-bg);

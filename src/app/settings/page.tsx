@@ -45,7 +45,7 @@ export default function SettingsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-wit-darker">
+    <div className="min-h-screen theme-content">
       <Sidebar />
       
       <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
