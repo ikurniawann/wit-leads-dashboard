@@ -206,19 +206,25 @@ body {
   background: var(--wit-card);
   border: 1px solid var(--wit-border);
   color: var(--wit-text);
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem 0.75rem 3rem;
   border-radius: 0.5rem;
+  font-size: 0.9375rem;
   transition: all 0.3s ease;
 }
 
 .input-dark:focus {
   outline: none;
   border-color: var(--wit-red);
-  box-shadow: 0 0 0 3px rgba(192, 0, 0, 0.1);
+  box-shadow: 0 0 0 3px rgba(192, 0, 0, 0.15);
 }
 
 .input-dark::placeholder {
   color: var(--wit-muted);
+}
+
+/* Ensure icon spacing is always sufficient */
+.input-dark[class*="pl-"] {
+  padding-left: 3rem !important;
 }
 
 /* Table styles */
