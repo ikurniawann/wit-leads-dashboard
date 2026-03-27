@@ -7,8 +7,9 @@ import LeadsTable from '../../components/LeadsTable';
 import LeadFormModal from '../../components/leads/LeadFormModal';
 import LeadDetailModal from '../../components/leads/LeadDetailModal';
 import DeleteConfirmModal from '../../components/shared/DeleteConfirmModal';
+import LeadFilters, { AppliedFilters } from '../../components/filters/LeadFilters';
 import { leadsApi, Lead } from '../../lib/api/leads';
-import { Table, Kanban } from 'lucide-react';
+import { Table, Kanban, Sliders } from 'lucide-react';
 
 export default function LeadsPage() {
   const [loading, setLoading] = useState(true);
@@ -16,6 +17,8 @@ export default function LeadsPage() {
   const [viewMode, setViewMode] = useState<'table' | 'kanban'>('table');
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [activeFilters, setActiveFilters] = useState<AppliedFilters | null>(null);
   
   // Modal states
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -89,6 +92,30 @@ export default function LeadsPage() {
     }
   };
 
+  const handleApplyFilters = (filters: AppliedFilters) => {
+    setActiveFilters(filters);
+    setCurrentPage(1); // Reset to first page when applying filters
+    console.log('Filters applied:', filters);
+    // TODO: Implement actual filtering logic with API
+  };
+
+  const handleResetFilters = () => {
+    setActiveFilters(null);
+    setCurrentPage(1);
+    console.log('Filters reset');
+  };
+
+  const getActiveFiltersCount = () => {
+    if (!activeFilters) return 0;
+    let count = 0;
+    if (activeFilters.stages?.length) count += activeFilters.stages.length;
+    if (activeFilters.pics?.length) count += activeFilters.pics.length;
+    if (activeFilters.industries?.length) count += activeFilters.industries.length;
+    if (activeFilters.dateFrom || activeFilters.dateTo) count += 1;
+    if (activeFilters.min_value !== undefined || activeFilters.max_value !== undefined) count += 1;
+    return count;
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-wit-darker flex items-center justify-center">
@@ -156,6 +183,8 @@ export default function LeadsPage() {
                 setPageSize(size);
                 setCurrentPage(1); // Reset to first page when changing page size
               }}
+              onOpenFilters={() => setIsFiltersOpen(true)}
+              activeFiltersCount={getActiveFiltersCount()}
             />
           ) : (
             <KanbanBoard
@@ -209,6 +238,14 @@ export default function LeadsPage() {
         title="Delete Lead"
         description="Are you sure you want to delete this lead?"
         itemName={selectedLead?.project_name || 'this lead'}
+      />
+
+      <LeadFilters
+        isOpen={isFiltersOpen}
+        onClose={() => setIsFiltersOpen(false)}
+        onApply={handleApplyFilters}
+        onReset={handleResetFilters}
+        currentFilters={activeFilters || undefined}
       />
     </div>
   );

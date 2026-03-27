@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Search, Filter, Plus, Edit2, Trash2, Eye, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { Search, Filter, Plus, Edit2, Trash2, Eye, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Sliders } from 'lucide-react';
 import { Lead } from '../lib/api/leads';
+import { AppliedFilters } from './filters/LeadFilters';
 
 // Utility functions
 const formatCurrency = (amount: number | null | undefined) => {
@@ -61,6 +62,8 @@ interface LeadsTableProps {
   onPageSizeChange?: (size: number) => void;
   currentPage?: number;
   totalLeads?: number;
+  onOpenFilters?: () => void;
+  activeFiltersCount?: number;
 }
 
 export default function LeadsTable({
@@ -74,6 +77,8 @@ export default function LeadsTable({
   onPageSizeChange,
   currentPage = 1,
   totalLeads,
+  onOpenFilters,
+  activeFiltersCount = 0,
 }: LeadsTableProps) {
   // Debug log
   console.log('LeadsTable Props:', { pageSize, currentPage, totalLeads, leadsCount: leads.length });
@@ -196,18 +201,45 @@ export default function LeadsTable({
       <div className="p-6 border-b border-wit-border">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold text-wit-text mb-1">Daftar Leads</h2>
+            <div className="flex items-center space-x-3 mb-1">
+              <h2 className="text-2xl font-bold text-wit-text">Daftar Leads</h2>
+              {activeFiltersCount > 0 && (
+                <span className="px-2 py-1 bg-wit-red text-white text-xs rounded-full font-medium">
+                  {activeFiltersCount} filter{activeFiltersCount !== 1 ? 's' : ''} active
+                </span>
+              )}
+            </div>
             <p className="text-wit-muted text-sm">
               Showing {startItem}-{endItem} of {total} leads
             </p>
           </div>
-          <button
-            onClick={onAdd}
-            className="btn-primary flex items-center space-x-2 w-fit"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Tambah Lead</span>
-          </button>
+          <div className="flex items-center space-x-3">
+            {onOpenFilters && (
+              <button
+                onClick={onOpenFilters}
+                className={`flex items-center space-x-2 px-4 py-2.5 rounded-lg border transition-all ${
+                  activeFiltersCount > 0
+                    ? 'bg-wit-red/10 border-wit-red/30 text-wit-red'
+                    : 'bg-wit-card border-wit-border text-wit-muted hover:text-wit-text'
+                }`}
+              >
+                <Sliders className="w-4 h-4" />
+                <span className="hidden md:inline">Filters</span>
+                {activeFiltersCount > 0 && (
+                  <span className="w-5 h-5 bg-wit-red text-white text-xs rounded-full flex items-center justify-center">
+                    {activeFiltersCount}
+                  </span>
+                )}
+              </button>
+            )}
+            <button
+              onClick={onAdd}
+              className="btn-primary flex items-center space-x-2 w-fit"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Tambah Lead</span>
+            </button>
+          </div>
         </div>
       </div>
 
