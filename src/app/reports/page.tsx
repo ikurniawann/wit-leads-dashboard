@@ -1,33 +1,125 @@
 'use client';
 
+import { useState } from 'react';
 import Sidebar from '../../components/Sidebar';
-import { FileText, Download, Calendar, TrendingUp } from 'lucide-react';
+import { FileText, Download, Calendar, TrendingUp, Users, DollarSign } from 'lucide-react';
+import { exportLeadsToExcel, exportClientsToExcel, exportEmployeesToExcel } from '../../lib/utils/export-excel';
+import { exportLeadsToPDF, exportClientsToPDF, exportEmployeesToPDF } from '../../lib/utils/export-pdf';
 
 export default function ReportsPage() {
+  const [exporting, setExporting] = useState<string | null>(null);
+
+  const handleExportExcel = async (type: 'leads' | 'clients' | 'employees') => {
+    setExporting(`${type}-excel`);
+    
+    try {
+      // Sample data (will be replaced with real Supabase data)
+      let result;
+      if (type === 'leads') {
+        const sampleLeads = [
+          { quotation_id: 'LEAD-202603-001', company_name: 'ION Network', project_name: 'IoT Platform', client_name: 'ION', pic_name: 'Ilham', status_id: 'IN_PROGRESS', value: 488400000, probability: 60 },
+          { quotation_id: 'LEAD-202603-002', company_name: 'BNI Rise', project_name: 'KNPI Catalog', client_name: 'BNI', pic_name: 'Irfan', status_id: 'NEW', value: 450000000, probability: 40 },
+        ];
+        result = await exportLeadsToExcel(sampleLeads);
+      } else if (type === 'clients') {
+        const sampleClients = [
+          { company_name: 'ION Network', contact_person: 'John Doe', email: 'john@ion.com', phone: '+62 812xxx', industry: 'Technology', status: 'active' },
+          { company_name: 'BNI Rise', contact_person: 'Jane Smith', email: 'jane@bni.com', phone: '+62 813xxx', industry: 'Finance', status: 'active' },
+        ];
+        result = await exportClientsToExcel(sampleClients);
+      } else {
+        const sampleEmployees = [
+          { employee_name: 'Banu Rusman', position: 'CIO', department: 'Technology', email: 'banu@wit.com', phone: '+62 811xxx', status: 'active' },
+        ];
+        result = await exportEmployeesToExcel(sampleEmployees);
+      }
+      
+      if (result.success) {
+        alert(`${type} exported to Excel successfully!`);
+      } else {
+        alert('Failed to export. Please try again.');
+      }
+    } catch (error) {
+      console.error('Export error:', error);
+      alert('Failed to export. Please install required dependencies.');
+    } finally {
+      setExporting(null);
+    }
+  };
+
+  const handleExportPDF = async (type: 'leads' | 'clients' | 'employees') => {
+    setExporting(`${type}-pdf`);
+    
+    try {
+      // Sample data (will be replaced with real Supabase data)
+      let result;
+      if (type === 'leads') {
+        const sampleLeads = [
+          { quotation_id: 'LEAD-202603-001', company_name: 'ION Network', project_name: 'IoT Platform', client_name: 'ION', pic_name: 'Ilham', status_id: 'IN_PROGRESS', value: 488400000 },
+          { quotation_id: 'LEAD-202603-002', company_name: 'BNI Rise', project_name: 'KNPI Catalog', client_name: 'BNI', pic_name: 'Irfan', status_id: 'NEW', value: 450000000 },
+        ];
+        result = await exportLeadsToPDF(sampleLeads);
+      } else if (type === 'clients') {
+        const sampleClients = [
+          { company_name: 'ION Network', contact_person: 'John Doe', email: 'john@ion.com', phone: '+62 812xxx', industry: 'Technology', status: 'active' },
+        ];
+        result = await exportClientsToPDF(sampleClients);
+      } else {
+        const sampleEmployees = [
+          { employee_name: 'Banu Rusman', position: 'CIO', department: 'Technology', email: 'banu@wit.com', phone: '+62 811xxx', status: 'active' },
+        ];
+        result = await exportEmployeesToPDF(sampleEmployees);
+      }
+      
+      if (result.success) {
+        alert(`${type} exported to PDF successfully!`);
+      } else {
+        alert('Failed to export. Please try again.');
+      }
+    } catch (error) {
+      console.error('Export error:', error);
+      alert('Failed to export. Please install required dependencies.');
+    } finally {
+      setExporting(null);
+    }
+  };
+
   const reports = [
     {
-      title: 'Monthly Leads Summary',
-      description: 'Complete overview of all leads for the current month',
+      title: 'Leads Report',
+      description: 'Complete overview of all leads with status and values',
       icon: FileText,
-      status: 'Available',
+      category: 'Sales',
+    },
+    {
+      title: 'Clients Report',
+      description: 'Active clients database with contact information',
+      icon: Users,
+      category: 'CRM',
+    },
+    {
+      title: 'Employees Report',
+      description: 'Employee directory with positions and departments',
+      icon: Users,
+      category: 'HR',
+    },
+    {
+      title: 'Monthly Revenue Report',
+      description: 'Revenue breakdown by month and PIC',
+      icon: DollarSign,
+      category: 'Finance',
     },
     {
       title: 'Pipeline Analysis',
-      description: 'Detailed pipeline breakdown by status and value',
+      description: 'Detailed pipeline breakdown by status and conversion',
       icon: TrendingUp,
-      status: 'Available',
+      category: 'Sales',
     },
     {
-      title: 'Client Performance Report',
-      description: 'Revenue and projects per client',
+      title: 'Quarterly Performance',
+      description: 'Q1 2026 performance summary and insights',
       icon: Calendar,
-      status: 'Coming Soon',
-    },
-    {
-      title: 'PIC Performance Report',
-      description: 'Individual performance metrics for each PIC',
-      icon: TrendingUp,
-      status: 'Coming Soon',
+      category: 'Executive',
     },
   ];
 
@@ -43,38 +135,96 @@ export default function ReportsPage() {
             <p className="text-wit-muted">Generate and export reports</p>
           </div>
 
-          {/* Quick Actions */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div className="glass border border-wit-border rounded-xl p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-wit-red/10 rounded-lg">
-                  <Download className="w-6 h-6 text-wit-red" />
-                </div>
-                <span className="badge badge-approved">Available</span>
-              </div>
-              <h3 className="text-lg font-bold text-wit-text mb-2">Export to Excel</h3>
-              <p className="text-wit-muted text-sm mb-4">
-                Download all leads data in Excel format
-              </p>
-              <button className="btn-primary w-full">
-                Download Excel
-              </button>
-            </div>
-
+          {/* Quick Export Actions */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <div className="glass border border-wit-border rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="p-3 bg-wit-red/10 rounded-lg">
                   <FileText className="w-6 h-6 text-wit-red" />
                 </div>
-                <span className="badge badge-approved">Available</span>
               </div>
-              <h3 className="text-lg font-bold text-wit-text mb-2">Export to PDF</h3>
+              <h3 className="text-lg font-bold text-wit-text mb-2">Leads Export</h3>
               <p className="text-wit-muted text-sm mb-4">
-                Generate PDF report with charts and summaries
+                Export all leads data
               </p>
-              <button className="btn-primary w-full">
-                Download PDF
-              </button>
+              <div className="space-y-2">
+                <button 
+                  onClick={() => handleExportExcel('leads')}
+                  className="btn-primary w-full flex items-center justify-center space-x-2"
+                  disabled={exporting === 'leads-excel'}
+                >
+                  <Download className="w-4 h-4" />
+                  <span>{exporting === 'leads-excel' ? 'Exporting...' : 'Export Excel'}</span>
+                </button>
+                <button 
+                  onClick={() => handleExportPDF('leads')}
+                  className="btn-secondary w-full flex items-center justify-center space-x-2"
+                  disabled={exporting === 'leads-pdf'}
+                >
+                  <Download className="w-4 h-4" />
+                  <span>{exporting === 'leads-pdf' ? 'Exporting...' : 'Export PDF'}</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="glass border border-wit-border rounded-xl p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="p-3 bg-wit-red/10 rounded-lg">
+                  <Users className="w-6 h-6 text-wit-red" />
+                </div>
+              </div>
+              <h3 className="text-lg font-bold text-wit-text mb-2">Clients Export</h3>
+              <p className="text-wit-muted text-sm mb-4">
+                Export all clients data
+              </p>
+              <div className="space-y-2">
+                <button 
+                  onClick={() => handleExportExcel('clients')}
+                  className="btn-primary w-full flex items-center justify-center space-x-2"
+                  disabled={exporting === 'clients-excel'}
+                >
+                  <Download className="w-4 h-4" />
+                  <span>{exporting === 'clients-excel' ? 'Exporting...' : 'Export Excel'}</span>
+                </button>
+                <button 
+                  onClick={() => handleExportPDF('clients')}
+                  className="btn-secondary w-full flex items-center justify-center space-x-2"
+                  disabled={exporting === 'clients-pdf'}
+                >
+                  <Download className="w-4 h-4" />
+                  <span>{exporting === 'clients-pdf' ? 'Exporting...' : 'Export PDF'}</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="glass border border-wit-border rounded-xl p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="p-3 bg-wit-red/10 rounded-lg">
+                  <Users className="w-6 h-6 text-wit-red" />
+                </div>
+              </div>
+              <h3 className="text-lg font-bold text-wit-text mb-2">Employees Export</h3>
+              <p className="text-wit-muted text-sm mb-4">
+                Export all employees data
+              </p>
+              <div className="space-y-2">
+                <button 
+                  onClick={() => handleExportExcel('employees')}
+                  className="btn-primary w-full flex items-center justify-center space-x-2"
+                  disabled={exporting === 'employees-excel'}
+                >
+                  <Download className="w-4 h-4" />
+                  <span>{exporting === 'employees-excel' ? 'Exporting...' : 'Export Excel'}</span>
+                </button>
+                <button 
+                  onClick={() => handleExportPDF('employees')}
+                  className="btn-secondary w-full flex items-center justify-center space-x-2"
+                  disabled={exporting === 'employees-pdf'}
+                >
+                  <Download className="w-4 h-4" />
+                  <span>{exporting === 'employees-pdf' ? 'Exporting...' : 'Export PDF'}</span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -98,22 +248,13 @@ export default function ReportsPage() {
                       <div>
                         <h3 className="text-lg font-bold text-wit-text">{report.title}</h3>
                         <p className="text-wit-muted text-sm">{report.description}</p>
+                        <span className="text-wit-muted text-xs mt-1 inline-block px-2 py-1 bg-wit-red/10 rounded">
+                          {report.category}
+                        </span>
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
-                      <span className={`badge ${report.status === 'Available' ? 'badge-done' : 'badge-cancelled'}`}>
-                        {report.status}
-                      </span>
-                      {report.status === 'Available' ? (
-                        <button className="btn-secondary flex items-center space-x-2">
-                          <Download className="w-4 h-4" />
-                          <span>Download</span>
-                        </button>
-                      ) : (
-                        <button className="btn-secondary flex items-center space-x-2" disabled>
-                          <span>Coming Soon</span>
-                        </button>
-                      )}
+                      <span className="badge badge-cancelled">Coming Soon</span>
                     </div>
                   </div>
                 );
