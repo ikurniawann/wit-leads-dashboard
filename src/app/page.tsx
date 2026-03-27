@@ -8,7 +8,7 @@ import WinRateChart from '../components/dashboard/WinRateChart';
 import LeadsTable from '../components/LeadsTable';
 import LeadFormModal from '../components/leads/LeadFormModal';
 import DeleteConfirmModal from '../components/shared/DeleteConfirmModal';
-import { leadsApi, Lead, LeadStats } from '@/lib/api/leads';
+import { leadsApi, Lead, LeadStats } from '../lib/api/leads';
 import { Plus } from 'lucide-react';
 
 export default function Dashboard() {

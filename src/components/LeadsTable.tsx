@@ -2,7 +2,53 @@
 
 import { useState } from 'react';
 import { Search, Filter, Plus, Edit2, Trash2, Eye } from 'lucide-react';
-import { Lead, formatCurrency, formatDate, getStatusBadgeClass, getStatusLabel } from '../lib/supabase';
+import { Lead } from '../lib/api/leads';
+
+// Utility functions
+const formatCurrency = (amount: number | null | undefined) => {
+  if (!amount) return 'Rp 0';
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+  }).format(amount);
+};
+
+const formatDate = (dateString: string) => {
+  return new Intl.DateTimeFormat('id-ID', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(new Date(dateString));
+};
+
+const getStatusBadgeClass = (statusId: string) => {
+  switch (statusId) {
+    case 'NEW':
+      return 'badge-new';
+    case 'APPROVED':
+      return 'badge-approved';
+    case 'IN_PROGRESS':
+      return 'badge-in-progress';
+    case 'DONE':
+      return 'badge-done';
+    case 'CANCELLED':
+      return 'badge-cancelled';
+    default:
+      return 'badge-new';
+  }
+};
+
+const getStatusLabel = (statusId: string) => {
+  const labels: Record<string, string> = {
+    NEW: 'Baru',
+    APPROVED: 'Disetujui',
+    IN_PROGRESS: 'Dalam Proses',
+    DONE: 'Selesai',
+    CANCELLED: 'Dibatalkan',
+  };
+  return labels[statusId] || statusId;
+};
 
 interface LeadsTableProps {
   leads: Lead[];
