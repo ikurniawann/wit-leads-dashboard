@@ -171,7 +171,7 @@ export default function EmployeeFormModal({ isOpen, onClose, employee, onSuccess
               </label>
               <input
                 type="date"
-                value={formData.join_date}
+                value={formData.join_date || ''}
                 onChange={(e) => handleChange('join_date', e.target.value)}
                 className="input-dark w-full"
               />
