@@ -75,13 +75,13 @@ export const projectsApi = {
       .from('projects')
       .select(`
         *,
-        project_categories (
+        project_categories!projects_category_id_fkey (
           category_name
         ),
-        clients (
+        clients!projects_client_id_fkey (
           company_name
         ),
-        employees (
+        employees!projects_project_manager_fkey (
           employee_name
         )
       `)
@@ -89,13 +89,19 @@ export const projectsApi = {
 
     if (error) throw error;
 
-    // Flatten nested data
-    return projects.map(p => ({
-      ...p,
-      category_name: (p.project_categories as any)?.[0]?.category_name,
-      client_name: (p.clients as any)?.[0]?.company_name,
-      project_manager_name: (p.employees as any)?.[0]?.employee_name,
-    })) as Project[];
+    // Flatten nested data - Supabase returns arrays for relationships
+    return projects.map(p => {
+      const categories = p.project_categories as any[];
+      const clients = p.clients as any[];
+      const employees = p.employees as any[];
+      
+      return {
+        ...p,
+        category_name: categories?.[0]?.category_name || null,
+        client_name: clients?.[0]?.company_name || null,
+        project_manager_name: employees?.[0]?.employee_name || null,
+      };
+    }) as Project[];
   },
 
   // GET PROJECT BY ID
