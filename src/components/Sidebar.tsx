@@ -35,6 +35,7 @@ export default function Sidebar() {
       icon: FolderKanban,
       submenu: [
         { href: '/projects', label: 'All Projects' },
+        { href: '/projects/timeline', label: 'Timeline' },
         { href: '/reports/workload', label: 'Workload Report' },
       ]
     },
