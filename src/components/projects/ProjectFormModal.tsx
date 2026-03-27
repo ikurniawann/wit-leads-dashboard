@@ -245,14 +245,14 @@ export default function ProjectFormModal({
             {/* Project Manager */}
             <div>
               <label className="block text-sm font-medium text-wit-text mb-2">
-                Project Manager
+                PM (Project Manager)
               </label>
               <select
                 value={formData.project_manager}
                 onChange={(e) => setFormData({ ...formData, project_manager: e.target.value })}
                 className="input-dark w-full"
               >
-                <option value="">Select manager</option>
+                <option value="">Select PM</option>
                 {employees.map(emp => (
                   <option key={emp.employee_id} value={emp.employee_id}>
                     {emp.employee_name}

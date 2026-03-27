@@ -151,7 +151,7 @@ export default function ProjectsTable({
               <th>Priority</th>
               <th>Budget</th>
               <th>Progress</th>
-              <th>Manager</th>
+              <th>PM</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -214,7 +214,7 @@ export default function ProjectsTable({
                     </div>
                   </td>
                   <td>
-                    <div className="text-wit-text text-sm">{project.project_manager_name || '-'}</div>
+                    <div className="text-wit-text text-sm">{project.project_manager_name || project.project_manager || '-'}</div>
                   </td>
                   <td>
                     <div className="flex items-center space-x-2">
