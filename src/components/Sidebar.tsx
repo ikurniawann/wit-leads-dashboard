@@ -37,6 +37,7 @@ export default function Sidebar() {
         { href: '/projects', label: 'All Projects' },
         { href: '/projects/timeline', label: 'Timeline' },
         { href: '/projects/budget', label: 'Budget vs Actual' },
+        { href: '/projects/documents', label: 'Documents' },
         { href: '/reports/workload', label: 'Workload Report' },
       ]
     },
