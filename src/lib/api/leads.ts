@@ -22,8 +22,8 @@ export interface Lead {
   discount_amount?: number;
   total_value?: number;
   quotation_date?: string;
-  valid_until?: string;
-  follow_up_date?: string;
+  valid_until?: string | null;
+  follow_up_date?: string | null;
   tags?: string[];
   internal_notes?: string;
   created_at: string;

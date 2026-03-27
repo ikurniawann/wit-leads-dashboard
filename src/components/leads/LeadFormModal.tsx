@@ -397,7 +397,7 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
             </label>
             <input
               type="date"
-              value={formData.valid_until}
+              value={formData.valid_until || ''}
               onChange={(e) => handleChange('valid_until', e.target.value)}
               className="input-dark w-full"
             />
@@ -409,7 +409,7 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
             </label>
             <input
               type="date"
-              value={formData.follow_up_date}
+              value={formData.follow_up_date || ''}
               onChange={(e) => handleChange('follow_up_date', e.target.value)}
               className="input-dark w-full"
             />
