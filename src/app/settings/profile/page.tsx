@@ -43,7 +43,7 @@ export default function ProfileSettingsPage() {
     <div className="min-h-screen bg-wit-darker">
       <Sidebar />
       
-      <main className="ml-72 pt-16 pb-12">
+      <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
         <div className="px-6">
           {/* Page Header */}
           <div className="mb-6">

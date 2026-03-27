@@ -44,27 +44,31 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile Menu Button */}
+      {/* Mobile Menu Button - Only show on mobile */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
         className="md:hidden fixed top-4 left-4 p-3 bg-wit-red text-white rounded-lg z-50 shadow-lg"
+        aria-label="Toggle menu"
       >
         {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
 
-      {/* Overlay for mobile */}
+      {/* Overlay for mobile - Click to close */}
       {mobileOpen && (
         <div
-          className="md:hidden fixed inset-0 bg-black/50 z-40"
+          className="md:hidden fixed inset-0 bg-black/50 z-40 backdrop-blur-sm"
           onClick={() => setMobileOpen(false)}
+          aria-hidden="true"
         />
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar - Hidden on mobile by default, slide in when open */}
       <aside
-        className={`fixed left-0 top-0 h-screen bg-wit-darker border-r border-wit-border z-50 transition-all duration-300 ${
+        className={`fixed left-0 top-0 h-screen bg-wit-darker border-r border-wit-border z-50 transition-all duration-300 transform ${
+          mobileOpen ? 'translate-x-0' : '-translate-x-full'
+        } md:translate-x-0 md:${collapsed ? 'w-20' : 'w-72'} ${
           collapsed ? 'w-20' : 'w-72'
-        } hidden md:block ${mobileOpen ? 'block' : ''}`}
+        }`}
       >
         {/* Logo */}
         <div className="h-20 flex items-center justify-between px-6 border-b border-wit-border">
@@ -130,13 +134,13 @@ export default function Sidebar() {
         </div>
       </aside>
 
-      {/* Top Bar */}
+      {/* Top Bar - Adjust left position based on sidebar state */}
       <header
-        className={`fixed top-0 right-0 h-16 border-b border-wit-border glass z-40 transition-all duration-300 md:block ${
-          collapsed ? 'left-20' : 'left-72'
-        } ${mobileOpen ? 'left-0 md:left-auto' : ''}`}
+        className={`fixed top-0 right-0 h-16 border-b border-wit-border glass z-30 transition-all duration-300 ${
+          mobileOpen ? 'left-0' : collapsed ? 'left-20' : 'left-72'
+        } md:${collapsed ? 'left-20' : 'left-72'}`}
       >
-        <div className="h-full px-6 flex items-center justify-between">
+        <div className="h-full px-4 md:px-6 flex items-center justify-between">
           {/* Breadcrumb - Hidden on mobile */}
           <div className="hidden md:flex items-center space-x-2 text-sm">
             <Link href="/" className="text-wit-muted hover:text-wit-text">
@@ -146,6 +150,13 @@ export default function Sidebar() {
             <span className="text-wit-text capitalize">
               {pathname === '/' ? 'Dashboard' : pathname.split('/')[1]}
             </span>
+          </div>
+
+          {/* Mobile title - Only show on mobile */}
+          <div className="md:hidden">
+            <h1 className="text-lg font-bold text-wit-text">
+              {pathname === '/' ? 'Dashboard' : pathname.split('/')[1].charAt(0).toUpperCase() + pathname.split('/')[1].slice(1)}
+            </h1>
           </div>
 
           {/* Right side */}

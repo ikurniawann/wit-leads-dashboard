@@ -100,8 +100,8 @@ export default function Dashboard() {
     <div className="min-h-screen bg-wit-darker">
       <Sidebar />
       
-      <main className="ml-72 pt-16 pb-12">
-        <div className="px-6">
+      <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
+        <div>
           {/* Page Header */}
           <div className="flex items-center justify-between mb-6">
             <div>

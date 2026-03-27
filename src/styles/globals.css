@@ -108,6 +108,23 @@ body {
   color: #ffffff !important;
 }
 
+/* Mobile responsive tables */
+@media (max-width: 768px) {
+  .table-dark {
+    font-size: 14px;
+  }
+  
+  .table-dark th,
+  .table-dark td {
+    white-space: nowrap;
+  }
+  
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 /* Sidebar hover - text jadi putih */
 .sidebar-item:hover {
   background-color: rgba(192, 0, 0, 0.2);
