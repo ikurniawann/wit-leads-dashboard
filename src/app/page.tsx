@@ -7,6 +7,7 @@ import PipelineChart from '../components/dashboard/PipelineChart';
 import WinRateChart from '../components/dashboard/WinRateChart';
 import LeadsTable from '../components/LeadsTable';
 import LeadFormModal from '../components/leads/LeadFormModal';
+import LeadDetailModal from '../components/leads/LeadDetailModal';
 import DeleteConfirmModal from '../components/shared/DeleteConfirmModal';
 import { leadsApi, Lead, LeadStats } from '../lib/api/leads';
 import { Plus } from 'lucide-react';
@@ -27,6 +28,7 @@ export default function Dashboard() {
   // Modal states
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
 
@@ -66,7 +68,8 @@ export default function Dashboard() {
   };
 
   const handleViewLead = (lead: Lead) => {
-    alert(`View lead details: ${lead.project_name}`);
+    setSelectedLead(lead);
+    setIsDetailModalOpen(true);
   };
 
   const handleModalSuccess = () => {
@@ -158,6 +161,27 @@ export default function Dashboard() {
         onClose={() => setIsEditModalOpen(false)}
         lead={selectedLead}
         onSuccess={handleModalSuccess}
+      />
+
+      <LeadDetailModal
+        isOpen={isDetailModalOpen}
+        onClose={() => setIsDetailModalOpen(false)}
+        lead={selectedLead}
+        onEdit={(lead) => {
+          setSelectedLead(lead);
+          setIsDetailModalOpen(false);
+          setIsEditModalOpen(true);
+        }}
+        onDelete={(lead) => {
+          setSelectedLead(lead);
+          setIsDetailModalOpen(false);
+          setIsDeleteModalOpen(true);
+        }}
+        onStageChange={(lead, newStage) => {
+          // TODO: Implement stage change API call
+          console.log('Change stage:', lead.quotation_id, newStage);
+          loadData();
+        }}
       />
 
       <DeleteConfirmModal
