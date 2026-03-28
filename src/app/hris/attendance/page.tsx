@@ -37,6 +37,11 @@ const generateDummyAttendance = () => {
     const checkOut = status === 'PRESENT' || status === 'LATE' ?
       new Date(date.setHours(17 + Math.floor(Math.random() * 3), Math.floor(Math.random() * 60))) : null;
     
+    const workLocation = status === 'WORK_FROM_HOME' ? 'WFH' : 
+      status === 'LEAVE' ? null : 
+      Math.random() > 0.8 ? 'REMOTE' : 
+      Math.random() > 0.9 ? 'OUT_OF_TOWN' : 'OFFICE';
+    
     records.push({
       attendance_id: `ATT-${String(i).padStart(4, '0')}`,
       employee_id: employee.employee_id,
@@ -47,8 +52,9 @@ const generateDummyAttendance = () => {
       check_in: checkIn ? checkIn.toISOString() : null,
       check_out: checkOut ? checkOut.toISOString() : null,
       status: status,
-      latitude: status !== 'ABSENT' ? -6.2088 + (Math.random() * 0.1 - 0.05) : null,
-      longitude: status !== 'ABSENT' ? 106.8456 + (Math.random() * 0.1 - 0.05) : null,
+      work_location: workLocation,
+      latitude: status !== 'ABSENT' && workLocation !== 'WFH' ? -6.2088 + (Math.random() * 0.1 - 0.05) : null,
+      longitude: status !== 'ABSENT' && workLocation !== 'WFH' ? 106.8456 + (Math.random() * 0.1 - 0.05) : null,
       photo_url: status !== 'ABSENT' ? `/attendance/photos/ATT-${String(i).padStart(4, '0')}.jpg` : null,
       notes: status === 'LATE' ? 'Traffic jam' : status === 'WORK_FROM_HOME' ? 'Remote work approved' : '',
     });
@@ -65,6 +71,13 @@ const STATUS_COLORS: Record<string, string> = {
   ABSENT: 'text-red-500 bg-red-500/10 border-red-500/30',
   LEAVE: 'text-blue-500 bg-blue-500/10 border-blue-500/30',
   WORK_FROM_HOME: 'text-purple-500 bg-purple-500/10 border-purple-500/30',
+};
+
+const WORK_LOCATION_COLORS: Record<string, string> = {
+  OFFICE: 'text-blue-500 bg-blue-500/10',
+  WFH: 'text-purple-500 bg-purple-500/10',
+  REMOTE: 'text-green-500 bg-green-500/10',
+  OUT_OF_TOWN: 'text-orange-500 bg-orange-500/10',
 };
 
 const STATUS_ICONS: Record<string, any> = {
@@ -430,7 +443,8 @@ export default function AttendancePage() {
                     <th>Check In</th>
                     <th>Check Out</th>
                     <th>Status</th>
-                    <th>Location</th>
+                    <th>Work Location</th>
+                    <th>GPS Location</th>
                     <th>Photo</th>
                     <th>Notes</th>
                   </tr>
@@ -464,6 +478,19 @@ export default function AttendancePage() {
                             <StatusIcon className="w-3 h-3" />
                             <span>{record.status.replace('_', ' ')}</span>
                           </span>
+                        </td>
+                        <td>
+                          {record.work_location ? (
+                            <span className={`inline-flex items-center space-x-1 px-3 py-1 rounded-full text-xs font-medium ${WORK_LOCATION_COLORS[record.work_location]}`}>
+                              {record.work_location === 'WFH' && <Cloud className="w-3 h-3" />}
+                              {record.work_location === 'OFFICE' && <MapPin className="w-3 h-3" />}
+                              {record.work_location === 'REMOTE' && <Camera className="w-3 h-3" />}
+                              {record.work_location === 'OUT_OF_TOWN' && <AlertCircle className="w-3 h-3" />}
+                              <span>{record.work_location}</span>
+                            </span>
+                          ) : (
+                            <span className="text-wit-muted">-</span>
+                          )}
                         </td>
                         <td>
                           {record.latitude && record.longitude ? (

@@ -51,7 +51,7 @@ export default function Sidebar() {
       icon: UserCheck,
       submenu: [
         { href: '/hris/attendance', label: 'Attendance' },
-        { href: '/hris/leave', label: 'Leave Management 🔒' },
+        { href: '/hris/leave', label: 'Leave Management' },
         { href: '/hris/performance', label: 'Performance Review 🔒' },
         { href: '/hris/payroll', label: 'Payroll 🔒' },
         { href: '/hris/employees', label: 'Employee Directory 🔒' },
