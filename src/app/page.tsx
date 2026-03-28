@@ -108,7 +108,7 @@ export default function Dashboard() {
       <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
         <div>
           {/* Page Header - Mobile Responsive */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6 pb-4 border-b border-wit-border/0">
             <div className="flex-1">
               <h1 className="text-2xl md:text-3xl font-bold text-wit-text mb-1 md:mb-2">Dashboard</h1>
               <p className="text-sm md:text-base text-wit-muted">Monitor dan kelola pipeline leads WIT</p>
