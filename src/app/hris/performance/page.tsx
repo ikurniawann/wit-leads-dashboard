@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Header from '../../components/Header';
 import Sidebar from '../../../components/Sidebar';
 import { 
   TrendingUp, Star, Target, Users, Calendar, CheckCircle, 
@@ -146,6 +147,7 @@ export default function PerformanceReviewPage() {
   return (
     <div className="min-h-screen theme-content">
       <Sidebar />
+      <Header />
       
       <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
         <div>

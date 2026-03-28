@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import ThemeToggle from '../../components/ThemeToggle';
 import { User, Database, Bell, Shield, Palette, Sun, Moon, ChevronRight } from 'lucide-react';
@@ -47,6 +48,7 @@ export default function SettingsPage() {
   return (
     <div className="min-h-screen theme-content">
       <Sidebar />
+      <Header />
       
       <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
         <div>

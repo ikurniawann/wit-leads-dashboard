@@ -18,7 +18,7 @@ export default function Header({ title }: HeaderProps) {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 h-20 border-b z-[90] theme-header">
+    <header className="fixed top-0 left-0 right-0 h-20 z-[90] theme-header">
       <div className="h-full px-4 md:px-6 flex items-center justify-between">
         {/* Left: Title */}
         <div className="flex-1">
