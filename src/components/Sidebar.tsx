@@ -52,7 +52,7 @@ export default function Sidebar() {
       submenu: [
         { href: '/hris/attendance', label: 'Attendance' },
         { href: '/hris/leave', label: 'Leave Management' },
-        { href: '/hris/performance', label: 'Performance Review 🔒' },
+        { href: '/hris/performance', label: 'Performance Review' },
         { href: '/hris/payroll', label: 'Payroll 🔒' },
         { href: '/hris/employees', label: 'Employee Directory 🔒' },
         { href: '/hris/requests', label: 'My Requests 🔒' },
