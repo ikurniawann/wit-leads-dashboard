@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Bell, FileText, Megaphone, X, Check, CheckCheck, AlertCircle, Info, User, Calendar } from 'lucide-react';
+import { Bell, FileText, Megaphone, X, CheckCheck, AlertCircle, Info, User, Calendar, Plus, Trash2, Edit } from 'lucide-react';
 
-// DUMMY DATA - Will be replaced with real API later
+// DUMMY DATA - CRUD Action Logs with PIC
 const DUMMY_ACTIVITY_LOGS = [
   {
     id: '1',
@@ -11,7 +11,8 @@ const DUMMY_ACTIVITY_LOGS = [
     entity: 'Lead',
     description: 'Created new lead: PT Maju Jaya',
     user: 'Muhamad Ilham Kurniawan',
-    timestamp: new Date(Date.now() - 1000 * 60 * 5).toISOString(), // 5 min ago
+    user_avatar: 'MK',
+    timestamp: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
   },
   {
     id: '2',
@@ -19,7 +20,8 @@ const DUMMY_ACTIVITY_LOGS = [
     entity: 'Project',
     description: 'Updated project status: Rental Management System → Active',
     user: 'Fahmi Muhammad Syaban',
-    timestamp: new Date(Date.now() - 1000 * 60 * 30).toISOString(), // 30 min ago
+    user_avatar: 'FS',
+    timestamp: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
   },
   {
     id: '3',
@@ -27,23 +29,26 @@ const DUMMY_ACTIVITY_LOGS = [
     entity: 'Vendor',
     description: 'Deleted vendor: CV Test',
     user: 'Admin',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60).toISOString(), // 1 hour ago
+    user_avatar: 'AD',
+    timestamp: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
   },
   {
     id: '4',
     type: 'CREATE',
     entity: 'Employee',
     description: 'Added new employee: Siti Nurhaliza (Designer)',
-    user: 'HRD',
-    timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString(), // 2 hours ago
+    user: 'Dewi Lestari',
+    user_avatar: 'DL',
+    timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
   },
   {
     id: '5',
     type: 'UPDATE',
     entity: 'Budget',
     description: 'Updated budget: GNSS Chipset project',
-    user: 'Finance Team',
-    timestamp: new Date(Date.now() - 1000 * 60 * 180).toISOString(), // 3 hours ago
+    user: 'Fitri Handayani',
+    user_avatar: 'FH',
+    timestamp: new Date(Date.now() - 1000 * 60 * 180).toISOString(),
   },
 ];
 
@@ -52,9 +57,9 @@ const DUMMY_ANNOUNCEMENTS = [
     id: '1',
     type: 'COMPANY',
     title: 'Office Closure - Public Holiday',
-    description: 'Office will be closed on Monday, April 1st, 2026 for public holiday. Normal operations resume on Tuesday.',
+    description: 'Office will be closed on Monday, April 1st, 2026',
     from: 'Management',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(), // 2 hours ago
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
     priority: 'HIGH',
     read: false,
   },
@@ -62,31 +67,11 @@ const DUMMY_ANNOUNCEMENTS = [
     id: '2',
     type: 'HRD',
     title: 'Team Building Event Q2 2026',
-    description: 'Join us for team building event on April 15th, 2026 at Puncak. Registration open until April 10th.',
+    description: 'Join us for team building on April 15th at Puncak',
     from: 'HRD Department',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(), // 1 day ago
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
     priority: 'MEDIUM',
     read: false,
-  },
-  {
-    id: '3',
-    type: 'HRD',
-    title: 'New Leave Policy Update',
-    description: 'Updated leave policy effective April 1st. Please check employee handbook for details.',
-    from: 'HRD Department',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(), // 2 days ago
-    priority: 'LOW',
-    read: true,
-  },
-  {
-    id: '4',
-    type: 'COMPANY',
-    title: 'Q1 2026 Performance Review',
-    description: 'Great job team! We achieved 128% of our Q1 target. Thank you for your hard work!',
-    from: 'CEO Office',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(), // 3 days ago
-    priority: 'MEDIUM',
-    read: true,
   },
 ];
 
@@ -94,6 +79,12 @@ const ACTIVITY_COLORS: Record<string, string> = {
   CREATE: 'text-green-500 bg-green-500/10',
   UPDATE: 'text-blue-500 bg-blue-500/10',
   DELETE: 'text-red-500 bg-red-500/10',
+};
+
+const ACTIVITY_ICONS: Record<string, any> = {
+  CREATE: Plus,
+  UPDATE: Edit,
+  DELETE: Trash2,
 };
 
 const ANNOUNCEMENT_COLORS: Record<string, string> = {
@@ -120,7 +111,7 @@ interface NotificationsProps {
 export default function Notifications({ onNotificationsOpen }: NotificationsProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'ALL' | 'ACTIVITY' | 'ANNOUNCEMENTS'>('ALL');
-  const [unreadCount, setUnreadCount] = useState(2);
+  const [unreadCount, setUnreadCount] = useState(5);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -137,7 +128,6 @@ export default function Notifications({ onNotificationsOpen }: NotificationsProp
 
   const handleMarkAllRead = () => {
     setUnreadCount(0);
-    alert('All notifications marked as read! (Demo only)');
   };
 
   const filteredLogs = activeTab === 'ALL' || activeTab === 'ACTIVITY' 
@@ -147,19 +137,6 @@ export default function Notifications({ onNotificationsOpen }: NotificationsProp
   const filteredAnnouncements = activeTab === 'ALL' || activeTab === 'ANNOUNCEMENTS'
     ? DUMMY_ANNOUNCEMENTS 
     : [];
-
-  const getTypeIcon = (type: string) => {
-    const icons: Record<string, any> = {
-      CREATE: FileText,
-      UPDATE: User,
-      DELETE: AlertCircle,
-    };
-    return icons[type] || FileText;
-  };
-
-  const getAnnouncementIcon = (type: string) => {
-    return type === 'COMPANY' ? Megaphone : User;
-  };
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -173,7 +150,7 @@ export default function Notifications({ onNotificationsOpen }: NotificationsProp
       >
         <Bell className="w-5 h-5" />
         {unreadCount > 0 && (
-          <span className="absolute top-1 right-1 w-4 h-4 bg-wit-red text-white text-xs rounded-full flex items-center justify-center">
+          <span className="absolute -top-1 -right-1 w-5 h-5 bg-blue-500 text-white text-xs rounded-full flex items-center justify-center font-bold border-2 border-wit-darker">
             {unreadCount}
           </span>
         )}
@@ -242,7 +219,7 @@ export default function Notifications({ onNotificationsOpen }: NotificationsProp
           <div className="overflow-y-auto max-h-[400px]">
             {/* Activity Logs */}
             {(activeTab === 'ALL' || activeTab === 'ACTIVITY') && (
-              <div className="border-b border-wit-border">
+              <div>
                 <div className="px-4 py-2 bg-wit-card/30">
                   <span className="text-xs font-medium text-wit-muted">ACTIVITY LOG</span>
                 </div>
@@ -250,22 +227,30 @@ export default function Notifications({ onNotificationsOpen }: NotificationsProp
                   <div className="p-4 text-center text-wit-muted text-sm">No activity logs</div>
                 ) : (
                   filteredLogs.map((log) => {
-                    const Icon = getTypeIcon(log.type);
+                    const Icon = ACTIVITY_ICONS[log.type];
                     return (
                       <div
                         key={log.id}
                         className="p-4 border-b border-wit-border/30 hover:bg-wit-card/30 transition-all cursor-pointer"
                       >
                         <div className="flex items-start space-x-3">
-                          <div className={`p-2 rounded-lg ${ACTIVITY_COLORS[log.type]}`}>
-                            <Icon className="w-4 h-4" />
+                          {/* User Avatar */}
+                          <div className="w-10 h-10 rounded-full bg-wit-red/10 flex items-center justify-center flex-shrink-0">
+                            <span className="text-xs font-bold text-wit-red">{log.user_avatar}</span>
                           </div>
+                          
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm text-wit-text">{log.description}</p>
-                            <div className="flex items-center space-x-2 mt-1">
-                              <span className="text-xs text-wit-muted">{log.user}</span>
-                              <span className="text-xs text-wit-muted">•</span>
-                              <span className="text-xs text-wit-muted">{timeAgo(log.timestamp)}</span>
+                            <div className="flex items-center space-x-2 mb-1">
+                              <div className={`p-1 rounded ${ACTIVITY_COLORS[log.type]}`}>
+                                <Icon className="w-3 h-3" />
+                              </div>
+                              <span className="text-xs font-medium text-wit-muted">{log.type}</span>
+                            </div>
+                            <p className="text-sm text-wit-text mb-1">{log.description}</p>
+                            <div className="flex items-center space-x-2 text-xs">
+                              <span className="font-medium text-wit-red">{log.user}</span>
+                              <span className="text-wit-muted">•</span>
+                              <span className="text-wit-muted">{timeAgo(log.timestamp)}</span>
                             </div>
                           </div>
                         </div>
@@ -285,40 +270,39 @@ export default function Notifications({ onNotificationsOpen }: NotificationsProp
                 {filteredAnnouncements.length === 0 ? (
                   <div className="p-4 text-center text-wit-muted text-sm">No announcements</div>
                 ) : (
-                  filteredAnnouncements.map((announcement) => {
-                    const Icon = getAnnouncementIcon(announcement.type);
-                    return (
-                      <div
-                        key={announcement.id}
-                        className={`p-4 border-b border-wit-border/30 hover:bg-wit-card/30 transition-all cursor-pointer ${
-                          !announcement.read ? 'bg-wit-red/5' : ''
-                        }`}
-                      >
-                        <div className="flex items-start space-x-3">
-                          <div className="p-2 rounded-lg bg-wit-card">
-                            <Icon className="w-4 h-4 text-wit-muted" />
+                  filteredAnnouncements.map((announcement) => (
+                    <div
+                      key={announcement.id}
+                      className="p-4 border-b border-wit-border/30 hover:bg-wit-card/30 transition-all cursor-pointer"
+                    >
+                      <div className="flex items-start space-x-3">
+                        <div className="p-2 rounded-lg bg-wit-card">
+                          {announcement.type === 'COMPANY' ? (
+                            <Megaphone className="w-4 h-4 text-wit-muted" />
+                          ) : (
+                            <User className="w-4 h-4 text-wit-muted" />
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between mb-1">
+                            <h4 className="text-sm font-medium text-wit-text">{announcement.title}</h4>
+                            {!announcement.read && (
+                              <span className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0" />
+                            )}
                           </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center justify-between mb-1">
-                              <h4 className="text-sm font-medium text-wit-text">{announcement.title}</h4>
-                              {!announcement.read && (
-                                <span className="w-2 h-2 bg-wit-red rounded-full flex-shrink-0" />
-                              )}
-                            </div>
-                            <p className="text-xs text-wit-muted line-clamp-2">{announcement.description}</p>
-                            <div className="flex items-center space-x-2 mt-2">
-                              <span className={`px-2 py-0.5 text-xs rounded border ${ANNOUNCEMENT_COLORS[announcement.priority]}`}>
-                                {announcement.priority}
-                              </span>
-                              <span className="text-xs text-wit-muted">{announcement.from}</span>
-                              <span className="text-xs text-wit-muted">•</span>
-                              <span className="text-xs text-wit-muted">{timeAgo(announcement.timestamp)}</span>
-                            </div>
+                          <p className="text-xs text-wit-muted line-clamp-2">{announcement.description}</p>
+                          <div className="flex items-center space-x-2 mt-2">
+                            <span className={`px-2 py-0.5 text-xs rounded border ${ANNOUNCEMENT_COLORS[announcement.priority]}`}>
+                              {announcement.priority}
+                            </span>
+                            <span className="text-xs text-wit-muted">{announcement.from}</span>
+                            <span className="text-xs text-wit-muted">•</span>
+                            <span className="text-xs text-wit-muted">{timeAgo(announcement.timestamp)}</span>
                           </div>
                         </div>
                       </div>
-                    );
-                  })
+                    </div>
+                  ))
                 )}
               </div>
             )}
