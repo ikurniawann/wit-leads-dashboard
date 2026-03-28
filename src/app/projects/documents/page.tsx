@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Header from '../../../components/Header';
+import Header from '../../components/Header';
 import Sidebar from '../../../components/Sidebar';
 import { Upload, FileText, CheckCircle, Clock, AlertCircle, Download, Eye, Trash2, Search, Filter } from 'lucide-react';
 

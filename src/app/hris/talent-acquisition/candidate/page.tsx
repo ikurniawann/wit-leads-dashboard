@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Header from '../../../../components/Header';
+import Header from '../../../components/Header';
 import Sidebar from '../../../../components/Sidebar';
 import { Users, Search, Filter, Plus, Calendar, Mail, Phone, MapPin, Briefcase, Star, CheckCircle, XCircle, Clock, MoreVertical, ArrowRight } from 'lucide-react';
 

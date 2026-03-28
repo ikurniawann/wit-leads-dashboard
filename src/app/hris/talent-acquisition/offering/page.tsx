@@ -1,6 +1,6 @@
 'use client';
 
-import Header from '../../../../components/Header';
+import Header from '../../../components/Header';
 import Sidebar from '../../../../components/Sidebar';
 import { Briefcase } from 'lucide-react';
 
