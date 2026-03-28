@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Sidebar from '../../../../components/Sidebar';
 import { Users, Search, Filter, Plus, Calendar, Mail, Phone, MapPin, Briefcase, Star, CheckCircle, XCircle, Clock, MoreVertical, ArrowRight } from 'lucide-react';
 
 // DUMMY DATA
