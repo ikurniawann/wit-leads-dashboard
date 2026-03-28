@@ -5,7 +5,7 @@ import Sidebar from '../../../components/Sidebar';
 import { 
   Calendar, Clock, CheckCircle, XCircle, AlertCircle, FileText, 
   Plus, Download, Search, Filter, User, TrendingUp, Coffee,
-  Heart, Baby, Ring, Users, Home, DollarSign
+  Heart, Baby, Gem, Users, Home, DollarSign
 } from 'lucide-react';
 
 // DUMMY DATA
@@ -25,7 +25,7 @@ const LEAVE_TYPES = [
   { id: 'SICK', name: 'Sick Leave', icon: Heart, quota: -1, color: 'text-red-500', paid: true }, // -1 = unlimited
   { id: 'MATERNITY', name: 'Maternity Leave', icon: Baby, quota: 90, color: 'text-pink-500', paid: true },
   { id: 'PATERNITY', name: 'Paternity Leave', icon: Baby, quota: 3, color: 'text-purple-500', paid: true },
-  { id: 'MARRIAGE', name: 'Marriage Leave', icon: Ring, quota: 3, color: 'text-green-500', paid: true },
+  { id: 'MARRIAGE', name: 'Marriage Leave', icon: Gem, quota: 3, color: 'text-green-500', paid: true },
   { id: 'BEREAVEMENT', name: 'Bereavement Leave', icon: Heart, quota: 3, color: 'text-gray-500', paid: true },
   { id: 'MENSTRUAL', name: 'Menstrual Leave', icon: Heart, quota: 2, color: 'text-rose-500', paid: true },
   { id: 'UNPAID', name: 'Unpaid Leave', icon: DollarSign, quota: -1, color: 'text-yellow-500', paid: false },
