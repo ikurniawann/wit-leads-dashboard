@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
+import Header from '../components/Header';
 import StatsCards from '../components/StatsCards';
 import PipelineChart from '../components/dashboard/PipelineChart';
 import WinRateChart from '../components/dashboard/WinRateChart';
@@ -102,6 +103,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen theme-content">
       <Sidebar />
+      <Header />
       
       <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
         <div>
