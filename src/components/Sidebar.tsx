@@ -53,6 +53,20 @@ export default function Sidebar() {
         { href: '/hris/attendance', label: 'Attendance' },
         { href: '/hris/leave', label: 'Leave Management' },
         { href: '/hris/performance', label: 'Performance Review' },
+        { 
+          href: '/hris/talent-acquisition', 
+          label: 'Talent Acquisition',
+          submenu: [
+            { href: '/hris/talent-acquisition', label: 'Dashboard' },
+            { href: '/hris/talent-acquisition/requirement', label: 'Requirement Planning' },
+            { href: '/hris/talent-acquisition/request', label: 'Request Form' },
+            { href: '/hris/talent-acquisition/requisition', label: 'Requisition Tracker' },
+            { href: '/hris/talent-acquisition/candidate', label: 'Candidate Application' },
+            { href: '/hris/talent-acquisition/talent', label: 'Talent Pooling' },
+            { href: '/hris/talent-acquisition/offering', label: 'Offering & Hiring' },
+            { href: '/hris/talent-acquisition/onboarding', label: 'Onboarding' },
+          ]
+        },
         { href: '/hris/payroll', label: 'Payroll 🔒' },
         { href: '/hris/employees', label: 'Employee Directory 🔒' },
         { href: '/hris/requests', label: 'My Requests 🔒' },
