@@ -1,6 +1,6 @@
 'use client';
 
-import Sidebar from '../../../components/Sidebar';
+import Sidebar from '../../../../components/Sidebar';
 import { Database } from 'lucide-react';
 
 export default function TalentPoolingPage() {
