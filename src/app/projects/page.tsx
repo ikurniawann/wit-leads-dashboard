@@ -23,6 +23,10 @@ interface ProjectFromLead {
   end_date: string;
   progress: number;
   created_at: string;
+  updated_at: string;
+  is_internal: boolean;
+  priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  completion_percent: number;
 }
 
 export default function ProjectsPage() {
@@ -60,6 +64,10 @@ export default function ProjectsPage() {
         end_date: lead.follow_up_date || new Date().toISOString(),
         progress: 0,
         created_at: lead.created_at,
+        updated_at: lead.created_at,
+        is_internal: false,
+        priority: 'MEDIUM',
+        completion_percent: 0,
       }));
       
       setProjects(projectsFromLeads);
