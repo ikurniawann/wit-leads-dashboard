@@ -169,7 +169,7 @@ export default function LeadsTable({
   });
 
   // Pagination logic
-  const total = sortedLeads.length;
+  const total = totalLeads !== undefined ? totalLeads : filteredLeads.length;
   const totalPages = Math.ceil(total / pageSize);
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
