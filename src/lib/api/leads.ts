@@ -145,7 +145,29 @@ export const leadsApi = {
     console.log('API Update - Data:', lead);
     
     // Hapus field yang tidak boleh diupdate (read-only fields)
-    const { quotation_id, created_at, created_by, client_id, ...updateData } = lead;
+    const { quotation_id, created_at, created_by, ...updateDataRaw } = lead;
+    
+    // Hapus juga field yang null/undefined untuk menghindari constraint error
+    const updateData: any = {};
+    Object.entries(updateDataRaw).forEach(([key, value]) => {
+      // Jangan kirim field dengan nilai null atau undefined
+      // Kecuali memang ingin set null secara eksplisit
+      if (value !== undefined) {
+        updateData[key] = value;
+      }
+    });
+    
+    // Jangan kirim client_id jika null (foreign key constraint)
+    if (updateData.client_id === null || updateData.client_id === '') {
+      delete updateData.client_id;
+    }
+    
+    // Jangan kirim pic_employee_id jika null (foreign key constraint)
+    if (updateData.pic_employee_id === null || updateData.pic_employee_id === '') {
+      delete updateData.pic_employee_id;
+    }
+    
+    console.log('API Update - Filtered data:', updateData);
     
     // Pastikan ada data yang diupdate
     if (Object.keys(updateData).length === 0) {
@@ -169,7 +191,8 @@ export const leadsApi = {
         
         // Berikan pesan error yang lebih informatif
         if (error.code === '23503') {
-          throw new Error('Data tidak valid. Pastikan semua referensi sudah benar.');
+          console.error('Foreign key violation. Fields:', updateData);
+          throw new Error(`Data tidak valid. Field yang bermasalah: ${error.message}`);
         } else if (error.code === '42501') {
           throw new Error('Tidak memiliki izin untuk mengupdate data. Cek login Anda.');
         } else if (error.message?.includes('CORS')) {
