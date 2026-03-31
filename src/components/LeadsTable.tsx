@@ -168,6 +168,17 @@ export default function LeadsTable({
     }
   });
 
+  // Pagination logic
+  const total = sortedLeads.length;
+  const totalPages = Math.ceil(total / pageSize);
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedLeads = sortedLeads.slice(startIndex, endIndex);
+
+  // Calculate display range
+  const startItem = total === 0 ? 0 : startIndex + 1;
+  const endItem = Math.min(endIndex, total);
+
   const handleSort = (column: string) => {
     if (sortColumn === column) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -333,7 +344,7 @@ export default function LeadsTable({
                 </td>
               </tr>
             ) : (
-              sortedLeads.map((lead) => (
+              paginatedLeads.map((lead) => (
                 <tr key={lead.quotation_id} className="hover:bg-wit-red/5 transition-colors">
                   <td>
                     <div className="font-medium text-wit-text">{lead.company_name}</div>
@@ -404,7 +415,7 @@ export default function LeadsTable({
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           {/* Debug Info */}
           <div className="text-xs text-wit-muted">
-            Debug: pageSize={pageSize}, currentPage={currentPage}, total={total}, totalPages={totalPages}
+            Showing {startItem} to {endItem} of {total} leads
           </div>
           
           {/* Page Size Selector */}
