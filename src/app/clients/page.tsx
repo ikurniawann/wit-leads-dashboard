@@ -13,6 +13,11 @@ export default function ClientsPage() {
   const [clients, setClients] = useState<Client[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalCount, setTotalCount] = useState(0);
+  
   // Modal states
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -21,13 +26,14 @@ export default function ClientsPage() {
 
   useEffect(() => {
     loadClients();
-  }, []);
+  }, [currentPage, pageSize]);
 
   const loadClients = async () => {
     try {
       setLoading(true);
       const data = await clientsApi.getAll();
       setClients(data);
+      setTotalCount(data.length);
     } catch (error) {
       console.error('Error loading clients:', error);
     } finally {
@@ -71,6 +77,21 @@ export default function ClientsPage() {
     client.client_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     client.industry?.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredClients.length / pageSize);
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedClients = filteredClients.slice(startIndex, endIndex);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handlePageSizeChange = (size: number) => {
+    setPageSize(size);
+    setCurrentPage(1); // Reset to first page when changing page size
+  };
 
   const stats = {
     total: clients.length,
@@ -191,7 +212,7 @@ export default function ClientsPage() {
                       </td>
                     </tr>
                   ) : (
-                    filteredClients.map((client) => (
+                    paginatedClients.map((client) => (
                       <tr key={client.client_id} className="border-t border-wit-border hover:bg-wit-red/5 transition-colors">
                         <td className="py-3 px-4">
                           <div className="font-medium text-wit-text">{client.company_name}</div>
@@ -245,6 +266,72 @@ export default function ClientsPage() {
                 </tbody>
               </table>
             </div>
+            
+            {/* Pagination */}
+            {filteredClients.length > 0 && (
+              <div className="flex flex-col md:flex-row items-center justify-between px-4 py-4 border-t border-wit-border">
+                <div className="flex items-center space-x-2 mb-4 md:mb-0">
+                  <span className="text-wit-muted text-sm">Show</span>
+                  <select
+                    value={pageSize}
+                    onChange={(e) => handlePageSizeChange(Number(e.target.value))}
+                    className="bg-wit-card border border-wit-border rounded-lg px-3 py-1 text-sm text-wit-text focus:outline-none focus:ring-2 focus:ring-wit-red"
+                  >
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                    <option value={50}>50</option>
+                    <option value={100}>100</option>
+                  </select>
+                  <span className="text-wit-muted text-sm">
+                    Showing {startIndex + 1} to {Math.min(endIndex, filteredClients.length)} of {filteredClients.length} clients
+                  </span>
+                </div>
+                
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="px-3 py-1 rounded-lg border border-wit-border text-sm text-wit-text hover:bg-wit-red/10 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  >
+                    Previous
+                  </button>
+                  
+                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                    let pageNum;
+                    if (totalPages <= 5) {
+                      pageNum = i + 1;
+                    } else if (currentPage <= 3) {
+                      pageNum = i + 1;
+                    } else if (currentPage >= totalPages - 2) {
+                      pageNum = totalPages - 4 + i;
+                    } else {
+                      pageNum = currentPage - 2 + i;
+                    }
+                    return (
+                      <button
+                        key={pageNum}
+                        onClick={() => handlePageChange(pageNum)}
+                        className={`px-3 py-1 rounded-lg text-sm transition-all ${
+                          currentPage === pageNum
+                            ? 'bg-wit-red text-white'
+                            : 'border border-wit-border text-wit-text hover:bg-wit-red/10'
+                        }`}
+                      >
+                        {pageNum}
+                      </button>
+                    );
+                  })}
+                  
+                  <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="px-3 py-1 rounded-lg border border-wit-border text-sm text-wit-text hover:bg-wit-red/10 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </main>
