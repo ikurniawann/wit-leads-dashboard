@@ -162,9 +162,9 @@ export const leadsApi = {
       delete updateData.client_id;
     }
     
-    // Jangan kirim pic_employee_id jika null (foreign key constraint)
-    if (updateData.pic_employee_id === null || updateData.pic_employee_id === '') {
-      delete updateData.pic_employee_id;
+    // Jangan kirim status_id jika bermasalah (biarkan database handle)
+    if (updateData.status_id === null || updateData.status_id === '' || updateData.status_id === undefined) {
+      delete updateData.status_id;
     }
     
     console.log('API Update - Filtered data:', updateData);
@@ -192,7 +192,12 @@ export const leadsApi = {
         // Berikan pesan error yang lebih informatif
         if (error.code === '23503') {
           console.error('Foreign key violation. Fields:', updateData);
-          throw new Error(`Data tidak valid. Field yang bermasalah: ${error.message}`);
+          // Parse error message untuk tahu field mana
+          const match = error.message.match(/column "(\w+)"/) || 
+                       error.message.match(/table "(\w+)"/) ||
+                       ['', 'unknown'];
+          const field = match[1] || 'unknown field';
+          throw new Error(`Data tidak valid. Status "${updateData.status_id || 'empty'}" tidak ditemukan di database. Pilih status yang valid.`);
         } else if (error.code === '42501') {
           throw new Error('Tidak memiliki izin untuk mengupdate data. Cek login Anda.');
         } else if (error.message?.includes('CORS')) {
