@@ -195,12 +195,6 @@ export default function LeadsTable({
       <span className="ml-1 text-wit-red">↓</span>;
   };
 
-  // Pagination
-  const total = totalLeads || filteredLeads.length;
-  const totalPages = Math.ceil(total / pageSize);
-  const startItem = (currentPage - 1) * pageSize + 1;
-  const endItem = Math.min(currentPage * pageSize, total);
-
   const handleFirstPage = () => onPageChange && onPageChange(1);
   const handlePrevPage = () => onPageChange && onPageChange(currentPage - 1);
   const handleNextPage = () => onPageChange && onPageChange(currentPage + 1);
