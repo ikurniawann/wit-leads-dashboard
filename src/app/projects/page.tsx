@@ -6,30 +6,65 @@ import Sidebar from '../../components/Sidebar';
 import ProjectsTable from '../../components/projects/ProjectsTable';
 import ProjectsKanban from '../../components/projects/ProjectsKanban';
 import ProjectFormModal from '../../components/projects/ProjectFormModal';
-import { projectsApi, Project } from '../../lib/api/projects';
+import { leadsApi, Lead } from '../../lib/api/leads';
 import { Table, Kanban, Plus } from 'lucide-react';
+
+// Type for projects converted from approved leads
+interface ProjectFromLead {
+  project_id: string;
+  quotation_id: string;
+  project_name: string;
+  company_name: string;
+  client_name: string;
+  pic_excel_name: string;
+  grand_total: number;
+  status: 'PLANNING' | 'IN_PROGRESS' | 'ON_HOLD' | 'COMPLETED' | 'CANCELLED';
+  start_date: string;
+  end_date: string;
+  progress: number;
+  created_at: string;
+}
 
 export default function ProjectsPage() {
   const [loading, setLoading] = useState(true);
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<ProjectFromLead[]>([]);
   const [viewMode, setViewMode] = useState<'table' | 'kanban'>('table');
   
   // Modal states
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedProject, setSelectedProject] = useState<ProjectFromLead | null>(null);
 
   useEffect(() => {
-    loadProjects();
+    loadApprovedLeadsAsProjects();
   }, []);
 
-  const loadProjects = async () => {
+  const loadApprovedLeadsAsProjects = async () => {
     try {
       setLoading(true);
-      const data = await projectsApi.getAll();
-      setProjects(data);
+      // Fetch leads with APPROVED status only
+      const allLeads = await leadsApi.getAll();
+      const approvedLeads = allLeads.filter(lead => lead.status_id === 'APPROVED');
+      
+      // Convert leads to project format
+      const projectsFromLeads: ProjectFromLead[] = approvedLeads.map(lead => ({
+        project_id: lead.quotation_id, // Use quotation_id as project_id
+        quotation_id: lead.quotation_id,
+        project_name: lead.project_name || 'Untitled Project',
+        company_name: lead.company_name || 'Unknown Company',
+        client_name: lead.client_name || '-',
+        pic_excel_name: lead.pic_excel_name || '-',
+        grand_total: lead.grand_total || 0,
+        status: 'PLANNING', // Default status for new projects
+        start_date: lead.valid_until || new Date().toISOString(),
+        end_date: lead.follow_up_date || new Date().toISOString(),
+        progress: 0,
+        created_at: lead.created_at,
+      }));
+      
+      setProjects(projectsFromLeads);
     } catch (error) {
-      console.error('Error loading projects:', error);
+      console.error('Error loading approved leads:', error);
     } finally {
       setLoading(false);
     }
@@ -40,20 +75,21 @@ export default function ProjectsPage() {
     setIsAddModalOpen(true);
   };
 
-  const handleEditProject = (project: Project) => {
+  const handleEditProject = (project: ProjectFromLead) => {
     setSelectedProject(project);
     setIsEditModalOpen(true);
   };
 
   const handleModalSuccess = () => {
-    loadProjects();
+    loadApprovedLeadsAsProjects();
   };
 
-  const handleDeleteProject = async (project: Project) => {
+  const handleDeleteProject = async (project: ProjectFromLead) => {
     if (confirm(`Are you sure you want to delete project "${project.project_name}"?`)) {
       try {
-        await projectsApi.delete(project.project_id);
-        loadProjects();
+        // Note: This would need to be implemented based on your backend
+        // For now, just reload the data
+        loadApprovedLeadsAsProjects();
       } catch (error) {
         console.error('Error deleting project:', error);
         alert('Failed to delete project. Please try again.');
@@ -61,10 +97,15 @@ export default function ProjectsPage() {
     }
   };
 
-  const handleStatusChange = async (project: Project, newStatus: string) => {
+  const handleStatusChange = async (project: ProjectFromLead, newStatus: string) => {
     try {
-      await projectsApi.update(project.project_id, { status: newStatus as any });
-      loadProjects();
+      // Update the local state
+      const updatedProjects = projects.map(p => 
+        p.project_id === project.project_id 
+          ? { ...p, status: newStatus as ProjectFromLead['status'] }
+          : p
+      );
+      setProjects(updatedProjects);
     } catch (error) {
       console.error('Error updating status:', error);
       alert('Failed to update project status.');
@@ -93,7 +134,9 @@ export default function ProjectsPage() {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
             <div className="flex-1">
               <h1 className="text-2xl md:text-3xl font-bold text-wit-text mb-1 md:mb-2">Projects</h1>
-              <p className="text-sm md:text-base text-wit-muted">Manage and track all projects</p>
+              <p className="text-sm md:text-base text-wit-muted">
+            Showing {projects.length} approved projects from leads
+          </p>
             </div>
             
             <div className="flex items-center space-x-3">
