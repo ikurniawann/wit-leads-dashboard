@@ -148,22 +148,65 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
         follow_up_date: sanitizeDate(formData.follow_up_date || ''),
       };
 
+      console.log('=== FORM SUBMIT DEBUG ===');
+      console.log('Lead ID:', lead?.quotation_id);
+      console.log('Is Update:', !!lead?.quotation_id);
+      console.log('Data to save:', JSON.stringify(dataToSave, null, 2));
+
       if (lead && lead.quotation_id) {
         // Update existing lead
-        await leadsApi.update(lead.quotation_id, dataToSave);
+        console.log('Calling leadsApi.update...');
+        const result = await leadsApi.update(lead.quotation_id, dataToSave);
+        console.log('Update success:', result);
       } else {
         // Create new lead
-        await leadsApi.create(dataToSave);
+        console.log('Calling leadsApi.create...');
+        const result = await leadsApi.create(dataToSave);
+        console.log('Create success:', result);
       }
 
       onSuccess();
       onClose();
     } catch (error: any) {
-      console.error('Error saving lead:', error);
-      // Tampilkan detail error
-      const errorMessage = error?.message || error?.error_description || 'Unknown error';
-      const errorCode = error?.code || '';
-      alert(`Gagal menyimpan lead.\n\nError: ${errorMessage}\nCode: ${errorCode}\n\nCek console browser untuk detail lebih lanjut.`);
+      console.error('=== ERROR SAVING LEAD ===');
+      console.error('Error object:', error);
+      console.error('Error message:', error?.message);
+      console.error('Error code:', error?.code);
+      console.error('Error details:', error?.details);
+      console.error('Full error:', JSON.stringify(error, null, 2));
+      
+      // Extract error message dengan fallback
+      let errorMessage = 'Unknown error';
+      let errorCode = '';
+      
+      if (error?.message) {
+        errorMessage = error.message;
+      } else if (error?.error_description) {
+        errorMessage = error.error_description;
+      } else if (typeof error === 'string') {
+        errorMessage = error;
+      }
+      
+      if (error?.code) {
+        errorCode = error.code;
+      }
+      
+      // Pesan error yang lebih user-friendly
+      let userMessage = 'Gagal menyimpan lead.';
+      
+      if (errorMessage.includes('CORS') || errorMessage.includes('fetch')) {
+        userMessage = 'Masalah koneksi ke server. Coba refresh halaman atau cek internet Anda.';
+      } else if (errorMessage.includes('permission') || errorCode === '42501') {
+        userMessage = 'Tidak memiliki izin. Pastikan Anda sudah login.';
+      } else if (errorMessage.includes('not found') || errorCode === '404') {
+        userMessage = 'Data tidak ditemukan. Mungkin sudah dihapus.';
+      } else if (errorMessage.includes('duplicate')) {
+        userMessage = 'Data sudah ada. Cek data yang sama.';
+      } else if (errorMessage.includes('required') || errorMessage.includes('not-null')) {
+        userMessage = 'Ada field wajib yang belum diisi (Company Name, Project Name).';
+      }
+      
+      alert(`${userMessage}\n\nDetail teknis:\n${errorMessage}\nCode: ${errorCode || 'N/A'}`);
     } finally {
       setLoading(false);
     }
