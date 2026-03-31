@@ -105,7 +105,7 @@ export default function Dashboard() {
       <Sidebar />
       <Header />
       
-      <main className="md:ml-72 pt-16 pb-12 px-4 md:px-6">
+      <main className="md:ml-72 pt-20 pb-12 px-4 md:px-6">
         <div>
           {/* Page Header - Mobile Responsive */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6 pb-4 border-b border-wit-border/0">
@@ -180,7 +180,6 @@ export default function Dashboard() {
           setIsDeleteModalOpen(true);
         }}
         onStageChange={(lead, newStage) => {
-          // TODO: Implement stage change API call
           console.log('Change stage:', lead.quotation_id, newStage);
           loadData();
         }}

@@ -141,18 +141,53 @@ export const leadsApi = {
 
   // UPDATE LEAD
   async update(quotationId: string, lead: Partial<Lead>) {
-    const { data, error } = await supabase
-      .from('quotations')
-      .update({
-        ...lead,
-        updated_at: new Date().toISOString(),
-      })
-      .eq('quotation_id', quotationId)
-      .select()
-      .single();
+    console.log('API Update - ID:', quotationId);
+    console.log('API Update - Data:', lead);
+    
+    // Hapus field yang tidak boleh diupdate (read-only fields)
+    const { quotation_id, created_at, created_by, client_id, ...updateData } = lead;
+    
+    // Pastikan ada data yang diupdate
+    if (Object.keys(updateData).length === 0) {
+      console.warn('No data to update');
+      throw new Error('Tidak ada data yang diupdate');
+    }
+    
+    try {
+      const { data, error } = await supabase
+        .from('quotations')
+        .update({
+          ...updateData,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('quotation_id', quotationId)
+        .select()
+        .single();
 
-    if (error) throw error;
-    return data as Lead;
+      if (error) {
+        console.error('API Update - Supabase Error:', error);
+        
+        // Berikan pesan error yang lebih informatif
+        if (error.code === '23503') {
+          throw new Error('Data tidak valid. Pastikan semua referensi sudah benar.');
+        } else if (error.code === '42501') {
+          throw new Error('Tidak memiliki izin untuk mengupdate data. Cek login Anda.');
+        } else if (error.message?.includes('CORS')) {
+          throw new Error('Masalah koneksi. Coba refresh halaman.');
+        } else {
+          throw new Error(`Update gagal: ${error.message || 'Unknown error'}`);
+        }
+      }
+      
+      console.log('API Update - Success:', data);
+      return data as Lead;
+    } catch (networkError: any) {
+      console.error('API Update - Network Error:', networkError);
+      if (networkError.message?.includes('fetch') || networkError.message?.includes('CORS')) {
+        throw new Error('Koneksi ke server gagal. Cek internet Anda dan coba lagi.');
+      }
+      throw networkError;
+    }
   },
 
   // DELETE LEAD

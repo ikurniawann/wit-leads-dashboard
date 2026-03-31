@@ -158,9 +158,12 @@ export default function LeadFormModal({ isOpen, onClose, lead, onSuccess }: Lead
 
       onSuccess();
       onClose();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving lead:', error);
-      alert('Gagal menyimpan lead. Coba lagi.');
+      // Tampilkan detail error
+      const errorMessage = error?.message || error?.error_description || 'Unknown error';
+      const errorCode = error?.code || '';
+      alert(`Gagal menyimpan lead.\n\nError: ${errorMessage}\nCode: ${errorCode}\n\nCek console browser untuk detail lebih lanjut.`);
     } finally {
       setLoading(false);
     }

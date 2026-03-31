@@ -7,7 +7,6 @@ import {
   LayoutDashboard,
   Briefcase,
   Users,
-  UserCheck,
   BarChart3,
   FileText,
   Settings,
@@ -16,15 +15,13 @@ import {
   Menu,
   X,
   ChevronDown,
-  ChevronRight
 } from 'lucide-react';
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({
-    'HRIS': true, // Always open HRIS submenu by default
+    'Projects': false,
   });
 
   // Main navigation
@@ -40,40 +37,10 @@ export default function Sidebar() {
         { href: '/projects/timeline', label: 'Timeline' },
         { href: '/projects/budget', label: 'Budget vs Actual' },
         { href: '/projects/documents', label: 'Documents' },
-        { href: '/reports/workload', label: 'Workload Report' },
       ]
     },
     { href: '/vendors', label: 'Vendors', icon: Truck },
     { href: '/clients', label: 'Clients', icon: Users },
-    { 
-      href: '/hris', 
-      label: 'HRIS', 
-      icon: UserCheck,
-      submenu: [
-        { href: '/hris/attendance', label: 'Attendance' },
-        { href: '/hris/leave', label: 'Leave Management' },
-        { href: '/hris/performance', label: 'Performance Review' },
-        { 
-          href: '/hris/talent-acquisition', 
-          label: 'Talent Acquisition',
-          submenu: [
-            { href: '/hris/talent-acquisition', label: 'Dashboard' },
-            { href: '/hris/talent-acquisition/requirement', label: 'Requirement Planning' },
-            { href: '/hris/talent-acquisition/request', label: 'Request Form' },
-            { href: '/hris/talent-acquisition/requisition', label: 'Requisition Tracker' },
-            { href: '/hris/talent-acquisition/candidate', label: 'Candidate Application' },
-            { href: '/hris/talent-acquisition/talent', label: 'Talent Pooling' },
-            { href: '/hris/talent-acquisition/offering', label: 'Offering & Hiring' },
-            { href: '/hris/talent-acquisition/onboarding', label: 'Onboarding' },
-          ]
-        },
-        { href: '/hris/payroll', label: 'Payroll 🔒' },
-        { href: '/hris/employees', label: 'Employee Directory 🔒' },
-        { href: '/hris/requests', label: 'My Requests 🔒' },
-        { href: '/hris/reports', label: 'HR Reports 🔒' },
-        { href: '/hris/settings', label: 'HR Settings 🔒' },
-      ]
-    },
     { href: '/analytics', label: 'Analytics', icon: BarChart3 },
     { href: '/reports', label: 'Reports', icon: FileText },
   ];
@@ -117,19 +84,13 @@ export default function Sidebar() {
         <div className="h-20 flex items-center justify-between px-6 border-b border-wit-border">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-wit-red/10 rounded-lg flex items-center justify-center overflow-hidden">
-              <img src="/wit-logo.png" alt="WIT" className="w-8 h-8 object-contain" />
+              <span className="text-wit-red font-bold text-xl">W</span>
             </div>
             <div>
               <h1 className="text-lg font-bold theme-sidebar-text">WIT.ID</h1>
               <p className="text-xs text-wit-muted">Leads Dashboard</p>
             </div>
           </div>
-          <button
-            onClick={() => setCollapsed(!collapsed)}
-            className="p-2 text-wit-muted hover:text-wit-red hover:bg-wit-card rounded-lg transition-all md:block hidden"
-          >
-            {collapsed ? <Menu className="w-5 h-5" /> : <X className="w-5 h-5" />}
-          </button>
         </div>
 
         {/* Navigation */}
@@ -187,19 +148,6 @@ export default function Sidebar() {
                   <div className="ml-8 mt-1 space-y-1">
                     {item.submenu.map((subItem) => {
                       const isSubActive = pathname === subItem.href;
-                      const hasLock = subItem.label.includes('🔒');
-                      
-                      if (hasLock) {
-                        return (
-                          <div
-                            key={subItem.href}
-                            className="block px-3 py-2 rounded-lg text-sm text-wit-muted/50 cursor-not-allowed"
-                            title="Coming Soon"
-                          >
-                            {subItem.label}
-                          </div>
-                        );
-                      }
                       
                       return (
                         <Link
