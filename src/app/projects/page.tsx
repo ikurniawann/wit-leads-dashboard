@@ -7,37 +7,18 @@ import ProjectsTable from '../../components/projects/ProjectsTable';
 import ProjectsKanban from '../../components/projects/ProjectsKanban';
 import ProjectFormModal from '../../components/projects/ProjectFormModal';
 import { leadsApi, Lead } from '../../lib/api/leads';
+import { Project } from '../../lib/api/projects';
 import { Table, Kanban, Plus } from 'lucide-react';
-
-// Type for projects converted from approved leads
-interface ProjectFromLead {
-  project_id: string;
-  quotation_id: string;
-  project_name: string;
-  company_name: string;
-  client_name: string;
-  pic_excel_name: string;
-  grand_total: number;
-  status: 'PLANNING' | 'IN_PROGRESS' | 'ON_HOLD' | 'COMPLETED' | 'CANCELLED';
-  start_date: string;
-  end_date: string;
-  progress: number;
-  created_at: string;
-  updated_at: string;
-  is_internal: boolean;
-  priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
-  completion_percent: number;
-}
 
 export default function ProjectsPage() {
   const [loading, setLoading] = useState(true);
-  const [projects, setProjects] = useState<ProjectFromLead[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [viewMode, setViewMode] = useState<'table' | 'kanban'>('table');
   
   // Modal states
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<ProjectFromLead | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   useEffect(() => {
     loadApprovedLeadsAsProjects();
@@ -51,23 +32,23 @@ export default function ProjectsPage() {
       const approvedLeads = allLeads.filter(lead => lead.status_id === 'APPROVED');
       
       // Convert leads to project format
-      const projectsFromLeads: ProjectFromLead[] = approvedLeads.map(lead => ({
-        project_id: lead.quotation_id, // Use quotation_id as project_id
+      const projectsFromLeads: Project[] = approvedLeads.map(lead => ({
+        project_id: lead.quotation_id,
         quotation_id: lead.quotation_id,
         project_name: lead.project_name || 'Untitled Project',
-        company_name: lead.company_name || 'Unknown Company',
-        client_name: lead.client_name || '-',
-        pic_excel_name: lead.pic_excel_name || '-',
-        grand_total: lead.grand_total || 0,
-        status: 'PLANNING', // Default status for new projects
+        description: `Client: ${lead.company_name || 'Unknown'}`,
+        client_name: lead.company_name || 'Unknown Company',
+        project_manager: lead.pic_excel_name || '-',
+        status: 'PLANNING' as const,
         start_date: lead.valid_until || new Date().toISOString(),
         end_date: lead.follow_up_date || new Date().toISOString(),
-        progress: 0,
+        budget: lead.grand_total || 0,
+        actual_cost: 0,
+        is_internal: false,
+        priority: 'MEDIUM' as const,
+        completion_percent: 0,
         created_at: lead.created_at,
         updated_at: lead.created_at,
-        is_internal: false,
-        priority: 'MEDIUM',
-        completion_percent: 0,
       }));
       
       setProjects(projectsFromLeads);
@@ -83,7 +64,7 @@ export default function ProjectsPage() {
     setIsAddModalOpen(true);
   };
 
-  const handleEditProject = (project: ProjectFromLead) => {
+  const handleEditProject = (project: Project) => {
     setSelectedProject(project);
     setIsEditModalOpen(true);
   };
@@ -92,7 +73,7 @@ export default function ProjectsPage() {
     loadApprovedLeadsAsProjects();
   };
 
-  const handleDeleteProject = async (project: ProjectFromLead) => {
+  const handleDeleteProject = async (project: Project) => {
     if (confirm(`Are you sure you want to delete project "${project.project_name}"?`)) {
       try {
         // Note: This would need to be implemented based on your backend
@@ -105,12 +86,12 @@ export default function ProjectsPage() {
     }
   };
 
-  const handleStatusChange = async (project: ProjectFromLead, newStatus: string) => {
+  const handleStatusChange = async (project: Project, newStatus: string) => {
     try {
       // Update the local state
       const updatedProjects = projects.map(p => 
         p.project_id === project.project_id 
-          ? { ...p, status: newStatus as ProjectFromLead['status'] }
+          ? { ...p, status: newStatus as Project['status'] }
           : p
       );
       setProjects(updatedProjects);
